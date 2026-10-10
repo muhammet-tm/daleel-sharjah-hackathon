@@ -76,7 +76,7 @@ for d in ranked:
     rows.append(
         f"<tr class='{'is-pick' if pick else 'is-out'}'><td>{tag}</td><td class='name'>{label}<div class='fam'>{esc(d.get('family'))}</div></td>"
         f"{cells}<td class='num total'>{avg(n, 'total'):.1f}</td>"
-        f"<td class='note'>{'<br>'.join(esc(x) for x in notes.get(n, []))}{('<div class=sim>Reads like: ' + esc(', '.join(sorted(set(sim)))) + '</div>') if sim else ''}</td></tr>"
+        f"<td class='note'>{esc(min(notes.get(n, ['']), key=len))}{('<div class=sim>Reads like: ' + esc(', '.join(sorted(set(sim)))) + '</div>') if sim else ''}</td></tr>"
     )
 
 nav = "".join(f"<a href='#dir-{idx}'><span>0{idx}</span>{esc(name)}</a>" for idx, name, _ in mockups)
@@ -93,7 +93,8 @@ caveat_items = "".join(
     f"<li><strong>0{idx} {esc(name)}.</strong> {esc(CAVEATS.get(name, ''))}</li>" for idx, name, _ in mockups if CAVEATS.get(name)
 )
 
-page = f"""<title>Daleel Design Directions</title>
+page = f"""<meta charset="utf-8">
+<title>Daleel Design Directions</title>
 {''.join(links)}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
 <style>
