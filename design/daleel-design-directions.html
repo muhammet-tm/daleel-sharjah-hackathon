@@ -1,0 +1,529 @@
+<title>Daleel Design Directions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Naskh+Arabic:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@800;900&family=Atkinson+Hyperlegible:wght@400;700&family=Readex+Pro:wght@400;700&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Noto+Kufi+Arabic:wght@800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,600..900,50,1;1,9..144,400..600,50,1&family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<style>
+/* Frame: a quiet stone-grey chrome so each panel's own palette carries the personality. */
+:root { --bg:#f2f3f1; --fg:#1b1d1f; --mute:#5c6166; --line:#d5d8d4; --card:#ffffff; --accent:#1f4d3a; --pick:#1f4d3a; --out:#9aa0a3;
+  --sans:'Instrument Sans','IBM Plex Sans Arabic',system-ui,sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#141617; --fg:#ebedea; --mute:#a3a9ad; --line:#2d3134; --card:#1d2022; --accent:#8fcfae; --pick:#8fcfae; --out:#6a7074; color-scheme:dark } }
+:root[data-theme="dark"] { --bg:#141617; --fg:#ebedea; --mute:#a3a9ad; --line:#2d3134; --card:#1d2022; --accent:#8fcfae; --pick:#8fcfae; --out:#6a7074; color-scheme:dark }
+body { background:var(--bg); color:var(--fg); font-family:var(--sans); margin:0; padding-block:0 48px; }
+.frame { max-width:1280px; margin:0 auto; padding-inline:16px; }
+header.top { padding-block:40px 24px; border-bottom:1px solid var(--line); display:grid; gap:12px; }
+.eyebrow { font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); }
+h1 { font-size:clamp(28px,4vw,44px); line-height:1.05; margin:0; font-weight:600; text-wrap:balance; }
+h1 .ar { font-family:'IBM Plex Sans Arabic',sans-serif; font-weight:600; margin-inline-start:12px; color:var(--accent); }
+.lede { max-width:68ch; color:var(--mute); font-size:16px; line-height:1.5; margin:0; }
+nav.dirs { position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--bg); border-bottom:1px solid var(--line); display:flex; gap:6px; overflow-x:auto; padding-block:10px; }
+nav.dirs a { flex:0 0 auto; display:inline-flex; gap:8px; align-items:baseline; padding:8px 12px; border:1px solid var(--line); border-radius:999px; color:var(--fg); text-decoration:none; font-size:14px; background:var(--card); }
+nav.dirs a span { font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600; }
+nav.dirs a:focus-visible, .score a:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+section.score { padding-block:32px; }
+section.score h2, section.after h2 { font-size:20px; margin:0 0 6px; font-weight:600; }
+section.score p { color:var(--mute); max-width:70ch; margin:0 0 16px; line-height:1.5; }
+.tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--card); }
+table { border-collapse:collapse; width:100%; min-width:900px; font-size:13.5px; }
+th, td { text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute); font-weight:600; }
+td.num { font-variant-numeric:tabular-nums; text-align:right; }
+td.total { font-weight:600; }
+td.name a { color:var(--fg); font-weight:600; text-decoration:none; border-bottom:1px solid var(--accent); }
+td.name .fam { color:var(--mute); font-size:12px; margin-top:2px; }
+td.note { max-width:38ch; min-width:0; color:var(--mute); line-height:1.4; }
+td.note .sim { margin-top:6px; color:var(--fg); font-size:12px; }
+.pick { font-weight:600; color:var(--pick); font-variant-numeric:tabular-nums; }
+.nopick { color:var(--out); font-size:12px; }
+tr.is-out td { color:var(--out); }
+tr.is-out td.name .fam, tr.is-out td.note { color:var(--out); }
+.panels { display:grid; gap:40px; padding-block:16px; }
+.panels > * { min-width:0; }
+section.after { padding-block:32px; border-top:1px solid var(--line); }
+section.after ol { padding-inline-start:20px; line-height:1.6; color:var(--fg); max-width:70ch; }
+section.after li { margin-bottom:6px; }
+@media (max-width:640px) { header.top { padding-block:28px 16px; } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior:auto !important; transition:none !important; animation:none !important; } }
+</style>
+<div class="frame">
+<header class="top">
+  <div class="eyebrow">Sharjah Tourism Innovation Hackathon 2026 &middot; Team Daleel &middot; 10 October 2026</div>
+  <h1>Daleel: brand and five layout directions <span class="ar" lang="ar" dir="rtl">دليل</span></h1>
+  <p class="lede">Panel 00 is the team's identity (Rama's mark and palette: cream #F7F3EA, sand #E6DCC8, brass #C9A24D, navy #14213D) applied to the three demo screens. Panels 01 to 05 are the layout directions eight independent art directors proposed, scored by three judges; their colours are superseded by the brand, but their layout and interaction ideas (route bands, poster type, margin notes, lattice sheet, field cards) are still on the table. Pick the layout idea to carry into the brand, or keep panel 00 as it stands.</p>
+</header>
+<nav class="dirs" aria-label="Directions"><a href='#dir-0'><span>00</span>Daleel brand</a><a href='#dir-1'><span>01</span>Route Band Signage</a><a href='#dir-2'><span>02</span>Lagoon After Dark</a><a href='#dir-3'><span>03</span>Hashiya Folio</a><a href='#dir-4'><span>04</span>Girih Screen</a><a href='#dir-5'><span>05</span>Mleiha Field Sheet</a></nav>
+<section class="score" id="scorecard">
+  <h2>Scorecard</h2>
+  <p>Each judge scored every direction from 1 to 5 on six criteria (maximum 30). Lenses: an SCTDA tourism-authority judge, a product-design mentor allergic to generic AI aesthetics, and a hackathon judge who sees ten pitches in two hours and remembers only what is unmistakable on a projector. Rows are averages over the three. "Reads like" marks pairs that two or more judges said a panel would experience as the same option.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Shown</th><th>Direction</th><th>Distinct</th><th>Sharjah</th><th>Theme</th><th>Anti-slop</th><th>Projector</th><th>Buildable</th><th>Total /30</th><th>Judge notes</th></tr></thead>
+    <tbody><tr class='is-pick'><td><span class='pick'>01</span></td><td class='name'><a href='#dir-1'>Route Band Signage</a><div class='fam'>Civic wayfinding signage (airport and museum information design, Schiphol and AIGA/DOT pictogram lineage)</div></td><td class='num'>5.0</td><td class='num'>3.7</td><td class='num'>5.0</td><td class='num'>5.0</td><td class='num'>4.0</td><td class='num'>4.3</td><td class='num total'>27.0</td><td class='note'>Reads like something SCTDA would install on the Corniche. Footprint bands make sustainability legible without a leaf icon. Flat CSS, buildable today.<br>Bands encode footprint without a word of explanation; flat plates project cleanly and nobody mistakes signage for AI art. Pure CSS build. Watch sternness.<br>Footprint as route band makes sustainability the information architecture; flat plates build fast and project hard. Warm it with photography or it reads transit.</td></tr><tr class='is-pick'><td><span class='pick'>02</span></td><td class='name'><a href='#dir-2'>Lagoon After Dark</a><div class='fam'>Civic night poster: event-bill typography, flat saturated accents on deep navy, documentary night photography</div></td><td class='num'>4.3</td><td class='num'>4.0</td><td class='num'>4.0</td><td class='num'>3.3</td><td class='num'>5.0</td><td class='num'>4.0</td><td class='num total'>24.7</td><td class='note'>Off-peak night visiting is a real Gulf-heat lever. Projector-proof. Magenta must stay civic or SCTDA reads nightlife; night-only limits reach.<br>Loudest slide in the room: magenta poster type on navy. Off-peak night walking is a credible Gulf sustainability lever. Needs real night photos tonight.<br>Off-peak night walking is a real Gulf sustainability lever and poster type projects hard; keep copy civic so magenta never reads nightlife.<div class=sim>Reads like: Coral Reticle</div></td></tr><tr class='is-pick'><td><span class='pick'>03</span></td><td class='name'><a href='#dir-3'>Hashiya Folio</a><div class='fam'>Scholarly editorial, manuscript-derived typographic UI: paper and ink with rubricated hierarchy and marginal commentary</div></td><td class='num'>3.0</td><td class='num'>5.0</td><td class='num'>2.7</td><td class='num'>4.3</td><td class='num'>2.7</td><td class='num'>4.0</td><td class='num total'>21.7</td><td class='note'>Strongest Sharjah grounding in the set (World Book Capital, Bulaq naskh). Sustainability ledger feels appended. Marginalia needs explaining in five minutes.<br>Marginalia is the cleverest idea here but invisible at projector distance; hairlines and 14px notes vanish, sustainability is a footnote ledger. Brochure risk is real.<br>Margin-note chat is the sharpest interaction idea here, but dense serif text dies on a projector; lead with the plate and red numerals.<div class=sim>Reads like: Gypsum Hour</div></td></tr><tr class='is-pick'><td><span class='pick'>05</span></td><td class='name'><a href='#dir-5'>Mleiha Field Sheet</a><div class='fam'>Field-notebook editorial, map-first survey sheet</div></td><td class='num'>2.7</td><td class='num'>4.0</td><td class='num'>4.3</td><td class='num'>3.3</td><td class='num'>3.0</td><td class='num'>3.0</td><td class='num total'>20.3</td><td class='note'>Carbon ledger and protected-site stamps are explicit, but stamps read as last year&#x27;s badges. Visually a twin of Khor Field Guide.<br>Carbon ticket ledger is concrete, but stamps read as badges, which last year&#x27;s winner built. Halftone and MapLibre recolor cost hours; twin of Khor.<br>Carbon ledger is the best theme mechanic in the set, but stamps are badges by another name and MapLibre restyling burns an hour.<div class=sim>Reads like: Khor Field Guide</div></td></tr><tr class='is-pick'><td><span class='pick'>04</span></td><td class='name'><a href='#dir-4'>Girih Screen</a><div class='fam'>Islamic geometric lattice as structure: dark heritage editorial with drafting-line AR, not ornament</div></td><td class='num'>4.7</td><td class='num'>3.7</td><td class='num'>3.7</td><td class='num'>2.3</td><td class='num'>4.0</td><td class='num'>2.0</td><td class='num total'>20.3</td><td class='note'>Teal and brass lattice is the default AI Arabian-luxury look despite guardrails. Mask animation and three sheet states exceed seven hours.<br>Lattice-as-mask is the most memorable concept and the hardest build; animated khatam SVG masks will eat the afternoon. Teal-brass flirts with hotel brochure.<br>Lattice-as-mask is clever, but teal, brass and Cormorant is the luxury-Arabian AI palette, and the animated SVG mask will eat your seven hours.</td></tr><tr class='is-out'><td><span class='nopick'>not shown</span></td><td class='name'>Khor Field Guide<div class='fam'>Naturalist field guide: flat botanical-plate illustration on a light, green-tinted neutral, with a committed single-hue strategy (deep mangrove carries the hero, header, and guide sheet).</div></td><td class='num'>2.7</td><td class='num'>4.0</td><td class='num'>5.0</td><td class='num'>2.7</td><td class='num'>3.0</td><td class='num'>2.0</td><td class='num total'>19.3</td><td class='note'>Best theme fit (capacity meters, EPAA credits), but green-for-sustainability is the obvious move and illustration plates will not finish by tomorrow noon.<br>Strongest conservation story, weakest deliverability: species plates will not exist by 18:00 and muted sage washes out on a projector. Twin of Mleiha.<br>Kalba kingfisher and EPAA data are genuinely Sharjah, but sage plus botanical serif is wellness-brand slop and the plates will not finish today.<div class=sim>Reads like: Mleiha Field Sheet</div></td></tr><tr class='is-out'><td><span class='nopick'>not shown</span></td><td class='name'>Coral Reticle<div class='fam'>Spatial glass HUD, instrument overlay on live camera</div></td><td class='num'>3.3</td><td class='num'>2.7</td><td class='num'>4.3</td><td class='num'>1.7</td><td class='num'>4.0</td><td class='num'>3.0</td><td class='num total'>19.0</td><td class='note'>Glass HUD with corner ticks over a camera is the canonical AI AR mockup. Sharjah survives only as color names. Carbon row is good.<br>Sustainability row in every callout is the best theme integration here, but glass HUD on camera is exactly what AI renders. Heading jitter will show.<br>Glass panels over a camera feed is exactly what every AI render of an AR tourist app looks like; the carbon row cannot rescue it.<div class=sim>Reads like: Lagoon After Dark</div></td></tr><tr class='is-out'><td><span class='nopick'>not shown</span></td><td class='name'>Gypsum Hour<div class='fam'>Desert editorial minimalism: photography-led, warm neutral, serif display, near-zero chrome</div></td><td class='num'>2.0</td><td class='num'>4.0</td><td class='num'>2.3</td><td class='num'>2.3</td><td class='num'>3.0</td><td class='num'>3.7</td><td class='num total'>17.3</td><td class='note'>Handsome but generic warm minimalism; one caption line cannot carry the theme. Depends on photography the team has not shot yet.<br>Big serif over desaturated photos is the default AI travel brand; shade hatching is a thin sustainability story. Easy to build, easy to forget.<br>The 2026 warm-editorial default by its own admission; sustainability is one caption line and the look depends on a photo shoot you cannot afford.<div class=sim>Reads like: Hashiya Folio</div></td></tr></tbody>
+  </table></div>
+</section>
+<div class="panels">
+<style>
+.d0{--r:0;padding:clamp(20px,4vw,40px);border-radius:12px;overflow:hidden;scroll-margin-top:64px}
+.d0 *{box-sizing:border-box}
+.d0 .hd{display:grid;gap:6px;margin-bottom:20px}
+.d0 .hd .no{font:600 13px/1 var(--mono,monospace);font-variant-numeric:tabular-nums;opacity:.75}
+.d0 .hd h2{margin:0;font-size:clamp(30px,5vw,52px);line-height:1}
+.d0 .hd .tag{margin:0;font-size:18px;max-width:52ch}
+.d0 .hd .fam{margin:0;font-size:13px;opacity:.75;max-width:80ch}
+.d0 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:28px;align-items:start}
+.d0 .sw{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.d0 .sw li{display:grid;gap:2px;font-size:11px;line-height:1.25;min-width:0}
+.d0 .sw li span{height:40px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+.d0 .sw b{font-variant-numeric:tabular-nums}
+.d0 .sw i{font-style:normal;opacity:.75;overflow-wrap:anywhere}
+.d0 .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;justify-items:center}
+.d0 figure{margin:0;width:100%;max-width:300px;display:grid;gap:10px}
+.d0 figcaption{font-size:12px;opacity:.8;line-height:1.4}
+.d0 figcaption b{display:block;font-size:13px;opacity:1}
+.d0 .ph{aspect-ratio:9/18.5;width:100%;border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 6px #0a0a0a,0 0 0 7px rgba(127,127,127,.4)}
+.d0 .fort{width:100%;height:auto;display:block}
+.d0 .fort .f-ground{fill:none;stroke-width:1.5}
+.d0 .fort .f-slit{fill:none;stroke-width:2}
+.d0 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:28px;font-size:13.5px;line-height:1.5}
+.d0 .notes h3{margin:0 0 4px;font-size:13px}
+.d0 .notes p{margin:0}
+.d0 [lang=ar]{direction:rtl}
+
+.d0{--bg:#F7F3EA;--sf:#E6DCC8;--g:#C9A24D;--n:#14213D;--gt:#8A6A1F;--mono:'IBM Plex Mono';background:var(--bg);color:var(--n);font-family:'IBM Plex Sans',sans-serif;box-shadow:inset 0 0 0 2px var(--g)}
+.d0 .hd h2{font-family:Marcellus;font-weight:400}
+.d0 .hd .no{color:var(--gt)}
+.d0 .spec{display:grid;gap:4px} .d0 .spec .wm{display:flex;align-items:center;gap:14px;font:400 44px/1 Marcellus} .d0 .spec .wm .ar{font:700 40px/1.2 'Noto Naskh Arabic'}
+.d0 .spec .oct{color:var(--n)}
+.d0 .ph{background:var(--bg)}
+.d0 .top{background:var(--n);color:var(--bg);padding:14px 16px 12px;display:flex;align-items:center;gap:10px}
+.d0 .top .oct{color:var(--bg);flex:none}
+.d0 .top .wm{font:400 22px/1 Marcellus} .d0 .top .wm .ar{font:700 18px 'Noto Naskh Arabic';margin-left:6px}
+.d0 .top .day{margin-left:auto;font:500 11px var(--mono);color:var(--g)}
+.d0 .ttl{padding:14px 16px 6px;font:400 24px/1.1 Marcellus}
+.d0 .stops{flex:1;padding:0 12px;display:grid;gap:8px;align-content:start}
+.d0 .stop{background:#fff;border:1px solid var(--sf);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:56px 1fr;gap:2px 8px}
+.d0 .stop .t{font:500 12px var(--mono);font-variant-numeric:tabular-nums;padding-top:2px}
+.d0 .stop .n{font-weight:600;font-size:14.5px} .d0 .stop .n .ar{font:500 13px 'Noto Naskh Arabic';opacity:.7;margin-left:6px}
+.d0 .stop .s{grid-column:2;justify-self:start;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px}
+.d0 .s.quiet{background:var(--n);color:var(--g)} .d0 .s.busy{background:var(--g);color:var(--n)} .d0 .s.shade{background:var(--sf);color:var(--n)}
+.d0 .swap{margin:10px 12px 0;padding:10px 12px;border-radius:12px;background:var(--sf);font-size:12.5px;line-height:1.4;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.d0 .needle{width:18px;height:18px;flex:none}
+.d0 .score{display:flex;align-items:center;justify-content:space-between;margin:10px 16px;font-size:13px}
+.d0 .score b{font:400 30px/1 Marcellus} .d0 .score small{color:var(--gt);font-weight:600}
+.d0 .bar{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--sf);background:var(--bg);text-align:center;font-size:12px;font-weight:600}
+.d0 .bar span{padding:10px 0 16px;position:relative} .d0 .bar .on::before{content:'';position:absolute;top:-1px;left:30%;right:30%;height:3px;background:var(--g)}
+.d0 .cam{flex:1;position:relative;background:#cdd3d6;display:flex;align-items:flex-end;overflow:hidden}
+.d0 .cam .fort .f-wall,.d0 .cam .fort .f-tower{fill:#d6c3a3} .d0 .cam .fort .f-door{fill:#5a4630} .d0 .cam .fort .f-slit{stroke:#5a4630} .d0 .cam .fort .f-ground{stroke:#14213d55}
+.d0 .tagx{position:absolute;top:14%;left:10%;background:var(--n);color:var(--bg);padding:8px 12px;border-radius:12px;font-size:12px;border:1px solid var(--g)}
+.d0 .tagx b{display:block;font:400 17px Marcellus;color:var(--g)}
+.d0 .pin{position:absolute;top:42%;left:46%;width:14px;height:14px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--g);border:2px solid var(--n)}
+.d0 .yr{background:var(--n);color:var(--bg);padding:12px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font:500 12px var(--mono)}
+.d0 .yr .tr{height:2px;background:#F7F3EA55;position:relative} .d0 .yr .tr::before{content:'';position:absolute;inset:0 38% 0 0;background:var(--g)}
+.d0 .yr .tr i{position:absolute;left:62%;top:-8px;width:18px;height:18px;border-radius:50%;background:var(--g);border:3px solid var(--n);box-shadow:0 0 0 1px var(--g)}
+.d0 .yr small{grid-column:1/4;font:400 11px 'IBM Plex Sans';color:var(--sf)}
+.d0 .ask{flex:1;position:relative;display:flex;flex-direction:column}
+.d0 .sheet{position:absolute;inset:auto 0 45px 0;height:66%;background:var(--bg);border-radius:20px 20px 0 0;padding:14px 14px 10px;display:flex;flex-direction:column;gap:10px;box-shadow:0 -1px 0 var(--sf)}
+.d0 .sheet h4{margin:0;font:400 20px Marcellus;display:flex;align-items:center;gap:8px}
+.d0 .q{align-self:flex-end;background:var(--sf);padding:8px 12px;border-radius:14px 14px 4px 14px;font-size:13px;max-width:85%}
+.d0 .a{background:var(--n);color:var(--bg);padding:10px 12px;border-radius:14px 14px 14px 4px;font-size:13px;line-height:1.45}
+.d0 .btns{display:flex;gap:8px} .d0 .btns span{font-size:12px;font-weight:600;padding:7px 12px;border-radius:999px}
+.d0 .btns .pr{background:var(--g);color:var(--n)} .d0 .btns .sc{border:1px solid var(--n)}
+</style>
+<section id="dir-0" class="d0" aria-labelledby="dir-0-h">
+  <div class="hd"><span class="no">00 · Daleel brand</span><h2 id="dir-0-h">Daleel brand</h2><p class="tag">Look Up.</p><p class="fam">The team&#x27;s identity: octagonal compass mark with a brass needle and a location pin, navy wordmark in Latin and Arabic, cream ground.</p></div>
+  <div class="meta"><ul class='sw'><li><span style='background:#F7F3EA'></span><b>#F7F3EA</b><i>background</i></li><li><span style='background:#E6DCC8'></span><b>#E6DCC8</b><i>surface</i></li><li><span style='background:#C9A24D'></span><b>#C9A24D</b><i>accent</i></li><li><span style='background:#14213D'></span><b>#14213D</b><i>ink</i></li><li><span style='background:#8A6A1F'></span><b>#8A6A1F</b><i>derived</i></li></ul><div class='spec'><div class='wm'><svg class='oct' width='56' height='56' viewBox='0 0 40 40' aria-hidden='true'><path d='M12 2h16l10 10v16L28 38H12L2 28V12z' fill='none' stroke='#C9A24D' stroke-width='2'/><circle cx='20' cy='20' r='11' fill='none' stroke='currentColor' stroke-width='1'/><path d='M20 20 L29 9' stroke='#C9A24D' stroke-width='3' stroke-linecap='round'/><circle cx='20' cy='20' r='3.5' fill='#C9A24D'/></svg><span>Daleel</span><span class='ar' lang='ar'>دليل</span></div><p style='margin:6px 0 0;font-size:15px;line-height:1.5'>Navy carries every word; gold marks the one choice Daleel recommends (the needle, the primary button, the active tab). Type is a provisional match for the wordmark: Marcellus and Noto Naskh Arabic for display, IBM Plex Sans and Plex Sans Arabic for body.</p></div></div>
+  <div class="phones">
+    <figure><div class="ph"><div class='top'><svg class='oct' width='28' height='28' viewBox='0 0 40 40' aria-hidden='true'><path d='M12 2h16l10 10v16L28 38H12L2 28V12z' fill='none' stroke='#C9A24D' stroke-width='2'/><circle cx='20' cy='20' r='11' fill='none' stroke='currentColor' stroke-width='1'/><path d='M20 20 L29 9' stroke='#C9A24D' stroke-width='3' stroke-linecap='round'/><circle cx='20' cy='20' r='3.5' fill='#C9A24D'/></svg><span class='wm'>Daleel<span class='ar' lang='ar'>دليل</span></span><span class='day'>SAT 10 OCT · 34°C</span></div><div class='ttl'>Today, at the right time</div><div class='stops'><div class='stop'><span class='t'>09:30</span><span class='n'>Al Hisn Fort<span class='ar' lang='ar'>حصن الشارقة</span></span><span class='s quiet'>Quiet now</span></div><div class='stop'><span class='t'>19:00</span><span class='n'>Al Noor Island<span class='ar' lang='ar'>جزيرة النور</span></span><span class='s busy'>Busy 16:00–18:00, go at 19:00</span></div><div class='stop'><span class='t'>Sat 08:00</span><span class='n'>Kalba Mangroves<span class='ar' lang='ar'>قرم كلباء</span></span><span class='s shade'>Shade route, 40 min by car</span></div></div><div class='swap'><svg class='needle' viewBox='0 0 18 18' aria-hidden='true'><path d='M9 9 L16 2' stroke='#C9A24D' stroke-width='3' stroke-linecap='round'/><circle cx='9' cy='9' r='3' fill='#14213D'/></svg><span>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</span></div><div class='score'><span>Plan score<br><small>Quiet, cool, low footprint</small></span><b>82</b></div><div class='bar'><span class='on'>Plan</span><span class=''>Look Up</span><span class=''>Ask</span></div></div><figcaption><b>Plan</b>Today's itinerary scored for crowd, heat and transport, with one swap explained.</figcaption></figure>
+    <figure><div class="ph"><div class='top'><svg class='oct' width='28' height='28' viewBox='0 0 40 40' aria-hidden='true'><path d='M12 2h16l10 10v16L28 38H12L2 28V12z' fill='none' stroke='#C9A24D' stroke-width='2'/><circle cx='20' cy='20' r='11' fill='none' stroke='currentColor' stroke-width='1'/><path d='M20 20 L29 9' stroke='#C9A24D' stroke-width='3' stroke-linecap='round'/><circle cx='20' cy='20' r='3.5' fill='#C9A24D'/></svg><span class='wm'>Daleel<span class='ar' lang='ar'>دليل</span></span><span class='day'>AL HISN FORT</span></div><div class='cam'><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><span class='tagx'><b>Al Hisn Fort</b>Built 1823 · quiet until 11:00</span><span class='pin'></span></div><div class='yr'><span>TODAY</span><span class='tr'><i></i></span><span>1823</span><small>The 1823 view is an artist's impression.</small></div><div class='bar'><span class=''>Plan</span><span class='on'>Look Up</span><span class=''>Ask</span></div></div><figcaption><b>Look</b>AR at Al Hisn Fort, slider from today back to 1823 (reconstruction labelled artist's impression).</figcaption></figure>
+    <figure><div class="ph"><div class='ask'><div class='top'><svg class='oct' width='28' height='28' viewBox='0 0 40 40' aria-hidden='true'><path d='M12 2h16l10 10v16L28 38H12L2 28V12z' fill='none' stroke='#C9A24D' stroke-width='2'/><circle cx='20' cy='20' r='11' fill='none' stroke='currentColor' stroke-width='1'/><path d='M20 20 L29 9' stroke='#C9A24D' stroke-width='3' stroke-linecap='round'/><circle cx='20' cy='20' r='3.5' fill='#C9A24D'/></svg><span class='wm'>Daleel<span class='ar' lang='ar'>دليل</span></span><span class='day'>GUIDE</span></div><div class='cam' style='flex:1'><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg></div><div class='sheet'><h4><svg class='oct' width='22' height='22' viewBox='0 0 40 40' aria-hidden='true'><path d='M12 2h16l10 10v16L28 38H12L2 28V12z' fill='none' stroke='#C9A24D' stroke-width='2'/><circle cx='20' cy='20' r='11' fill='none' stroke='currentColor' stroke-width='1'/><path d='M20 20 L29 9' stroke='#C9A24D' stroke-width='3' stroke-linecap='round'/><circle cx='20' cy='20' r='3.5' fill='#C9A24D'/></svg>Ask Daleel</h4><div class='q'>Why was the fort demolished in 1969?</div><div class='a'>In 1969 most of Al Hisn was pulled down to make room for the modern city centre. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</div><div class='btns'><span class='pr'>Read aloud</span><span class='sc'>Quiet hours today</span></div></div><div class='bar'><span class=''>Plan</span><span class=''>Look Up</span><span class='on'>Ask</span></div></div></div><figcaption><b>Ask</b>The guide answers from the curated Sharjah corpus and reads aloud.</figcaption></figure>
+  </div>
+  <div class="notes"><div><h3>Why Sharjah</h3><p>The octagon follows the eight-fold geometry of Sharjah&#x27;s heritage screens and tiles, and the compass needle is the guide in the name. Navy and brass sit with the coral stone and gypsum of the Heart of Sharjah without a trend palette.</p></div><div><h3>Why sustainable</h3><p>The needle is the product: it points visitors to a better time and a quieter place. Gold marks the recommended choice and navy carries the facts, so the nudge reads at a glance.</p></div><div><h3>Risks</h3><p>Gold on cream is 2.17:1 and gold on sand 1.76:1, so gold can never carry text on light grounds: use navy, or dark brass #8A6A1F for gold-toned text. The type here is provisional (Marcellus and Noto Naskh Arabic as stand-ins for the wordmark); swap in the fonts Rama used. The mark is drawn as a plain octagon placeholder until the logo file is in design/brand/.</p></div></div>
+</section>
+<style>
+.d1{--r:0;padding:clamp(20px,4vw,40px);border-radius:12px;overflow:hidden;scroll-margin-top:64px}
+.d1 *{box-sizing:border-box}
+.d1 .hd{display:grid;gap:6px;margin-bottom:20px}
+.d1 .hd .no{font:600 13px/1 var(--mono,monospace);font-variant-numeric:tabular-nums;opacity:.75}
+.d1 .hd h2{margin:0;font-size:clamp(30px,5vw,52px);line-height:1}
+.d1 .hd .tag{margin:0;font-size:18px;max-width:52ch}
+.d1 .hd .fam{margin:0;font-size:13px;opacity:.75;max-width:80ch}
+.d1 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:28px;align-items:start}
+.d1 .sw{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.d1 .sw li{display:grid;gap:2px;font-size:11px;line-height:1.25;min-width:0}
+.d1 .sw li span{height:40px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+.d1 .sw b{font-variant-numeric:tabular-nums}
+.d1 .sw i{font-style:normal;opacity:.75;overflow-wrap:anywhere}
+.d1 .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;justify-items:center}
+.d1 figure{margin:0;width:100%;max-width:300px;display:grid;gap:10px}
+.d1 figcaption{font-size:12px;opacity:.8;line-height:1.4}
+.d1 figcaption b{display:block;font-size:13px;opacity:1}
+.d1 .ph{aspect-ratio:9/18.5;width:100%;border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 6px #0a0a0a,0 0 0 7px rgba(127,127,127,.4)}
+.d1 .fort{width:100%;height:auto;display:block}
+.d1 .fort .f-ground{fill:none;stroke-width:1.5}
+.d1 .fort .f-slit{fill:none;stroke-width:2}
+.d1 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:28px;font-size:13.5px;line-height:1.5}
+.d1 .notes h3{margin:0 0 4px;font-size:13px}
+.d1 .notes p{margin:0}
+.d1 [lang=ar]{direction:rtl}
+
+.d1{--bg:#F2F2F0;--plate:#14211B;--ink:#101513;--g:#0F6B3F;--a:#D8761C;--b:#1F4E8C;background:var(--bg);color:var(--ink);font-family:'Atkinson Hyperlegible',sans-serif}
+.d1 .hd h2{font-family:Overpass;font-weight:900;text-transform:uppercase;letter-spacing:-.02em}
+.d1 .spec .big{font:900 40px/1 Overpass;text-transform:uppercase} .d1 .spec .ar{font:700 30px/1.2 'Readex Pro'}
+.d1 .ph{background:var(--bg)}
+.d1 .sign{background:var(--plate);color:#fff;padding:14px 14px 10px;display:grid;grid-template-columns:1fr auto;gap:2px 8px;align-items:end}
+.d1 .sign .pl{font:900 22px/1 Overpass;text-transform:uppercase;letter-spacing:-.01em}
+.d1 .sign .pa{font:700 17px/1.2 'Readex Pro';grid-column:1;justify-self:start}
+.d1 .sign .rt{grid-row:1/3;grid-column:2;background:#fff;color:var(--plate);font:900 18px/1 Overpass;padding:6px 8px;border-radius:3px}
+.d1 .gauge{display:flex;gap:3px;grid-column:1/3;margin-top:8px;font-size:11px;align-items:center;gap:6px}
+.d1 .gauge i{width:22px;height:8px;background:#ffffff33} .d1 .gauge i.on{background:var(--g)}
+.d1 .bands i{display:block;height:12px}
+.d1 .stops{flex:1;padding:6px 0;overflow:hidden}
+.d1 .stop{display:grid;grid-template-columns:52px 1fr;gap:2px 10px;padding:10px 14px;border-bottom:1px solid #10151322}
+.d1 .stop .t{font:700 15px/1.2 'Atkinson Hyperlegible';font-variant-numeric:tabular-nums}
+.d1 .stop .n{font:800 15px/1.1 Overpass;text-transform:uppercase}
+.d1 .stop .s{grid-column:2;font-size:12px;font-weight:700;padding:3px 6px;justify-self:start;border-radius:2px}
+.d1 .s.quiet{background:var(--g);color:#fff} .d1 .s.busy{background:var(--a);color:var(--ink)} .d1 .s.shade{background:var(--b);color:#fff}
+.d1 .stop .x{grid-column:2;font-size:12px}
+.d1 .swap{margin:0 14px;padding:10px;background:var(--plate);color:#fff;font-size:12.5px;line-height:1.35;border-top:6px solid var(--a)}
+.d1 .score{display:flex;justify-content:space-between;align-items:center;margin:10px 14px;font-weight:700;font-size:13px}
+.d1 .score b{font:900 28px/1 Overpass;color:var(--g)}
+.d1 .bar{display:grid;grid-template-columns:repeat(3,1fr);background:var(--plate);color:#fff;font-size:12px;font-weight:700;text-align:center}
+.d1 .bar span{padding:10px 0 14px} .d1 .bar span.on{box-shadow:inset 0 4px 0 var(--a)}
+.d1 .stage{flex:1;position:relative;background:#cfd6da;display:flex;align-items:flex-end;overflow:hidden}
+.d1 .stage .fort .f-wall,.d1 .stage .fort .f-tower{fill:#c9b79a} .d1 .stage .fort .f-door{fill:#5a4a38} .d1 .stage .fort .f-slit{stroke:#5a4a38} .d1 .stage .fort .f-ground{stroke:#8a8f88}
+.d1 .stage .floor{position:absolute;inset:auto 0 0 0;height:22%;background:#b9b3a6}
+.d1 .chev{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.d1 .chev i{width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:14px solid #fff}
+.d1 .chev i:nth-child(2){opacity:.6} .d1 .chev i:nth-child(3){opacity:.3}
+.d1 .anch{position:absolute;top:18%;left:12%;right:12%;background:var(--plate);color:#fff;padding:8px 10px;border-top:6px solid var(--g)}
+.d1 .anch b{font:900 15px/1.1 Overpass;text-transform:uppercase;display:block} .d1 .anch span{font-size:12px}
+.d1 .tog{display:grid;grid-template-columns:1fr 1fr;margin:10px 14px 0;border:2px solid var(--plate);font-size:12px;font-weight:700;text-align:center}
+.d1 .tog span{padding:6px} .d1 .tog .on{background:var(--plate);color:#fff}
+.d1 .yr{margin:10px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.d1 .yr .tr{height:6px;background:var(--b);position:relative} .d1 .yr .tr i{position:absolute;left:62%;top:-7px;width:20px;height:20px;background:#fff;border:3px solid var(--plate)}
+.d1 .yr small{grid-column:1/4;font-weight:400}
+.d1 .chat{position:absolute;inset:auto 0 46px 0;height:62%;background:var(--bg);border-top:12px solid var(--b);padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.d1 .q{align-self:flex-end;background:#fff;border:2px solid var(--plate);padding:8px 10px;font-size:13px;max-width:85%}
+.d1 .a{background:var(--plate);color:#fff;padding:10px;font-size:13px;line-height:1.4}
+.d1 .a u{text-decoration-color:var(--a);text-underline-offset:3px;text-decoration-thickness:2px}
+.d1 .chips{display:flex;flex-wrap:wrap;gap:6px} .d1 .chips span{font-size:12px;font-weight:700;padding:5px 10px;border-radius:12px}
+.d1 .chips .c1{background:var(--a);color:var(--ink)} .d1 .chips .c2{background:var(--g);color:#fff}
+.d1 .ask{flex:1;position:relative;display:flex;flex-direction:column}
+</style>
+<section id="dir-1" class="d1" aria-labelledby="dir-1-h">
+  <div class="hd"><span class="no">01 · Route Band Signage</span><h2 id="dir-1-h">Route Band Signage</h2><p class="tag">Sharjah, signposted by footprint.</p><p class="fam">Civic wayfinding signage (airport and museum information design, Schiphol and AIGA/DOT pictogram lineage)</p></div>
+  <div class="meta"><ul class='sw'><li><span style='background:#F2F2F0'></span><b>#F2F2F0</b><i>background</i></li><li><span style='background:#14211B'></span><b>#14211B</b><i>surface</i></li><li><span style='background:#101513'></span><b>#101513</b><i>ink</i></li><li><span style='background:#0F6B3F'></span><b>#0F6B3F</b><i>accent</i></li><li><span style='background:#D8761C'></span><b>#D8761C</b><i>secondary accent</i></li><li><span style='background:#1F4E8C'></span><b>#1F4E8C</b><i>Blue Souk tile blue</i></li></ul><div class='spec'><div class='big'>Al Hisn Fort</div><div class='ar' lang='ar'>حصن الشارقة</div><p style='margin:6px 0 0;font-size:15px'>Overpass plates, Atkinson Hyperlegible body, Readex Pro Arabic. Bands encode footprint: green low, blue water, amber heat and crowd.</p></div></div>
+  <div class="phones">
+    <figure><div class="ph"><div class='sign'><span class='pl'>Today</span><span class='pa' lang='ar'>اليوم</span><span class='rt'>D1</span><span class='gauge'><i class=on></i><i></i><i></i> Crowd: low</span></div><div class='bands'><i style='background:var(--g)'></i><i style='background:var(--b)'></i></div><div class='stops'><div class='stop'><span class='t'>09:30</span><span class='n'>Al Hisn Fort</span><span class='s quiet'>Quiet now</span><span class='x'>Indoor, 6 min walk</span></div><div class='stop'><span class='t'>19:00</span><span class='n'>Al Noor Island</span><span class='s busy'>Busy 16:00–18:00, go at 19:00</span><span class='x'>After sunset, 31°C</span></div><div class='stop'><span class='t'>Sat 08:00</span><span class='n'>Kalba Mangroves</span><span class='s shade'>Shade route, 40 min by car</span><span class='x'>East Coast, under-visited</span></div></div><div class='swap'>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</div><div class='score'>Plan footprint score<b>82</b></div><div class='bar'><span class=''>Look</span><span class='on'>Map</span><span class=''>Ask</span></div></div><figcaption><b>Plan</b>Today's itinerary scored for crowd, heat and transport, with one swap explained.</figcaption></figure>
+    <figure><div class="ph"><div class='sign'><span class='pl'>Al Hisn Fort</span><span class='pa' lang='ar'>حصن الشارقة</span><span class='rt'>03</span><span class='gauge'><i class=on></i><i></i><i></i> Crowd: low</span></div><div class='bands'><i style='background:var(--g)'></i></div><div class='tog'><span class='on'>Look</span><span>Map</span></div><div class='stage'><div class='floor'></div><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><div class='anch'><b>Built 1823</b><span>Coral stone and gypsum. Quiet until 11:00.</span></div><div class='chev'><i></i><i></i><i></i></div></div><div class='yr'><span>Today</span><span class='tr'><i></i></span><span>1823</span><small>Reconstruction: artist's impression</small></div><div class='bar'><span class='on'>Look</span><span class=''>Map</span><span class=''>Ask</span></div></div><figcaption><b>Look</b>AR at Al Hisn Fort, slider from today back to 1823 (reconstruction labelled artist's impression).</figcaption></figure>
+    <figure><div class="ph"><div class='ask'><div class='sign'><span class='pl'>Ask Daleel</span><span class='pa' lang='ar'>اسأل دليل</span><span class='rt'>?</span><span class='gauge'><i></i><i></i><i></i> Crowd: low</span></div><div class='stage' style='flex:1'><div class='floor'></div><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg></div><div class='chat'><div class='q'>Why was the fort demolished in 1969?</div><div class='a'>In 1969 most of <u>Al Hisn</u> was pulled down to make room for the modern city centre. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</div><div class='chips'><span class='c1'>Read aloud</span><span class='c2'>Quiet hours today</span></div></div><div class='bar'><span class=''>Look</span><span class=''>Map</span><span class='on'>Ask</span></div></div></div><figcaption><b>Ask</b>The guide answers from the curated Sharjah corpus and reads aloud.</figcaption></figure>
+  </div>
+  <div class="notes"><div><h3>Why Sharjah</h3><p>The three route bands take their colors from places on the routes themselves: Blue Souk tile blue, Kalba mangrove green, and Mleiha&#x27;s amber rock. The neutral board recalls the whitewashed courtyards of the Sharjah Art Foundation and the coral-stone of the Heart of Sharjah. Bilingual plates follow the road and museum signs visitors already read along the Corniche.</p></div><div><h3>Why sustainable</h3><p>Every route band is a footprint label: green for walking and shaded paths, blue for creek water transport, amber for motorized or peak-heat legs. Crowd gauges borrow the parking-sign idiom to disperse visitors toward Mleiha, Kalba, and Khor Fakkan. Flat print-grade graphics run on low-end phones without heavy rendering.</p></div><div><h3>Risks</h3><p>Judges may read the sternness as a transport utility rather than a tourism product, so the photography has to carry the warmth in the deck. Eight bespoke pictograms is the ceiling in seven hours; the fallback is Material Symbols with credit in the disclosure document. Overpass has tight apertures below 14px, so small labels must use Atkinson. Readex Pro is a legibility face, not a calligraphic one, and Arabic-first judges may find it plain. Two contrast rules must live in the CSS tokens: amber never carries white text (3.22:1) and green text never sits on the dark plate (2.53:1). Three band colors can collide with basemap colors, so the map base must stay desaturated gray.</p></div></div>
+</section>
+<style>
+.d2{--r:0;padding:clamp(20px,4vw,40px);border-radius:12px;overflow:hidden;scroll-margin-top:64px}
+.d2 *{box-sizing:border-box}
+.d2 .hd{display:grid;gap:6px;margin-bottom:20px}
+.d2 .hd .no{font:600 13px/1 var(--mono,monospace);font-variant-numeric:tabular-nums;opacity:.75}
+.d2 .hd h2{margin:0;font-size:clamp(30px,5vw,52px);line-height:1}
+.d2 .hd .tag{margin:0;font-size:18px;max-width:52ch}
+.d2 .hd .fam{margin:0;font-size:13px;opacity:.75;max-width:80ch}
+.d2 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:28px;align-items:start}
+.d2 .sw{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.d2 .sw li{display:grid;gap:2px;font-size:11px;line-height:1.25;min-width:0}
+.d2 .sw li span{height:40px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+.d2 .sw b{font-variant-numeric:tabular-nums}
+.d2 .sw i{font-style:normal;opacity:.75;overflow-wrap:anywhere}
+.d2 .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;justify-items:center}
+.d2 figure{margin:0;width:100%;max-width:300px;display:grid;gap:10px}
+.d2 figcaption{font-size:12px;opacity:.8;line-height:1.4}
+.d2 figcaption b{display:block;font-size:13px;opacity:1}
+.d2 .ph{aspect-ratio:9/18.5;width:100%;border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 6px #0a0a0a,0 0 0 7px rgba(127,127,127,.4)}
+.d2 .fort{width:100%;height:auto;display:block}
+.d2 .fort .f-ground{fill:none;stroke-width:1.5}
+.d2 .fort .f-slit{fill:none;stroke-width:2}
+.d2 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:28px;font-size:13.5px;line-height:1.5}
+.d2 .notes h3{margin:0 0 4px;font-size:13px}
+.d2 .notes p{margin:0}
+.d2 [lang=ar]{direction:rtl}
+
+.d2{--bg:#0B1530;--sf:#16234D;--ink:#F1F3F8;--m:#FF5C99;--g:#2EE6A6;--am:#FFB454;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif}
+.d2 .hd h2{font-family:'Big Shoulders Display';font-weight:900;text-transform:uppercase;letter-spacing:-.02em;color:var(--m)}
+.d2 .spec .big{font:900 46px/.95 'Big Shoulders Display';text-transform:uppercase} .d2 .spec .ar{font:800 30px/1.2 'Noto Kufi Arabic';color:var(--g)}
+.d2 .ph{background:var(--bg)}
+.d2 .top{height:8px;background:var(--am)}
+.d2 .post{padding:16px 16px 8px;font:900 34px/.95 'Big Shoulders Display';text-transform:uppercase;letter-spacing:-.02em}
+.d2 .post em{font-style:normal;color:var(--g)} .d2 .post .ar{display:block;font:800 18px/1.4 'Noto Kufi Arabic';color:var(--m);margin-top:4px}
+.d2 .stops{flex:1;padding:0 16px;display:grid;gap:12px;align-content:start}
+.d2 .stop{display:grid;grid-template-columns:auto 1fr;gap:2px 12px}
+.d2 .stop .t{font:800 24px/1 'Big Shoulders Display';font-variant-numeric:tabular-nums;color:var(--g)}
+.d2 .stop .n{font-weight:600;font-size:15px}
+.d2 .stop .s{grid-column:2;justify-self:start;font-size:12px;font-weight:600;padding:3px 8px;color:var(--bg)}
+.d2 .s.quiet{background:var(--g)} .d2 .s.busy{background:var(--am)} .d2 .s.shade{background:var(--g)}
+.d2 .stop .x{grid-column:2;font-size:12px;opacity:.75}
+.d2 .swap{margin:8px 16px;font-size:13px;line-height:1.4;border-left:3px solid var(--m);padding-left:10px}
+.d2 .score{margin:4px 16px 10px;display:flex;align-items:baseline;gap:8px;font-size:13px} .d2 .score b{font:900 34px/1 'Big Shoulders Display';color:var(--m)}
+.d2 .bar{display:grid;grid-template-columns:repeat(3,1fr) auto;background:var(--sf);font:700 16px/1 'Big Shoulders Display';text-transform:uppercase;text-align:center;align-items:center}
+.d2 .bar span{padding:14px 0 18px} .d2 .bar .on{color:var(--m)} .d2 .bar .lg{padding:0 12px;font:600 13px 'IBM Plex Sans Arabic'}
+.d2 .cam{flex:1;position:relative;background:#0d1a3d;display:flex;align-items:flex-end;overflow:hidden}
+.d2 .cam .sky{position:absolute;inset:0 0 auto;height:30%;background:#13204a}
+.d2 .cam .fort .f-wall,.d2 .cam .fort .f-tower{fill:#3b3a4f} .d2 .cam .fort .f-door{fill:var(--am)} .d2 .cam .fort .f-slit{stroke:var(--am)} .d2 .cam .fort .f-ground{stroke:#ffffff44}
+.d2 .stk{position:absolute;padding:6px 9px;font:800 15px/1.05 'Big Shoulders Display';text-transform:uppercase;color:var(--bg)}
+.d2 .stk small{display:block;font:500 11px/1.3 'IBM Plex Sans';text-transform:none}
+.d2 .stk.m{background:var(--m);top:16%;left:8%} .d2 .stk.g{background:var(--g);top:34%;right:7%}
+.d2 .yr{padding:10px 16px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font:800 16px 'Big Shoulders Display';background:var(--sf)}
+.d2 .yr .tr{height:4px;background:var(--ink);position:relative} .d2 .yr .tr i{position:absolute;left:62%;top:-8px;width:20px;height:20px;background:var(--m)}
+.d2 .yr small{grid-column:1/4;font:400 11px 'IBM Plex Sans';opacity:.8}
+.d2 .sheet{position:absolute;inset:auto 0 47px 0;height:64%;background:var(--sf);padding:10px 16px;display:flex;flex-direction:column;gap:10px}
+.d2 .sheet .grab{width:36px;height:4px;background:#ffffff55;align-self:center}
+.d2 .sheet h4{margin:0;font:900 22px/1 'Big Shoulders Display';text-transform:uppercase}
+.d2 .q{align-self:flex-end;background:var(--bg);padding:8px 10px;font-size:13px;max-width:85%;border-radius:10px}
+.d2 .a{background:#0B1530;padding:10px;font-size:13px;line-height:1.45;border-radius:10px;border:2px solid var(--g)}
+.d2 .btn{align-self:flex-start;background:var(--m);color:var(--bg);font:700 16px 'Big Shoulders Display';text-transform:uppercase;padding:8px 14px}
+.d2 .ask{flex:1;position:relative;display:flex;flex-direction:column}
+</style>
+<section id="dir-2" class="d2" aria-labelledby="dir-2-h">
+  <div class="hd"><span class="no">02 · Lagoon After Dark</span><h2 id="dir-2-h">Lagoon After Dark</h2><p class="tag">Sharjah after dark, on foot.</p><p class="fam">Civic night poster: event-bill typography, flat saturated accents on deep navy, documentary night photography</p></div>
+  <div class="meta"><ul class='sw'><li><span style='background:#0B1530'></span><b>#0B1530</b><i>background</i></li><li><span style='background:#16234D'></span><b>#16234D</b><i>surface</i></li><li><span style='background:#F1F3F8'></span><b>#F1F3F8</b><i>ink</i></li><li><span style='background:#FF5C99'></span><b>#FF5C99</b><i>accent</i></li><li><span style='background:#2EE6A6'></span><b>#2EE6A6</b><i>secondary accent</i></li><li><span style='background:#FFB454'></span><b>#FFB454</b><i>sodium lamp amber</i></li></ul><div class='spec'><div class='big'>After sunset, on foot</div><div class='ar' lang='ar'>الشارقة بعد الغروب</div><p style='margin:6px 0 0;font-size:15px'>Big Shoulders poster type, Noto Kufi Arabic, IBM Plex body. Magenta acts, green means quiet, amber means pressure.</p></div></div>
+  <div class="phones">
+    <figure><div class="ph"><div class='top'></div><div class='post'>Go <em>later</em>.<br>Walk cooler.<span class='ar' lang='ar'>اذهب لاحقًا</span></div><div class='stops'><div class='stop'><span class='t'>09:30</span><span class='n'>Al Hisn Fort</span><span class='s quiet'>Quiet now</span><span class='x'>Indoor, 6 min walk</span></div><div class='stop'><span class='t'>19:00</span><span class='n'>Al Noor Island</span><span class='s busy'>Busy 16:00–18:00, go at 19:00</span><span class='x'>After sunset, 31°C</span></div><div class='stop'><span class='t'>Sat 08:00</span><span class='n'>Kalba Mangroves</span><span class='s shade'>Shade route, 40 min by car</span><span class='x'>East Coast, under-visited</span></div></div><div class='swap'>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</div><div class='score'><b>82</b>plan score, quiet and cool</div><div class='bar'><span class=''>Look</span><span class='on'>Go</span><span class=''>Ask</span><span class='lg' lang='ar'>ع</span></div></div><figcaption><b>Plan</b>Today's itinerary scored for crowd, heat and transport, with one swap explained.</figcaption></figure>
+    <figure><div class="ph"><div class='top' style='background:var(--m)'></div><div class='cam'><div class='sky'></div><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><span class='stk m'>Al Hisn Fort<small>Built 1823. Rebuilt and reopened 2015.</small></span><span class='stk g'>Quiet now<small>Until 11:00</small></span></div><div class='yr'><span>Today</span><span class='tr'><i></i></span><span>1823</span><small>Reconstruction: artist's impression</small></div><div class='bar'><span class='on'>Look</span><span class=''>Go</span><span class=''>Ask</span><span class='lg' lang='ar'>ع</span></div></div><figcaption><b>Look</b>AR at Al Hisn Fort, slider from today back to 1823 (reconstruction labelled artist's impression).</figcaption></figure>
+    <figure><div class="ph"><div class='ask'><div class='top' style='background:var(--g)'></div><div class='cam' style='flex:1'><div class='sky'></div><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><span class='stk m'>Al Hisn Fort</span></div><div class='sheet'><span class='grab'></span><h4>Ask about Al Hisn</h4><div class='q'>Why was the fort demolished in 1969?</div><div class='a'>In 1969 most of Al Hisn was pulled down to make room for the modern city centre. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</div><span class='btn'>Read aloud</span></div><div class='bar'><span class=''>Look</span><span class=''>Go</span><span class='on'>Ask</span><span class='lg' lang='ar'>ع</span></div></div></div><figcaption><b>Ask</b>The guide answers from the curated Sharjah corpus and reads aloud.</figcaption></figure>
+  </div>
+  <div class="notes"><div><h3>Why Sharjah</h3><p>Every color is already on the lagoon: the Al Majaz fountain&#x27;s colored jets, sodium lamps along the corniche, green reflections off Khalid Lagoon and the Al Qasba canal, Al Noor Island&#x27;s lit installations, and the Sharjah Light Festival projections on facades. Deep navy is the water. Big Shoulders gives headlines the register of a concert bill for Amphitheatre nights.</p></div><div><h3>Why sustainable</h3><p>Off-peak, after-dark visiting is the sustainability lever: cooler hours, walking the corniche instead of driving, and spreading visitors beyond crowded daytime sites. The palette is built from light already switched on, so the brand adds no spectacle. Green marks quiet hours and walk routes; amber marks crowd pressure.</p></div><div><h3>Risks</h3><p>A dark, saturated interface is hard to read on a phone outdoors at 14:00 on the AUS lawn and in a bright judging room; keep ink at 16:1, keep the amber and green at 10:1 or better, and test the demo under sunlight before the pitch. Magenta on navy slides toward nightlife or casino if the type turns playful; keep Big Shoulders uppercase and the copy civic. Camera access and WebXR in iOS Safari are fragile, so the Look lens should degrade to a still-photo overlay for the live demo. Noto Kufi Arabic at the same size as Big Shoulders will not share a baseline without the 0.92 scale and a separate line-height, so mixed-script headlines need a test render before the slides are built. The three references were confirmed only by gallery tags and page copy, not by screenshots, because the browser pane refused external navigation in this session.</p></div></div>
+</section>
+<style>
+.d3{--r:0;padding:clamp(20px,4vw,40px);border-radius:12px;overflow:hidden;scroll-margin-top:64px}
+.d3 *{box-sizing:border-box}
+.d3 .hd{display:grid;gap:6px;margin-bottom:20px}
+.d3 .hd .no{font:600 13px/1 var(--mono,monospace);font-variant-numeric:tabular-nums;opacity:.75}
+.d3 .hd h2{margin:0;font-size:clamp(30px,5vw,52px);line-height:1}
+.d3 .hd .tag{margin:0;font-size:18px;max-width:52ch}
+.d3 .hd .fam{margin:0;font-size:13px;opacity:.75;max-width:80ch}
+.d3 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:28px;align-items:start}
+.d3 .sw{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.d3 .sw li{display:grid;gap:2px;font-size:11px;line-height:1.25;min-width:0}
+.d3 .sw li span{height:40px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+.d3 .sw b{font-variant-numeric:tabular-nums}
+.d3 .sw i{font-style:normal;opacity:.75;overflow-wrap:anywhere}
+.d3 .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;justify-items:center}
+.d3 figure{margin:0;width:100%;max-width:300px;display:grid;gap:10px}
+.d3 figcaption{font-size:12px;opacity:.8;line-height:1.4}
+.d3 figcaption b{display:block;font-size:13px;opacity:1}
+.d3 .ph{aspect-ratio:9/18.5;width:100%;border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 6px #0a0a0a,0 0 0 7px rgba(127,127,127,.4)}
+.d3 .fort{width:100%;height:auto;display:block}
+.d3 .fort .f-ground{fill:none;stroke-width:1.5}
+.d3 .fort .f-slit{fill:none;stroke-width:2}
+.d3 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:28px;font-size:13.5px;line-height:1.5}
+.d3 .notes h3{margin:0 0 4px;font-size:13px}
+.d3 .notes p{margin:0}
+.d3 [lang=ar]{direction:rtl}
+
+.d3{--bg:#EFEFED;--sf:#FBFBFA;--ink:#1B1917;--r:#9E2B18;--l:#22407A;--gr:#5C5853;--mono:'IBM Plex Mono';background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif}
+.d3 .hd h2{font-family:'EB Garamond';font-weight:500;color:var(--r)}
+.d3 .spec .big{font:500 42px/1.05 'EB Garamond';color:var(--r)} .d3 .spec .ar{font:700 32px/1.4 Amiri}
+.d3 .ph{background:var(--bg)}
+.d3 .rh{display:flex;justify-content:space-between;padding:14px 16px 8px;border-bottom:1px solid var(--gr);font:400 16px 'EB Garamond'}
+.d3 .rh .on{color:var(--r)}
+.d3 .ttl{padding:14px 16px 4px;font:500 30px/1.05 'EB Garamond'} .d3 .ttl .ar{display:block;font:400 18px/1.6 Amiri;color:var(--gr)}
+.d3 .idx{flex:1;padding:4px 16px;display:grid;align-content:start}
+.d3 .ent{display:grid;grid-template-columns:1fr auto;padding:9px 0;border-bottom:1px solid #5c585340;gap:2px}
+.d3 .ent .n{font:500 17px/1.2 'EB Garamond'} .d3 .ent .t{font:500 11px var(--mono);color:var(--gr);font-variant-numeric:tabular-nums}
+.d3 .ent .s{grid-column:1/3;font-size:12px;color:var(--gr)} .d3 .ent .s sup{color:var(--r);font-weight:500}
+.d3 .ent.busy .s{color:var(--r)}
+.d3 .gloss{margin:6px 16px;font:400 14px/1.4 'EB Garamond';font-style:normal;padding-left:10px;border-left:1px solid var(--r)} .d3 .gloss sup{color:var(--r)}
+.d3 .col{margin:4px 16px 14px;display:flex;justify-content:space-between;font:500 11px var(--mono);text-transform:uppercase;color:var(--gr);border-top:1px solid var(--gr);padding-top:8px} .d3 .col b{color:var(--ink);font-size:13px}
+.d3 .plate{margin:12px 12px 6px;background:var(--sf);border:1px solid var(--gr);position:relative;padding:8px 8px 0}
+.d3 .plate .fort .f-wall,.d3 .plate .fort .f-tower{fill:#d9c9ae} .d3 .plate .fort .f-door{fill:#6b5a44} .d3 .plate .fort .f-slit{stroke:#6b5a44} .d3 .plate .fort .f-ground{stroke:var(--gr)}
+.d3 .plate .sky{position:absolute;inset:8px 8px auto;height:40%;background:#dfe5ea}
+.d3 .plate .fort{position:relative}
+.d3 .num{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--r);color:#fff;font:500 11px/20px var(--mono);text-align:center}
+.d3 .cap{font:500 10.5px/1.4 var(--mono);text-transform:uppercase;color:var(--gr);padding:6px 14px}
+.d3 .yr{padding:4px 14px 8px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font:400 15px 'EB Garamond'}
+.d3 .yr .tr{height:1px;background:var(--ink);position:relative} .d3 .yr .tr i{position:absolute;left:62%;top:-6px;width:2px;height:13px;background:var(--r)}
+.d3 .marg{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 12px;font:400 13.5px/1.35 'EB Garamond'}
+.d3 .marg p{margin:0} .d3 .marg sup{color:var(--r);font-family:var(--mono);font-size:10px}
+.d3 .q{font:italic 400 15px/1.3 'EB Garamond';color:var(--l);padding:10px 16px 0}
+.d3 .ans{flex:1;padding:6px 16px;display:grid;grid-template-columns:1.4fr 1fr;gap:12px;align-content:start}
+.d3 .ans .matn{font:400 15px/1.45 'EB Garamond'} .d3 .ans .matn::first-letter{color:var(--r)}
+.d3 .ans .hash{font:400 12.5px/1.4 'EB Garamond';color:var(--gr);border-left:1px solid #5c585360;padding-left:8px} .d3 .ans .hash sup{color:var(--r)}
+.d3 .field{margin:8px 16px 14px;border-bottom:1px solid var(--ink);font:italic 14px 'EB Garamond';color:var(--gr);padding:6px 0;display:flex;justify-content:space-between}
+.d3 .field b{font:500 11px var(--mono);color:var(--r);font-style:normal;text-transform:uppercase}
+</style>
+<section id="dir-3" class="d3" aria-labelledby="dir-3-h">
+  <div class="hd"><span class="no">03 · Hashiya Folio</span><h2 id="dir-3-h">Hashiya Folio</h2><p class="tag">Sharjah, read in the margins.</p><p class="fam">Scholarly editorial, manuscript-derived typographic UI: paper and ink with rubricated hierarchy and marginal commentary</p></div>
+  <div class="meta"><ul class='sw'><li><span style='background:#EFEFED'></span><b>#EFEFED</b><i>background</i></li><li><span style='background:#FBFBFA'></span><b>#FBFBFA</b><i>surface</i></li><li><span style='background:#1B1917'></span><b>#1B1917</b><i>ink</i></li><li><span style='background:#9E2B18'></span><b>#9E2B18</b><i>accent</i></li><li><span style='background:#22407A'></span><b>#22407A</b><i>secondary accent</i></li><li><span style='background:#5C5853'></span><b>#5C5853</b><i>rule gray</i></li></ul><div class='spec'><div class='big'>Sharjah, read in the margins</div><div class='ar' lang='ar'>الشارقة في الحواشي</div><p style='margin:6px 0 0;font-size:15px'>EB Garamond and Amiri for display, IBM Plex for body, Plex Mono for plate captions only. Rubric red marks notes and actions.</p></div></div>
+  <div class="phones">
+    <figure><div class="ph"><div class='rh'><span class='on'>Index</span><span class=''>Plate</span><span class=''>Colophon</span></div><div class='ttl'>The day, as an index<span class='ar' lang='ar'>فهرس اليوم</span></div><div class='idx'><div class='ent quiet'><span class='n'>Al Hisn Fort</span><span class='t'>09:30</span><span class='s'><sup>1</sup> Quiet now. Indoor, 6 min walk.</span></div><div class='ent busy'><span class='n'>Al Noor Island</span><span class='t'>19:00</span><span class='s'><sup>2</sup> Busy 16:00–18:00, go at 19:00. After sunset, 31°C.</span></div><div class='ent shade'><span class='n'>Kalba Mangroves</span><span class='t'>Sat 08:00</span><span class='s'><sup>3</sup> Shade route, 40 min by car. East Coast, under-visited.</span></div></div><p class='gloss'><sup>2</sup> Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</p><div class='col'><span>Colophon, plan score</span><b>82/100</b></div></div><figcaption><b>Plan</b>Today's itinerary scored for crowd, heat and transport, with one swap explained.</figcaption></figure>
+    <figure><div class="ph"><div class='rh'><span class=''>Index</span><span class='on'>Plate</span><span class=''>Colophon</span></div><div class='plate'><div class='sky'></div><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><span class='num' style='top:22%;left:14%'>1</span><span class='num' style='top:40%;left:52%'>2</span></div><div class='cap'>Plate 7. Al Hisn Fort, east wall, coral stone</div><div class='yr'><span>Today</span><span class='tr'><i></i></span><span>1823</span></div><div class='marg'><p><sup>1</sup> Round tower, the one part of the fort saved in 1969.</p><p><sup>2</sup> Gate. The 1823 view is an artist's impression, not a photograph.</p></div></div><figcaption><b>Look</b>AR at Al Hisn Fort, slider from today back to 1823 (reconstruction labelled artist's impression).</figcaption></figure>
+    <figure><div class="ph"><div class='rh'><span class=''>Index</span><span class='on'>Plate</span><span class=''>Colophon</span></div><p class='q'>Why was the fort demolished in 1969?</p><div class='ans'><div class='matn'>In 1969 most of Al Hisn was pulled down to make room for the modern city centre. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</div><div class='hash'><sup>3</sup> Quiet until 11:00 today. The museum is indoors, so it holds up in the heat.<br><br><sup>4</sup> Read aloud</div></div><div class='field'>Write a question in the margin<b>Ask</b></div></div><figcaption><b>Ask</b>The guide answers from the curated Sharjah corpus and reads aloud.</figcaption></figure>
+  </div>
+  <div class="notes"><div><h3>Why Sharjah</h3><p>Sharjah was UNESCO World Book Capital 2019 and hosts the Sharjah International Book Fair and House of Wisdom library. The heritage area holds the Sharjah Calligraphy Museum and Al Hisn Fort&#x27;s coral-stone walls. Amiri revives the Bulaq Press naskh of early Arabic printing. Rubric red and lapis come from manuscript illumination, not from a trend palette.</p></div><div><h3>Why sustainable</h3><p>The margin keeps a ledger: meters walked, bus rides, dirhams spent with souq craftsmen, water refills. The day closes with a colophon page that totals it. AR annotates existing walls instead of rendering replacements, and the page is text and hairlines, so it loads on weak signal with low energy.</p></div><div><h3>Risks</h3><p>Judges may read paper and ink as a brochure rather than a product, so the AR plate must be the first thing shown in the pitch. Marginalia is unfamiliar; the five-minute pitch needs one sentence explaining the matn and hashiya idea. Amiri and EB Garamond have different vertical metrics, so Arabic and English need separate line-height tokens or lines collide. Rule gray passes at 6.1:1, but hairlines thinner than 1px vanish in direct sun. The team must resist cream palette drift and the temptation to add a 3D reconstruction, which breaks both the look and the seven-hour budget.</p></div></div>
+</section>
+<style>
+.d4{--r:0;padding:clamp(20px,4vw,40px);border-radius:12px;overflow:hidden;scroll-margin-top:64px}
+.d4 *{box-sizing:border-box}
+.d4 .hd{display:grid;gap:6px;margin-bottom:20px}
+.d4 .hd .no{font:600 13px/1 var(--mono,monospace);font-variant-numeric:tabular-nums;opacity:.75}
+.d4 .hd h2{margin:0;font-size:clamp(30px,5vw,52px);line-height:1}
+.d4 .hd .tag{margin:0;font-size:18px;max-width:52ch}
+.d4 .hd .fam{margin:0;font-size:13px;opacity:.75;max-width:80ch}
+.d4 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:28px;align-items:start}
+.d4 .sw{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.d4 .sw li{display:grid;gap:2px;font-size:11px;line-height:1.25;min-width:0}
+.d4 .sw li span{height:40px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+.d4 .sw b{font-variant-numeric:tabular-nums}
+.d4 .sw i{font-style:normal;opacity:.75;overflow-wrap:anywhere}
+.d4 .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;justify-items:center}
+.d4 figure{margin:0;width:100%;max-width:300px;display:grid;gap:10px}
+.d4 figcaption{font-size:12px;opacity:.8;line-height:1.4}
+.d4 figcaption b{display:block;font-size:13px;opacity:1}
+.d4 .ph{aspect-ratio:9/18.5;width:100%;border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 6px #0a0a0a,0 0 0 7px rgba(127,127,127,.4)}
+.d4 .fort{width:100%;height:auto;display:block}
+.d4 .fort .f-ground{fill:none;stroke-width:1.5}
+.d4 .fort .f-slit{fill:none;stroke-width:2}
+.d4 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:28px;font-size:13.5px;line-height:1.5}
+.d4 .notes h3{margin:0 0 4px;font-size:13px}
+.d4 .notes p{margin:0}
+.d4 [lang=ar]{direction:rtl}
+
+.d4{--bg:#0F3D3E;--sf:#175152;--ink:#F1E9D6;--br:#D1AA4F;--co:#D27A5A;--vg:#86C3B2;--mono:'IBM Plex Mono';background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif}
+.d4 .hd h2{font-family:'Cormorant Garamond';font-weight:600;color:var(--br)}
+.d4 .spec .big{font:600 40px/1.05 'Cormorant Garamond';color:var(--br)} .d4 .spec .ar{font:700 30px/1.4 'Reem Kufi'}
+.d4 .ph{background:var(--bg)}
+.d4 .cam{position:relative;background:#2b5a5b;display:flex;align-items:flex-end;overflow:hidden}
+.d4 .cam .fort .f-wall,.d4 .cam .fort .f-tower{fill:#c99a7f} .d4 .cam .fort .f-door{fill:#5d3d2c} .d4 .cam .fort .f-slit{stroke:#5d3d2c} .d4 .cam .fort .f-ground{stroke:#ffffff55}
+.d4 .cam .wire{position:absolute;inset:auto 0 0;} .d4 .cam .wire .fort *{fill:none!important;stroke:var(--br)!important;stroke-width:1.5}
+.d4 .lat{position:absolute;inset:0;width:100%;height:100%}
+.d4 .sheet{background:var(--sf);border-top:2px solid var(--br);flex:1;display:flex;flex-direction:column;padding:12px 14px;gap:8px;clip-path:polygon(0 10px,10px 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+.d4 .sheet h4{margin:0;font:600 24px/1.05 'Cormorant Garamond';color:var(--br)} .d4 .sheet h4 .ar{font:500 15px 'Reem Kufi';color:var(--ink);margin-left:8px}
+.d4 .map{height:74px;position:relative;border:1px solid #D1AA4F66}
+.d4 .map svg{width:100%;height:100%}
+.d4 .stop{display:grid;grid-template-columns:56px 1fr;gap:1px 8px;padding:6px 0;border-bottom:1px solid #D1AA4F40;font-size:13px}
+.d4 .stop .t{font:500 12px var(--mono);color:var(--vg)} .d4 .stop .n{font-weight:500}
+.d4 .stop .s{grid-column:2;font-size:11.5px;color:var(--vg)} .d4 .stop.busy .s{color:var(--co);font-weight:500}
+.d4 .strip{font:500 11px var(--mono);color:var(--vg);display:flex;justify-content:space-between;border-top:1px solid #86C3B255;padding-top:6px}
+.d4 .thr{height:56px;background:var(--bg);border-top:1px solid var(--br);display:grid;grid-template-columns:repeat(3,1fr);align-items:center;text-align:center;font-size:12px}
+.d4 .thr .on{color:var(--br);font-weight:500} .d4 .thr .pill{justify-self:center;background:var(--br);color:var(--bg);padding:6px 14px;border-radius:999px;font-weight:500}
+.d4 .yr{position:absolute;left:12px;right:12px;bottom:12px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font:500 11px var(--mono);color:var(--ink)}
+.d4 .yr .tr{height:1.5px;background:var(--br);position:relative} .d4 .yr .tr i{position:absolute;left:62%;top:-6px;width:12px;height:12px;transform:rotate(45deg);background:var(--br)}
+.d4 .lbl{position:absolute;top:12px;left:12px;right:12px;font:600 20px/1.1 'Cormorant Garamond';color:var(--br)} .d4 .lbl small{display:block;font:500 11px var(--mono);color:var(--vg);margin-top:4px}
+.d4 .turn{font-size:13px;padding:6px 0;border-bottom:1px solid #D1AA4F55}
+.d4 .rep{font:500 16px/1.35 'Cormorant Garamond'}
+</style>
+<section id="dir-4" class="d4" aria-labelledby="dir-4-h">
+  <div class="hd"><span class="no">04 · Girih Screen</span><h2 id="dir-4-h">Girih Screen</h2><p class="tag">Sharjah through the lattice: light in, heat out.</p><p class="fam">Islamic geometric lattice as structure: dark heritage editorial with drafting-line AR, not ornament</p></div>
+  <div class="meta"><ul class='sw'><li><span style='background:#0F3D3E'></span><b>#0F3D3E</b><i>background</i></li><li><span style='background:#175152'></span><b>#175152</b><i>surface</i></li><li><span style='background:#F1E9D6'></span><b>#F1E9D6</b><i>ink</i></li><li><span style='background:#D1AA4F'></span><b>#D1AA4F</b><i>accent</i></li><li><span style='background:#D27A5A'></span><b>#D27A5A</b><i>secondary accent</i></li><li><span style='background:#86C3B2'></span><b>#86C3B2</b><i>data</i></li></ul><div class='spec'><div class='big'>Light in, heat out</div><div class='ar' lang='ar'>من خلف المشربية</div><p style='margin:6px 0 0;font-size:15px'>Cormorant and Reem Kufi for display, IBM Plex body, Plex Mono for data. Brass is stroke only; verdigris marks every sustainability figure.</p></div></div>
+  <div class="phones">
+    <figure><div class="ph"><div class='cam' style='height:14%'><svg class='lat' aria-hidden='true'><defs><pattern id='khatam' width='28' height='28' patternUnits='userSpaceOnUse'><path d='M14 2l4 8 8 4-8 4-4 8-4-8-8-4 8-4z' fill='none' stroke='#D1AA4F' stroke-width='.8'/></pattern></defs><rect width='100%' height='100%' fill='url(#khatam)'/></svg></div><div class='sheet'><h4>Today's plan<span class='ar' lang='ar'>خطة اليوم</span></h4><div class='map'><svg viewBox='0 0 240 74' aria-hidden='true'><path d='M10 60 C60 20 100 58 150 30 S220 20 232 12' fill='none' stroke='#D1AA4F' stroke-width='1.5'/><path d='M150 30 S220 20 232 12' fill='none' stroke='#86C3B2' stroke-width='4' stroke-dasharray='2 3'/><circle cx='10' cy='60' r='4' fill='#86C3B2'/><circle cx='150' cy='30' r='6' fill='#D27A5A'/><circle cx='232' cy='12' r='4' fill='#86C3B2'/></svg></div><div class='stop quiet'><span class='t'>09:30</span><span class='n'>Al Hisn Fort</span><span class='s'>Quiet now</span></div><div class='stop busy'><span class='t'>19:00</span><span class='n'>Al Noor Island</span><span class='s'>Busy 16:00–18:00, go at 19:00</span></div><div class='stop shade'><span class='t'>Sat 08:00</span><span class='n'>Kalba Mangroves</span><span class='s'>Shade route, 40 min by car</span></div><p style='margin:0;font-size:12px;line-height:1.4'>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</p><div class='strip'><span>SHADE 68%</span><span>CROWD LOW</span><span>SCORE 82</span></div></div><div class='thr'><span class='on'>Plan</span><span class=''>Look</span><span class=''>Ask</span></div></div><figcaption><b>Plan</b>Today's itinerary scored for crowd, heat and transport, with one swap explained.</figcaption></figure>
+    <figure><div class="ph"><div class='cam' style='flex:1'><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><div class='wire'><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg></div><div class='lbl'>Al Hisn Fort, 1823<small>BRASS LINE: ARTIST'S IMPRESSION</small></div><div class='yr'><span>TODAY</span><span class='tr'><i></i></span><span>1823</span></div></div><div style='padding:8px 12px;font:500 11px var(--mono);color:var(--vg);background:var(--bg)'>SHADE · CROWD LOW · 0.4 KG CO₂ ON FOOT</div><div class='thr'><span class=''>Plan</span><span class='on'>Look</span><span class=''>Ask</span></div></div><figcaption><b>Look</b>AR at Al Hisn Fort, slider from today back to 1823 (reconstruction labelled artist's impression).</figcaption></figure>
+    <figure><div class="ph"><div class='cam' style='height:34%'><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><svg class='lat' aria-hidden='true'><defs><pattern id='khatam' width='28' height='28' patternUnits='userSpaceOnUse'><path d='M14 2l4 8 8 4-8 4-4 8-4-8-8-4 8-4z' fill='none' stroke='#D1AA4F' stroke-width='.8'/></pattern></defs><rect width='100%' height='100%' fill='url(#khatam)'/></svg></div><div class='sheet'><div class='turn'>Why was the fort demolished in 1969?</div><div class='rep'>In 1969 most of Al Hisn was pulled down to make room for the modern city centre. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</div><div class='strip'><span>READ ALOUD</span><span>SOURCE: DALEEL CORPUS</span></div></div><div class='thr'><span>Plan</span><span>Look</span><span class='pill'>Ask</span></div></div><figcaption><b>Ask</b>The guide answers from the curated Sharjah corpus and reads aloud.</figcaption></figure>
+  </div>
+  <div class="notes"><div><h3>Why Sharjah</h3><p>Heart of Sharjah houses use coral stone, gypsum, teak doors, barjeel wind towers, and lattice screens; the Sharjah Museum of Islamic Civilization holds the geometry; Souk Al Arsah sells the brass and copperware; Central Souk is tiled in blue; Khalid Lagoon supplies the teal. The palette and the lattice come from these specific places.</p></div><div><h3>Why sustainable</h3><p>The mashrabiya is passive cooling: shade and airflow with no electricity. The interface uses it the same way, letting through only the information a walker needs, and extends it to shade routes, off-peak slots, and crowd dispersal. Dark teal saves OLED power; line-drawn AR replaces heavy 3D downloads.</p></div><div><h3>Risks</h3><p>Reads as a mosque brochure or luxury hotel if Cormorant gets too large or italic; hold display to two sizes and never italic. SVG mask animation can stutter on low-end Android in a browser demo; precompute one mask per sheet position and animate only the mask scale. The lattice steals camera area in the half-open state, so test that the top 55 percent stays usable for orientation. Brass on surface teal is 4.10:1, so brass text on surfaces must be 14px bold or larger; coral is for shapes and large labels only. RTL mirroring needs a symmetric 8-fold module, so do not switch to a 10-fold girih late. The pattern is shared heritage, but avoid cropping mosque imagery with the lattice in ways that read as disrespect.</p></div></div>
+</section>
+<style>
+.d5{--r:0;padding:clamp(20px,4vw,40px);border-radius:12px;overflow:hidden;scroll-margin-top:64px}
+.d5 *{box-sizing:border-box}
+.d5 .hd{display:grid;gap:6px;margin-bottom:20px}
+.d5 .hd .no{font:600 13px/1 var(--mono,monospace);font-variant-numeric:tabular-nums;opacity:.75}
+.d5 .hd h2{margin:0;font-size:clamp(30px,5vw,52px);line-height:1}
+.d5 .hd .tag{margin:0;font-size:18px;max-width:52ch}
+.d5 .hd .fam{margin:0;font-size:13px;opacity:.75;max-width:80ch}
+.d5 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:28px;align-items:start}
+.d5 .sw{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.d5 .sw li{display:grid;gap:2px;font-size:11px;line-height:1.25;min-width:0}
+.d5 .sw li span{height:40px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+.d5 .sw b{font-variant-numeric:tabular-nums}
+.d5 .sw i{font-style:normal;opacity:.75;overflow-wrap:anywhere}
+.d5 .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;justify-items:center}
+.d5 figure{margin:0;width:100%;max-width:300px;display:grid;gap:10px}
+.d5 figcaption{font-size:12px;opacity:.8;line-height:1.4}
+.d5 figcaption b{display:block;font-size:13px;opacity:1}
+.d5 .ph{aspect-ratio:9/18.5;width:100%;border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 6px #0a0a0a,0 0 0 7px rgba(127,127,127,.4)}
+.d5 .fort{width:100%;height:auto;display:block}
+.d5 .fort .f-ground{fill:none;stroke-width:1.5}
+.d5 .fort .f-slit{fill:none;stroke-width:2}
+.d5 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:28px;font-size:13.5px;line-height:1.5}
+.d5 .notes h3{margin:0 0 4px;font-size:13px}
+.d5 .notes p{margin:0}
+.d5 [lang=ar]{direction:rtl}
+
+.d5{--bg:#E4E7E3;--sf:#FFFFFF;--ink:#1C1A17;--ox:#9E3E18;--mg:#1F5F4E;--st:#8F1D21;--mono:'IBM Plex Mono';background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif}
+.d5 .hd h2{font-family:Fraunces;font-weight:900;color:var(--ox)}
+.d5 .spec .big{font:800 40px/1.05 Fraunces} .d5 .spec .ar{font:700 30px/1.4 Amiri;color:var(--mg)}
+.d5 .ph{background:var(--bg)}
+.d5 .map{flex:1;position:relative;overflow:hidden}
+.d5 .map svg{position:absolute;inset:0;width:100%;height:100%}
+.d5 .tabs{position:absolute;right:0;top:56px;display:grid;gap:4px;z-index:2}
+.d5 .tabs span{writing-mode:vertical-rl;background:var(--sf);font:500 10px var(--mono);text-transform:uppercase;padding:10px 5px;border:1px solid #1c1a1733;border-right:0}
+.d5 .tabs .on{background:var(--ink);color:var(--sf)}
+.d5 .card{background:var(--sf);border-top:1px solid #1c1a1733;padding:12px 14px;display:grid;gap:6px;position:relative}
+.d5 .card .hdr{font:500 10.5px var(--mono);text-transform:uppercase;color:#1c1a17aa;display:flex;justify-content:space-between}
+.d5 .card h4{margin:0;font:800 22px/1.05 Fraunces} .d5 .card h4 .ar{font:400 15px Amiri;color:var(--mg);margin-left:6px}
+.d5 .stop{display:grid;grid-template-columns:62px 1fr;gap:1px 8px;padding:5px 0;border-bottom:1px solid #1c1a1720;font-size:13px}
+.d5 .stop .t{font:500 11px var(--mono)} .d5 .stop .s{grid-column:2;font:italic 400 13px Fraunces;color:var(--mg)} .d5 .stop.busy .s{color:var(--ox)}
+.d5 .note{font:italic 400 13.5px/1.35 Fraunces;color:var(--ox)}
+.d5 .stamp{position:absolute;right:14px;top:-34px;width:62px;height:62px;border-radius:50%;border:1.5px solid var(--st);color:var(--st);display:grid;place-items:center;text-align:center;font:500 9px/1.2 var(--mono);transform:rotate(-3deg);background:#ffffffd9;opacity:.92}
+.d5 .stamp b{font-size:15px}
+.d5 .lens{flex:1;position:relative;background:#c7cfc9;display:flex;align-items:flex-end;overflow:hidden}
+.d5 .lens .fort .f-wall,.d5 .lens .fort .f-tower{fill:#c8ad8c} .d5 .lens .fort .f-door{fill:#5b4330} .d5 .lens .fort .f-slit{stroke:#5b4330} .d5 .lens .fort .f-ground{stroke:#1c1a1766}
+.d5 .ticks{position:absolute;left:8px;top:16px;bottom:16px;width:12px;background:repeating-linear-gradient(to bottom,var(--ink) 0 1px,transparent 1px 18px);border-left:1px solid var(--ink)}
+.d5 .ac{position:absolute;font:500 10.5px/1.3 var(--mono);text-transform:uppercase;background:#ffffffcc;padding:4px 6px;border:1px solid var(--ink)}
+.d5 .arrow{position:absolute;right:22%;bottom:16%;font:800 34px/1 Fraunces;color:var(--ox)}
+.d5 .yr{padding:10px 14px;background:var(--sf);display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font:500 11px var(--mono)}
+.d5 .yr .tr{height:1px;background:var(--ink);position:relative} .d5 .yr .tr i{position:absolute;left:62%;top:-6px;width:12px;height:12px;border-radius:50%;background:var(--ox)}
+.d5 .yr small{grid-column:1/4;font:italic 400 12px Fraunces;text-transform:none}
+.d5 .q{font-size:13px;padding:6px 8px;border:1px solid #1c1a1740;align-self:start}
+.d5 .field{border-bottom:1px solid var(--ink);font:500 10.5px var(--mono);text-transform:uppercase;padding:8px 0 4px;display:flex;justify-content:space-between;color:#1c1a17aa}
+</style>
+<section id="dir-5" class="d5" aria-labelledby="dir-5-h">
+  <div class="hd"><span class="no">05 · Mleiha Field Sheet</span><h2 id="dir-5-h">Mleiha Field Sheet</h2><p class="tag">Walk Sharjah like a field survey: map first, notes in the margin, a stamp for every lighter trip.</p><p class="fam">Field-notebook editorial, map-first survey sheet</p></div>
+  <div class="meta"><ul class='sw'><li><span style='background:#E4E7E3'></span><b>#E4E7E3</b><i>background</i></li><li><span style='background:#FFFFFF'></span><b>#FFFFFF</b><i>surface</i></li><li><span style='background:#1C1A17'></span><b>#1C1A17</b><i>ink</i></li><li><span style='background:#9E3E18'></span><b>#9E3E18</b><i>accent</i></li><li><span style='background:#1F5F4E'></span><b>#1F5F4E</b><i>secondary accent</i></li><li><span style='background:#8F1D21'></span><b>#8F1D21</b><i>stamp red</i></li></ul><div class='spec'><div class='big'>Map first, notes in the margin</div><div class='ar' lang='ar'>دفتر الميدان</div><p style='margin:6px 0 0;font-size:15px'>Fraunces with Amiri, IBM Plex body, Plex Mono capitals for codes and stamps. Oxide for waypoints, mangrove green for protected areas.</p></div></div>
+  <div class="phones">
+    <figure><div class="ph"><div class='map'><svg viewBox='0 0 300 300' preserveAspectRatio='xMidYMid slice' aria-hidden='true'><rect width='300' height='300' fill='#E4E7E3'/><path d='M0 210 C60 190 90 240 160 220 S260 170 300 180 V300 H0z' fill='#c9d6d6'/><path d='M200 60 l60 10 l-10 60 l-55 -12z' fill='none' stroke='#1F5F4E' stroke-width='1'/><path d='M205 70 l45 7M203 85 l48 8M201 100 l47 9' stroke='#1F5F4E' stroke-width='.8'/><path d='M20 40 L120 90 L260 30 M40 160 L150 120 L280 150 M120 90 L150 120 L160 220' fill='none' stroke='#1c1a1755' stroke-width='1.2'/><path d='M70 70 Q120 100 150 120 T230 95' fill='none' stroke='#9E3E18' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='70' cy='70' r='6' fill='#9E3E18'/><circle cx='150' cy='120' r='6' fill='#9E3E18'/><circle cx='230' cy='95' r='6' fill='#1F5F4E'/><path d='M150 120 L175 150' stroke='#1c1a17' stroke-width='.8'/><text x='178' y='160' font-family='Fraunces' font-style='italic' font-size='13' fill='#9E3E18'>go at 19:00</text></svg><div class='tabs'><span class='on'>Map</span><span class=''>Notebook</span><span class=''>Guide</span></div></div><div class='card'><div class='hdr'><span>SHJ-D1 · 25.36N 55.39E</span><span>Score 82</span></div><h4>Today's survey<span class='ar' lang='ar'>مسح اليوم</span></h4><div class='stop quiet'><span class='t'>09:30</span><span>Al Hisn Fort</span><span class='s'>Quiet now</span></div><div class='stop busy'><span class='t'>19:00</span><span>Al Noor Island</span><span class='s'>Busy 16:00–18:00, go at 19:00</span></div><div class='stop shade'><span class='t'>Sat 08:00</span><span>Kalba Mangroves</span><span class='s'>Shade route, 40 min by car</span></div><p class='note' style='margin:0'>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</p></div></div><figcaption><b>Plan</b>Today's itinerary scored for crowd, heat and transport, with one swap explained.</figcaption></figure>
+    <figure><div class="ph"><div class='lens'><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><div class='ticks'></div><span class='ac' style='top:14%;left:26%'>Al Hisn · SHJ-03<br>Built 1823 · 25.358N</span><span class='ac' style='top:34%;right:8%'>Quiet to 11:00</span><span class='arrow'>→</span></div><div class='yr'><span>TODAY</span><span class='tr'><i></i></span><span>1823</span><small>The 1823 view is an artist's impression.</small></div></div><figcaption><b>Look</b>AR at Al Hisn Fort, slider from today back to 1823 (reconstruction labelled artist's impression).</figcaption></figure>
+    <figure><div class="ph"><div class='map'><svg viewBox='0 0 300 300' preserveAspectRatio='xMidYMid slice' aria-hidden='true'><rect width='300' height='300' fill='#E4E7E3'/><path d='M0 210 C60 190 90 240 160 220 S260 170 300 180 V300 H0z' fill='#c9d6d6'/><path d='M200 60 l60 10 l-10 60 l-55 -12z' fill='none' stroke='#1F5F4E' stroke-width='1'/><path d='M205 70 l45 7M203 85 l48 8M201 100 l47 9' stroke='#1F5F4E' stroke-width='.8'/><path d='M20 40 L120 90 L260 30 M40 160 L150 120 L280 150 M120 90 L150 120 L160 220' fill='none' stroke='#1c1a1755' stroke-width='1.2'/><path d='M70 70 Q120 100 150 120 T230 95' fill='none' stroke='#9E3E18' stroke-width='2.5' stroke-dasharray='6 4'/><circle cx='70' cy='70' r='6' fill='#9E3E18'/><circle cx='150' cy='120' r='6' fill='#9E3E18'/><circle cx='230' cy='95' r='6' fill='#1F5F4E'/><path d='M150 120 L175 150' stroke='#1c1a17' stroke-width='.8'/><text x='178' y='160' font-family='Fraunces' font-style='italic' font-size='13' fill='#9E3E18'>go at 19:00</text></svg><div class='tabs'><span class=''>Map</span><span class=''>Notebook</span><span class='on'>Guide</span></div></div><div class='card'><span class='stamp'><span>SHJ-03<br><b>10·10</b><br>ON FOOT</span></span><div class='hdr'><span>SHJ-03 · Al Hisn Fort</span><span>Open 08:00–20:00</span></div><div class='q'>Why was the fort demolished in 1969?</div><p class='note' style='margin:0'>In 1969 most of Al Hisn was pulled down to make room for the modern city centre. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</p><div class='field'><span>Ask the guide</span><span>Read aloud</span></div></div></div><figcaption><b>Ask</b>The guide answers from the curated Sharjah corpus and reads aloud.</figcaption></figure>
+  </div>
+  <div class="notes"><div><h3>Why Sharjah</h3><p>Mleiha&#x27;s archaeology center labels finds by trench and context code, which becomes the app&#x27;s label grammar. The sheet color comes from Kalba mangrove and Wasit Wetland survey maps, the accent from the iron oxide of Fossil Rock at evening, and the stamp red from passport entry stamps. Coral stone walls of the Heritage Area set the white card texture.</p></div><div><h3>Why sustainable</h3><p>The notebook works as a ledger. Each ticket stub records the travel mode and the carbon saved against a private car; stamps are issued only at protected or low-crowd sites such as Kalba mangroves and Wasit Wetland; the map hatches off-peak hours so visitors spread out across the emirate.</p></div><div><h3>Risks</h3><p>Skeuomorphism reads as nostalgic if texture is overdone; keep the paper white and let structure (rules, perforation, stamps) carry the feel. Recoloring a MapLibre style eats time, so start from OpenFreeMap Positron and change six layer colors only. Arabic right-to-left flips the margin notes and index tabs; test with Plex Sans Arabic on day one. Judges may read the notebook as the gimmick and miss the ledger, so lead the pitch with the carbon and crowd ledger and show the stamp second. Every Commons photo must be credited in the disclosure.</p></div></div>
+</section>
+</div>
+<section class="after" id="next">
+  <h2>After you choose</h2>
+  <ol>
+    <li>Rama drops the logo files (SVG preferred) into design/brand/ and names the wordmark fonts, so the provisional Marcellus and Noto Naskh stand-ins can be swapped.</li>
+    <li>One Higgsfield hero image from the direction's prompt (and up to three variants), then one five-second clip for the pitch opening; every asset is logged in the AI Usage Disclosure.</li>
+    <li>The direction's tokens are applied to the three demo screens (Explore, AR view, Guide) in the deployed app, then the transition recipes for the itinerary swap and the guide reply.</li>
+    <li>The pitch deck inherits the same tokens so the phone and the slides look like one product.</li>
+  </ol>
+</section>
+</div>

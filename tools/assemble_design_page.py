@@ -129,8 +129,8 @@ section.after li {{ margin-bottom:6px; }}
 <div class="frame">
 <header class="top">
   <div class="eyebrow">Sharjah Tourism Innovation Hackathon 2026 &middot; Team Daleel &middot; 10 October 2026</div>
-  <h1>Five directions for Daleel <span class="ar" lang="ar" dir="rtl">دليل</span></h1>
-  <p class="lede">Eight independent art directors each proposed one visual direction for the Daleel web app, with real references pulled from the design library. Three judges with different lenses scored all eight; the five shown here are the highest scoring that still read as different options from one another. Pick one by its number, or name the two to merge. The chosen direction then gets a Higgsfield hero image, a logo pass from Rama, and the tokens applied to the three demo screens.</p>
+  <h1>Daleel: brand and five layout directions <span class="ar" lang="ar" dir="rtl">دليل</span></h1>
+  <p class="lede">Panel 00 is the team's identity (Rama's mark and palette: cream #F7F3EA, sand #E6DCC8, brass #C9A24D, navy #14213D) applied to the three demo screens. Panels 01 to 05 are the layout directions eight independent art directors proposed, scored by three judges; their colours are superseded by the brand, but their layout and interaction ideas (route bands, poster type, margin notes, lattice sheet, field cards) are still on the table. Pick the layout idea to carry into the brand, or keep panel 00 as it stands.</p>
 </header>
 <nav class="dirs" aria-label="Directions">{nav}</nav>
 <section class="score" id="scorecard">
@@ -147,7 +147,7 @@ section.after li {{ margin-bottom:6px; }}
 <section class="after" id="next">
   <h2>After you choose</h2>
   <ol>
-    <li>Rama produces the logo and wordmark inside the chosen direction's palette and type, in Arabic and English.</li>
+    <li>Rama drops the logo files (SVG preferred) into design/brand/ and names the wordmark fonts, so the provisional Marcellus and Noto Naskh stand-ins can be swapped.</li>
     <li>One Higgsfield hero image from the direction's prompt (and up to three variants), then one five-second clip for the pitch opening; every asset is logged in the AI Usage Disclosure.</li>
     <li>The direction's tokens are applied to the three demo screens (Explore, AR view, Guide) in the deployed app, then the transition recipes for the itinerary swap and the guide reply.</li>
     <li>The pitch deck inherits the same tokens so the phone and the slides look like one product.</li>

@@ -72,3 +72,9 @@
 {"type":"failed","key":"v2:f6b9af63584ec862e74239f3990ae9a362e28ff8f4481bd0169f10bccdd8a801","agentId":"ab41e47ab8aba7f2f"}
 {"type":"failed","key":"v2:8d0b52e13551a965874d308ea779c4c5f33d436a03864367ba2bca19fb95080a","agentId":"af69961a0332e3ed2"}
 {"type":"failed","key":"v2:5182802df3fc97443300d4d739ee77ecc970da20b39f01a4a89090b6e451425b","agentId":"a7df1d02749d7db49"}
+{"type": "result", "label": "mockup:0:Daleel brand", "phase": "Mockups", "result": {"file": "design/dir-0.html", "builder": "tools/build_design_panels.py"}, "ts": "2026-10-10T10:57:46.829167+00:00"}
+{"type": "result", "label": "mockup:1:Route Band Signage", "phase": "Mockups", "result": {"file": "design/dir-1.html", "builder": "tools/build_design_panels.py"}, "ts": "2026-10-10T10:57:46.829167+00:00"}
+{"type": "result", "label": "mockup:2:Lagoon After Dark", "phase": "Mockups", "result": {"file": "design/dir-2.html", "builder": "tools/build_design_panels.py"}, "ts": "2026-10-10T10:57:46.829167+00:00"}
+{"type": "result", "label": "mockup:3:Hashiya Folio", "phase": "Mockups", "result": {"file": "design/dir-3.html", "builder": "tools/build_design_panels.py"}, "ts": "2026-10-10T10:57:46.829167+00:00"}
+{"type": "result", "label": "mockup:4:Girih Screen", "phase": "Mockups", "result": {"file": "design/dir-4.html", "builder": "tools/build_design_panels.py"}, "ts": "2026-10-10T10:57:46.829167+00:00"}
+{"type": "result", "label": "mockup:5:Mleiha Field Sheet", "phase": "Mockups", "result": {"file": "design/dir-5.html", "builder": "tools/build_design_panels.py"}, "ts": "2026-10-10T10:57:46.829167+00:00"}

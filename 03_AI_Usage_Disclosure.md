@@ -23,7 +23,8 @@ This document is required by Section 4 of the Hackathon Guidelines and is upload
 |---|---|---|
 | Event brief (00_Hackathon_Brief.md) | Claude Code, from the organizer PDFs and emails | Team read and corrected against the source documents |
 | Research notes on Sharjah tourism and competitors | Claude Code with web search | Claims were checked against the cited sources; unverified claims were removed |
-| Five design direction mockups | Claude Code | Team chose one direction; the chosen direction was then refined by hand |
+| Five design direction mockups (design/dir-1 to dir-5, comparison page) | Claude Code | Used for comparison only. The team designed its own identity instead (next row), and the mockups now serve as a source of layout ideas |
+| Logo, wordmark, and colour palette (cream, sand, brass, navy) | Rama Saud Abdallah, by the team | Claude Code applied the palette to the three demo screens in design/dir-0.html, measured contrast, and wrote design/brand/tokens.css; the mark in that panel is a placeholder until the logo file is added |
 | [Prototype code] | | |
 | [Hero images and video] | | |
 | [Pitch slides text] | | |
