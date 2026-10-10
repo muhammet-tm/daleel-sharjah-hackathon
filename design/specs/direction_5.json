@@ -1,0 +1,63 @@
+{
+ "name": "Mleiha Field Sheet",
+ "family": "Field-notebook editorial, map-first survey sheet",
+ "tagline": "Walk Sharjah like a field survey: map first, notes in the margin, a stamp for every lighter trip.",
+ "palette": [
+  {
+   "role": "background: survey sheet, gray-green tinted toward the mangrove hue",
+   "hex": "#E4E7E3"
+  },
+  {
+   "role": "surface: field card, ticket stub, white paper",
+   "hex": "#FFFFFF"
+  },
+  {
+   "role": "ink: sepia-black fountain pen ink for body and map labels",
+   "hex": "#1C1A17"
+  },
+  {
+   "role": "accent: Mleiha iron oxide for waypoints, arrows, halftone photos",
+   "hex": "#9E3E18"
+  },
+  {
+   "role": "secondary accent: Kalba mangrove green for protected areas and carbon saved",
+   "hex": "#1F5F4E"
+  },
+  {
+   "role": "stamp red: passport-stamp ink for earned stamps and the date",
+   "hex": "#8F1D21"
+  }
+ ],
+ "type_display": "Fraunces (Google Fonts), weights 600 to 900 with the SOFT and WONK axes on; italic carries the guide's margin voice. Arabic companion: Amiri for display and the guide's notes.",
+ "type_body": "IBM Plex Sans paired with IBM Plex Sans Arabic for body text; IBM Plex Mono in capitals for find codes, coordinates, stamps, and ticket stubs. Three families total, two of them one superfamily.",
+ "layout": "Mobile-first, single column on a 4-column, 8 px grid, with hairline rules (1 px ink at 20 percent) instead of card borders. The map sheet is the home state and fills the screen: MapLibre GL on a recolored open style (OpenFreeMap Positron as the base) with gray-green land, single-weight roads, hatched protected areas, and muted khor water. Places are field cards: white sheets that slide up from the bottom edge to 40 percent height, with a mono header (site code, coordinates, hours, travel mode) and the guide's note in Fraunces italic in the margin. The guide is not a chat panel. It annotates the map with pencil leader lines to pins and writes short notes in the card margin; one text field at the card foot takes questions. The AR lens opens from a card's Look action as a full-screen camera with an acetate overlay: hand-set mono labels, a 10 m tick scale down the left edge, and one oxide arrow to the next waypoint. Closing the lens returns to the card and presses the stamp. Three index tabs on the right edge (Map, Notebook, Guide) replace a bottom bar; the Notebook tab holds the stamps grid and the ticket ledger. Judge view on a laptop: map left two-thirds, notebook right third.",
+ "motion": "Ease-out-quint, 180 to 260 ms. Stamps press in from scale 1.12 to 1 with a 2 to 4 degree tilt that persists per stamp (seeded from the place code, not random per render). Guide leader lines draw with stroke-dashoffset over 320 ms, then the note fades in. Field cards slide with translateY only, never scale. A ticket stub tears along its perforation with clip-path when a trip is logged. Map pans and zooms use MapLibre's own easing capped at 600 ms. No bounce, no parallax, no page-turn. Under prefers-reduced-motion every entrance becomes a 120 ms crossfade and lines appear complete.",
+ "imagery": "Real photographs only: shot by the team on phones during the event, or Wikimedia Commons images under CC licenses with credit in the sources and AI disclosure. No generated renders of landmarks. Inside cards and tickets, photos are converted to a one-color halftone in Mleiha oxide on white, like a single risograph pass, so they sit with the mono labels; the AR lens and the hero show full color. No illustration set. Twelve line glyphs at 1.5 px stroke (bus, walk, bike, stamp, tick scale, needle, mangrove, tomb, fort, fossil, water, ticket). Stamps are typographic: place code and date in Plex Mono inside a 1.5 px circle, overprinted at 85 percent opacity.",
+ "hero_prompt": "Top-down editorial product photo: an open white field notebook lying on a gray-green survey map of Sharjah, typewriter-labeled index cards, one red circular date stamp, a graphite pencil, a small Bronze Age pottery sherd, a torn bus ticket stub, hard midday desert light, crisp shadows, no readable text, no people, no logos, 3:2.",
+ "why_sharjah": "Mleiha's archaeology center labels finds by trench and context code, which becomes the app's label grammar. The sheet color comes from Kalba mangrove and Wasit Wetland survey maps, the accent from the iron oxide of Fossil Rock at evening, and the stamp red from passport entry stamps. Coral stone walls of the Heritage Area set the white card texture.",
+ "why_sustainable": "The notebook works as a ledger. Each ticket stub records the travel mode and the carbon saved against a private car; stamps are issued only at protected or low-crowd sites such as Kalba mangroves and Wasit Wetland; the map hatches off-peak hours so visitors spread out across the emirate.",
+ "references": [
+  {
+   "site": "refero.design (blocked)",
+   "url": "https://refero.design",
+   "what": "Blocked: two fetches (home and /apps) returned only the page title and no screens, so it could not be used. Replaced with godly.design from the library."
+  },
+  {
+   "site": "pricingpages.design: Chroma pricing",
+   "url": "https://trychroma.com/pricing",
+   "what": "Usage calculator laid out as label-and-value rows that read like an itemized receipt. This is the model for the trip ledger stub: mode, distance, carbon saved, each on its own ruled line."
+  },
+  {
+   "site": "pricingpages.design: Supernotes pricing",
+   "url": "https://supernotes.app/pricing/",
+   "what": "The notecard is the single unit of the product and the copy is built around it. Confirms that one card type (place, ticket, stamp) can carry the whole app instead of a card grid plus a separate list."
+  },
+  {
+   "site": "godly.design (substitute for Refero)",
+   "url": "https://godly.design",
+   "what": "Consulted as the substitute gallery. Its front page listed Superpower, Cloaked, Paradigm, Reevo, and Gitnimble, none with a map, notebook, or print treatment, so nothing was borrowed. It confirmed the current gallery lane is dark AI product sites, which this direction avoids."
+  }
+ ],
+ "slop_guardrails": "No cream, sand, beige, or parchment body background; the sheet is gray-green tinted toward the mangrove hue and the paper is plain white. No feTurbulence or noise grain filters, no torn-edge PNGs, no coffee stains, no sepia photo filter. No handwriting webfonts (Caveat, Indie Flower, Shadows Into Light) for the guide's voice; the guide writes in Fraunces italic. No compass-rose logo, no vintage map ornaments, no emoji stamps, no illustrated badges, no identical card grids, no tiny uppercase eyebrow above each section, no rounded-everything (radius 2 px on cards, full circle only on the stamp). No AI-rendered landmark images presented as photographs.",
+ "risks": "Skeuomorphism reads as nostalgic if texture is overdone; keep the paper white and let structure (rules, perforation, stamps) carry the feel. Recoloring a MapLibre style eats time, so start from OpenFreeMap Positron and change six layer colors only. Arabic right-to-left flips the margin notes and index tabs; test with Plex Sans Arabic on day one. Judges may read the notebook as the gimmick and miss the ledger, so lead the pitch with the carbon and crowd ledger and show the stamp second. Every Commons photo must be credited in the disclosure."
+}

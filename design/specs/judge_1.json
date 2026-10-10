@@ -1,0 +1,110 @@
+{
+ "scores": [
+  {
+   "name": "Hashiya Folio",
+   "distinctiveness": 3,
+   "fit_sharjah": 5,
+   "fit_theme": 3,
+   "anti_slop": 5,
+   "pitch_impact": 3,
+   "buildable_in_hours": 4,
+   "total": 23,
+   "note": "Strongest Sharjah grounding in the set (World Book Capital, Bulaq naskh). Sustainability ledger feels appended. Marginalia needs explaining in five minutes."
+  },
+  {
+   "name": "Gypsum Hour",
+   "distinctiveness": 2,
+   "fit_sharjah": 4,
+   "fit_theme": 2,
+   "anti_slop": 3,
+   "pitch_impact": 3,
+   "buildable_in_hours": 4,
+   "total": 18,
+   "note": "Handsome but generic warm minimalism; one caption line cannot carry the theme. Depends on photography the team has not shot yet."
+  },
+  {
+   "name": "Lagoon After Dark",
+   "distinctiveness": 5,
+   "fit_sharjah": 4,
+   "fit_theme": 4,
+   "anti_slop": 3,
+   "pitch_impact": 5,
+   "buildable_in_hours": 4,
+   "total": 25,
+   "note": "Off-peak night visiting is a real Gulf-heat lever. Projector-proof. Magenta must stay civic or SCTDA reads nightlife; night-only limits reach."
+  },
+  {
+   "name": "Girih Screen",
+   "distinctiveness": 5,
+   "fit_sharjah": 4,
+   "fit_theme": 3,
+   "anti_slop": 2,
+   "pitch_impact": 4,
+   "buildable_in_hours": 2,
+   "total": 20,
+   "note": "Teal and brass lattice is the default AI Arabian-luxury look despite guardrails. Mask animation and three sheet states exceed seven hours."
+  },
+  {
+   "name": "Mleiha Field Sheet",
+   "distinctiveness": 2,
+   "fit_sharjah": 4,
+   "fit_theme": 4,
+   "anti_slop": 4,
+   "pitch_impact": 3,
+   "buildable_in_hours": 3,
+   "total": 20,
+   "note": "Carbon ledger and protected-site stamps are explicit, but stamps read as last year's badges. Visually a twin of Khor Field Guide."
+  },
+  {
+   "name": "Coral Reticle",
+   "distinctiveness": 4,
+   "fit_sharjah": 2,
+   "fit_theme": 4,
+   "anti_slop": 1,
+   "pitch_impact": 4,
+   "buildable_in_hours": 3,
+   "total": 18,
+   "note": "Glass HUD with corner ticks over a camera is the canonical AI AR mockup. Sharjah survives only as color names. Carbon row is good."
+  },
+  {
+   "name": "Route Band Signage",
+   "distinctiveness": 5,
+   "fit_sharjah": 4,
+   "fit_theme": 5,
+   "anti_slop": 5,
+   "pitch_impact": 4,
+   "buildable_in_hours": 5,
+   "total": 28,
+   "note": "Reads like something SCTDA would install on the Corniche. Footprint bands make sustainability legible without a leaf icon. Flat CSS, buildable today."
+  },
+  {
+   "name": "Khor Field Guide",
+   "distinctiveness": 2,
+   "fit_sharjah": 4,
+   "fit_theme": 5,
+   "anti_slop": 3,
+   "pitch_impact": 3,
+   "buildable_in_hours": 2,
+   "total": 19,
+   "note": "Best theme fit (capacity meters, EPAA credits), but green-for-sustainability is the obvious move and illustration plates will not finish by tomorrow noon."
+  }
+ ],
+ "similar_pairs": [
+  [
+   "Mleiha Field Sheet",
+   "Khor Field Guide"
+  ],
+  [
+   "Hashiya Folio",
+   "Gypsum Hour"
+  ],
+  [
+   "Hashiya Folio",
+   "Mleiha Field Sheet"
+  ],
+  [
+   "Lagoon After Dark",
+   "Coral Reticle"
+  ]
+ ]
+}

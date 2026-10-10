@@ -1,0 +1,63 @@
+{
+ "name": "Coral Reticle",
+ "family": "Spatial glass HUD, instrument overlay on live camera",
+ "tagline": "Every landmark, with its shade, its crowd, and its carbon.",
+ "palette": [
+  {
+   "role": "background (lagoon night, Khalid Lagoon water after dark; flat, no gradient)",
+   "hex": "#0E1214"
+  },
+  {
+   "role": "surface (glass panel base, rendered at 72 to 88 percent opacity over the camera, solid on non-camera screens)",
+   "hex": "#182024"
+  },
+  {
+   "role": "ink (gypsum plaster white, body text and primary labels; 15.5:1 on background)",
+   "hex": "#EEE9DF"
+  },
+  {
+   "role": "accent (coral stone of Al Hisn and Bait Al Naboodah; landmark reticles, fast route, primary action; 6.9:1 on background)",
+   "hex": "#E0865C"
+  },
+  {
+   "role": "secondary accent (Kalba mangrove green; sustainability readouts, low-impact route, shade indicator; 9.1:1 on background)",
+   "hex": "#86C29A"
+  },
+  {
+   "role": "hairline (slate; 1px rules, tick marks, leader lines, muted labels; 4.9:1 on background)",
+   "hex": "#74858C"
+  }
+ ],
+ "type_display": "IBM Plex Sans Condensed, SemiBold 600, for HUD labels, callout headings, mode tabs, and deck headings; Arabic companion IBM Plex Sans Arabic SemiBold 600 (no condensed cut exists, so Arabic labels are given 20 percent more panel width). Both confirmed on Google Fonts.",
+ "type_body": "IBM Plex Sans Regular 400 and Medium 500 for prose and the guide chat, 15 to 16px, line length capped at 60ch inside panels; IBM Plex Mono Regular with tabular figures for every readout (meters, minutes, crowd index, grams CO2, shade fraction); IBM Plex Sans Arabic Regular 400 for Arabic prose, Eastern Arabic digits optional per locale. One superfamily, three cuts, width and mono as the contrast axes.",
+ "layout": "The live camera is the home screen and the only full-bleed surface. Three layers sit on it. Layer one is the feed, untouched. Layer two is the callout system: a recognized or heading-matched landmark gets four 1px corner ticks (a reticle, never a closed box), a hairline leader line, and one glass panel with three fixed rows: name and year, one fact, and a sustainability strip (shade now, crowd now, grams CO2 to walk there). At most three callouts on screen; the rest collapse to dots on a horizon rule. Layer three is a single translucent instrument rail at the bottom with three plain-text modes: Lens, Guide, Map. Guide is a sheet that rises from the rail to 60 percent height and leaves the camera visible above it, so answers can point back into the scene with the same reticle. Map is the same frame flipped to a top-down overlay: the low-impact route in mangrove green is the default line, the fast route in coral is the alternative, and the two readouts (minutes, grams CO2, shaded fraction) sit side by side in Plex Mono. Grid: four columns at phone width, 16px gutter, 8px baseline; panels 12px radius maximum; density medium; everything aligns to the hairline system.",
+ "motion": "Reticle ticks draw outward from the anchor point in 240ms ease-out-quint, then the leader line extends and the panel fades in (Panel reveal recipe). Readouts use the Spinning counter recipe when a value changes and Number pop-in on first appearance. Guide replies use the Thinking states and Streaming text recipes, nothing else animates in the chat. The camera feed never receives filters, blur, or parallax. Anchors are damped (low-pass on heading) so panels drift slowly instead of jittering. No bounce, no elastic, no glow pulses. Reduced motion: ticks and panels appear instantly with a 120ms crossfade and counters set their value directly.",
+ "imagery": "Documentary phone photography shot by the team during the event, in flat Sharjah daylight and at dusk: Heart of Sharjah coral stone walls, Al Majaz waterfront, the House of Wisdom, Al Noor Island. No stock, no renders, no illustration. Icons are 1.5px stroke with square caps, the same weight as the hairlines. The historical view is a crossfade between the live frame and an archival photograph with the reticle persisting, not a 3D reconstruction, unless a single gltf model loads in under three seconds through model-viewer. The hero is a real phone frame over real footage with the panels composited at true opacity.",
+ "hero_prompt": "Phone held up at dusk toward the coral stone walls of Al Hisn fort, Sharjah; on the screen a live camera view with four thin pale corner ticks around the fort, a slim translucent dark panel beside it listing name, year, shade and carbon figures in monospaced type, mangrove green and coral accents, hairline leader line, no glow, documentary realism.",
+ "why_sharjah": "Coral stone and gypsum plaster from the Heart of Sharjah set the warm ink and the accent. Khalid Lagoon after dark sets the flat base. The Kalba mangrove reserve supplies the green. The barjeel wind tower, a passive cooling device, is the reason the shade readout exists. Corner ticks echo the gypsum lattice geometry of the old houses.",
+ "why_sustainable": "Sustainability is a permanent third row in every panel, not a badge: shade fraction, crowd index, and grams CO2 for the route. The map defaults to the low-impact route in mangrove green and shows the fast route as the alternative. Instrument precision makes environmental cost legible rather than decorative.",
+ "references": [
+  {
+   "site": "transitions.dev",
+   "url": "https://transitions.dev/studio.html?lib=spinning-counter",
+   "what": "Spinning counter: digits roll like a reel to the new value. Basis for the live meters, minutes, and grams CO2 readouts in the panels."
+  },
+  {
+   "site": "transitions.dev",
+   "url": "https://transitions.dev/studio.html?lib=panel-reveal",
+   "what": "Panel reveal: a panel open and close transition. Basis for the callout panel entrance and the Guide sheet rising from the instrument rail."
+  },
+  {
+   "site": "godly.design",
+   "url": "https://godly.design/website/paradigmai",
+   "what": "The gallery loaded and listed Paradigm, Cloaked, Superpower, Reevo, and Gitnimble, but every entry page returned only screenshot links with the Style field blank, so no entry could be verified as HUD-like. The Paradigm product page itself showed in-product status panels (Priority: Low to High), the closest listed match to data-callout UI. Treat as unverified."
+  },
+  {
+   "site": "supahero.io",
+   "url": "https://supahero.io",
+   "what": "Consulted as the substitute library site because godly.design entries carried no style text. The hero gallery loaded with several hundred entries (Linear, Raycast, Better Stack among them) but exposes no style tags through fetch, so no specific hero was confirmed as instrument-style."
+  }
+ ],
+ "slop_guardrails": "Glass appears only where it sits on the live camera; the Map and Guide screens use the flat solid base, never a dark gradient with frosted cards on it. No sci-fi HUD vocabulary: no scan lines, no hexagons, no radar sweeps, no neon cyan, no glow, no fake loading percentages, no Orbitron or Chakra Petch. Reticles are four corner ticks, never a closed box, and never more than three at once. Every readout is a computed number from the demo data; a decorative number is a bug. No uppercase tracked eyebrows above sections, no numbered section markers, no gradient text, no side-stripe borders. The camera feed is never blurred, tinted, or given parallax. No purple anywhere.",
+ "risks": "Readability over a bright scene: Sharjah midday light will wash out a 72 percent panel, so the page must sample the video frame luminance and raise panel opacity to 88 percent with the hairline border before text fails AA; test this on an outdoor photo, not just indoors. Build scope: real landmark recognition is not achievable in seven hours, so callouts anchor to GPS heading against a hard-coded landmark list or to printed markers; the instrument look makes any jitter obvious, so the heading low-pass filter is not optional. The demo runs indoors at the AUS Main Building, so bring a printed photograph of Al Hisn on an easel for the camera to look at. Judges may read a dark HUD as a game; the plain Plex type, documentary photographs, and the carbon row are the counterweight. Plex Sans Arabic has no condensed cut, so Arabic labels wrap in narrow panels unless the width allowance is built in. The AI Usage Disclosure must list any generated CSS or copy for the panels."
+}

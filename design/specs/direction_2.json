@@ -1,0 +1,63 @@
+{
+ "name": "Gypsum Hour",
+ "family": "Desert editorial minimalism: photography-led, warm neutral, serif display, near-zero chrome",
+ "tagline": "Sharjah, in its own light.",
+ "palette": [
+  {
+   "role": "background (gypsum, chroma-zero off-white; light sheet and map base; ink on it 14.66:1)",
+   "hex": "#F2F1EE"
+  },
+  {
+   "role": "surface (shadow, deep umber; camera and AR layer, projector dark panels; gypsum text on it 14.12:1)",
+   "hex": "#26211C"
+  },
+  {
+   "role": "ink (primary text on gypsum)",
+   "hex": "#221E1A"
+  },
+  {
+   "role": "accent (sand ochre from Mleiha dunes; route line, the single active label; 5.09:1 on gypsum, lighter tint #D4A066 on shadow 6.85:1)",
+   "hex": "#9A5417"
+  },
+  {
+   "role": "secondary accent (creek teal from Sharjah Creek and Khor Fakkan; water on the map, water refill points; 6.51:1 on gypsum, tint #8FB9BA on shadow 7.46:1)",
+   "hex": "#2F5D60"
+  },
+  {
+   "role": "muted ink (dust; captions, timestamps, hairlines at 24 percent; 5.16:1 on gypsum, tint #B8B0A6 on shadow 7.44:1)",
+   "hex": "#6B645C"
+  }
+ ],
+ "type_display": "Newsreader (Google Fonts, variable serif with optical sizes; opsz 72, weight 300 on phone and 400 on the projector, letter-spacing no tighter than -0.02em, display cap 56px on phone and 88px on projector) for Latin place names and headings; Amiri (Google Fonts, Naskh) 400 as the Arabic companion, set 8 to 10 percent larger than the Latin to match apparent size, Arabic first on bilingual captions. Both verified through the Google Fonts CSS API.",
+ "type_body": "IBM Plex Sans 400 and 500 for Latin body, labels, and the visitor's side of the transcript; IBM Plex Sans Arabic 400 and 500 for Arabic, same family and metrics so mixed-direction lines align. Body 16 to 17px, line height 1.55, measure 60 to 70ch. Uppercase only for the three bottom-bar labels; no all-caps body, no tracked eyebrows. Verified on Google Fonts.",
+ "layout": "Phone portrait, single column, 8pt spacing on a 4-column fluid grid with 20px side gutters; generous vertical rhythm (48 to 96px between blocks) so each screen carries one idea. Three states share one bottom bar with three text labels and no icons: Look, Ask, Walk. Look is the live camera, or a full-bleed Sharjah photograph as the indoor fallback, on the shadow surface; recognized places are named as captions in Amiri and Newsreader anchored to the lower third over a flat 40 percent scrim, never as floating boxes or brackets. Ask is a gypsum-white sheet that rises to 60 percent height over the camera, which stays visible above as context; the guide's replies run as a transcript separated by hairlines (no bubbles, no avatars), the guide in Newsreader, the visitor in Plex, with one ochre line marking the current answer. Walk is a monochrome gypsum map with a single ochre route line, creek teal for water and refill points, and shade along the route drawn as soft gray hatching that changes with the hour; the guide's next instruction is one line of text at the bottom. State changes are crossfades, so camera, transcript, and map read as three views of one place rather than three apps. For the pitch projector, the three states sit side by side in a 3-column grid on gypsum with 64px gutters and one photograph bleeding across the top.",
+ "motion": "Slow and settled: 600 to 900ms, ease-out-expo, no bounce, no spring, no parallax. AR captions do not pop; they fade in and drift 6px downward like a shadow lengthening. Transcript lines fade over 400ms with an 8px rise, one at a time. The map route draws along its path over 1200ms when a route is chosen, and the shade hatching shifts over 900ms when the hour slider moves. State changes are 500ms crossfades. One motion per event, never stacked, and no idle animation anywhere. Reduced motion: instant swaps and no path draw.",
+ "imagery": "Real photography only, large and quiet: gypsum and coral-stone walls in Heart of Sharjah, the whitewashed courtyards of Al Mureijah Art Spaces, Mleiha's amber dunes and fossil rock, Khor Fakkan's dark mountains over the sea, chosen for late-afternoon raking light with long hard shadows and almost no people. Full-bleed in Look, edge to edge with square corners, no overlays except the bottom scrim in the shadow color for caption legibility. Color grade warm but desaturated, highlights held rather than blown, the ochre and teal of the palette appearing only where the place itself has them. No stock crowds, no drone-swoop cliches, no 3D renders standing in for places, no illustration. Sources: photographs the team shoots during the event, or CC-licensed Wikimedia Commons images credited in the AI Usage Disclosure and credits document.",
+ "hero_prompt": "Photograph, late afternoon in Heart of Sharjah: a whitewashed gypsum and coral-stone wall with a wind tower casting one long hard shadow across an empty courtyard, warm desaturated tones, single person in the distance holding a phone, 35mm film look, soft grain, no text, no HUD, no graphics, quiet editorial travel photography.",
+ "why_sharjah": "Heart of Sharjah's restored coral-stone (faroush) and gypsum (juss) houses, Bait Al Naboodah and Souq Al Arsah, give the palette its white and its hard shadows; the barjeel wind towers give the shadow motif; Mleiha's dunes supply the one ochre accent; Sharjah Creek and Khor Fakkan supply the teal. The light is the late-afternoon raking sun on plaster.",
+ "why_sustainable": "Shade is the sustainability metaphor: the route view favors shaded, walkable paths and quieter heritage sites over crowded ones, drawn as gray hatching rather than badges. Restraint carries the rest: real photographs instead of 3D renders, hairlines instead of cards, and one caption line for distance walked and emissions avoided.",
+ "references": [
+  {
+   "site": "Supahero: Kettmeir (heritage winery, Alto Adige); live site https://www.kettmeir.com/ also read",
+   "url": "https://supahero.io/hero/kettmeir",
+   "what": "Sparse sections with one heading, one short text block, and one link each; full-section photography of territory before every headline; a heritage brand carried by restraint rather than chrome. Model for the Look state and the projector layout."
+  },
+  {
+   "site": "Supahero: Anuc Home (interior design studio, described on Supahero as serene and balanced); live site https://www.anuchome.com/ also read",
+   "url": "https://supahero.io/hero/anuc-home",
+   "what": "One wide hero photograph, a four-link top bar, a three-item numbered services list, four image cards with only year and title. Low density and plain labels; model for the bottom bar and the transcript's hairline rhythm."
+  },
+  {
+   "site": "Supahero: Heritage In Art (Lumen Art Space, Vietnamese lacquer craft); live site redirects to lumen-artspace.webflow.io, also read",
+   "url": "https://supahero.io/hero/heritage-in-art",
+   "what": "One large lead image with smaller craft images around it, three-link navigation, a single Scroll cue as the only motion. Model for presenting craft and place photography first, with text as caption."
+  },
+  {
+   "site": "refero.design (blocked: returned only its page title); godly.design used as the library substitute, and Badrutt's Palace Hotel on Supahero reviewed as a hospitality check",
+   "url": "https://refero.design",
+   "what": "Refero could not be read without login. Godly's first batch was AI and SaaS work with nothing in this lane, so it contributed no pick. Badrutt's Palace (https://supahero.io/hero/badrutt-s-palace-hotel) confirmed the luxury-hotel photography register but its live site returned 403, so it is noted, not relied on."
+  }
+ ],
+ "slop_guardrails": "Never a cream or sand body background: the light surface is chroma-zero gypsum (#F2F1EE) and sand appears only as the ochre accent, so no tokens named sand, cream, paper, parchment, or linen. No glass cards, blurred panels, scanning lines, or HUD corner brackets over the camera; AR labels are plain captions on a flat scrim. No rounded cards; radius stays at 0 to 4px because gypsum edges are sharp. No chat bubbles, avatars, or typing-dot animations in the guide transcript. No hero-metric stat block for CO2, steps, or points; one caption line. No tracked uppercase eyebrows, no 01/02/03 section markers, no gradient text, no side-stripe borders. No illustrations of camels, dunes, falcons, or dhows, and no 3D renders standing in for photographs. No slide or push transitions; only crossfades. No Inter anywhere.",
+ "risks": "The warm minimal lane sits next to the 2026 AI cream default; if the team drifts to a tinted beige background or adds cards, it collapses into that look. White captions over a bright midday camera feed fail contrast without the scrim, and the demo will likely run indoors at AUS where the camera shows a lecture hall, so the Look state needs a photograph fallback wired in from the start. Quiet design can read as unfinished to judges in a five-minute pitch, so the projector layout must show all three states at once with a real route. Newsreader at 300 weight and Amiri both thin out on low-resolution projectors; use 400 weight on the pitch screen. Large photography depends on real Sharjah images the team must shoot during the event or source under CC license with credit, which takes an hour that competes with build time."
+}

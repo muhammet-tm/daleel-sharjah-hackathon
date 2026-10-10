@@ -1,0 +1,63 @@
+{
+ "name": "Route Band Signage",
+ "family": "Civic wayfinding signage (airport and museum information design, Schiphol and AIGA/DOT pictogram lineage)",
+ "tagline": "Sharjah, signposted by footprint.",
+ "palette": [
+  {
+   "role": "background (sign board white, OKLCH L 0.96 C 0.003, a neutral, not cream)",
+   "hex": "#F2F2F0"
+  },
+  {
+   "role": "surface (sign plate, deep mangrove black; white text on it 16.63:1)",
+   "hex": "#14211B"
+  },
+  {
+   "role": "ink (16.45:1 on background)",
+   "hex": "#101513"
+  },
+  {
+   "role": "accent (Kalba mangrove green, low-footprint route band; 5.86:1 as text on background, white on it 6.57:1)",
+   "hex": "#0F6B3F"
+  },
+  {
+   "role": "secondary accent (Mleiha amber, heat and crowd warning band; carries ink text only, 5.73:1; white on it is 3.22:1 and is forbidden for body)",
+   "hex": "#D8761C"
+  },
+  {
+   "role": "Blue Souk tile blue (creek and water route band, links; 7.41:1 as text on background, white on it 8.31:1)",
+   "hex": "#1F4E8C"
+  }
+ ],
+ "type_display": "Overpass 800 and 900 (Google Fonts, Highway Gothic lineage) for place-name plates, uppercase only on plates, clamp(2rem, 7vw, 3.5rem), letter-spacing 0 to -0.02em. Arabic companion: Readex Pro 700 (Google Fonts, arabic subset confirmed in google/fonts METADATA), set 10 percent larger than the Latin to match x-height and right-aligned on the same plate.",
+ "type_body": "Atkinson Hyperlegible 400 and 700 (Google Fonts) for Latin body at 17px/1.45 with tabular figures for times, crowd counts, and footprint totals; Readex Pro 400 for Arabic body at 18px; labels 13px bold and never smaller. Three families in total (Overpass, Atkinson Hyperlegible, Readex Pro), no Inter, no fourth family.",
+ "layout": "Mobile-first 4-column grid, 16px gutters, 8px baseline, organized as three fixed horizontal zones like a station. Zone 1 is a 64px sign header plate in the surface color carrying the current place name in Latin and Arabic, a route number plate, and a three-cell crowd gauge. Zone 2 is the stage, which shows either the live AR camera or the map, switched by one two-cell toggle, never both at once. Zone 3 is a bottom platform bar with three pictogram tabs: Look (AR), Map, Ask (guide). Route bands are full-width horizontal strips 12px tall in green, blue, or amber stacked under the header like transit line indicators, and the same bands draw as 6px lines on a desaturated gray basemap. The guide chat is not a floating bubble layer: it slides up as a stacked sign plate over the lower 45 percent of the stage; each answer is a dark plate with white text, suggested questions are route-colored chips (ink text on amber, white on green and blue), and tapping a place name inside an answer drops the plate and pins that place on the map or anchors it in the AR view. AR overlays are anchored sign plates with a band on their top edge and flat chevrons drawn on the ground plane like road markings. The desktop pitch view keeps the same three zones with the map at 60 percent width and the plates in a 40 percent column; no cards anywhere.",
+ "motion": "Signage moves like signage. Plates enter with an 8px translateY over 180ms ease-out-quart, no bounce, no elastic. A chosen route band draws along its path with stroke-dashoffset over 400ms. The crowd gauge fills cell by cell at 90ms steps like an LED board. The Latin and Arabic toggle uses a 240ms vertical clip-path wipe, a nod to the split-flap board, with plate height fixed so nothing reflows. AR chevrons step through three opacity states at 600ms intervals instead of glowing. Under prefers-reduced-motion every one of these becomes a 120ms crossfade.",
+ "imagery": "Documentary photography of Sharjah in daylight, full-bleed and uncropped, no teal-orange grading, no filters: coral-stone walls in the Heart of Sharjah, Blue Souk tiles, Kalba mangroves, Mleiha rock, Khor Fakkan's Hajar slopes. Photos never sit under text; captions live on plates beside them. Pictograms are a bespoke set of eight drawn on a 24px grid at 2.5px stroke in the AIGA/DOT tradition: walk, abra, bus, shade, water refill, mangrove, fort, souk. Material Symbols, credited in the AI and open-source disclosure, fill any gap. No 3D renders, no isometric illustration, no AI sparkle glyphs.",
+ "hero_prompt": "Documentary photograph, Sharjah Corniche, 16:00 hard sunlight. Foreground: a tall matte black wayfinding totem with oversized white Latin and Arabic place names, three horizontal bands in mangrove green, souk blue, and desert amber, and white pictograms of a walking figure, an abra boat, and a mangrove. Blue Souk tiles and the creek behind. Flat colors, no glow, no gradients.",
+ "why_sharjah": "The three route bands take their colors from places on the routes themselves: Blue Souk tile blue, Kalba mangrove green, and Mleiha's amber rock. The neutral board recalls the whitewashed courtyards of the Sharjah Art Foundation and the coral-stone of the Heart of Sharjah. Bilingual plates follow the road and museum signs visitors already read along the Corniche.",
+ "why_sustainable": "Every route band is a footprint label: green for walking and shaded paths, blue for creek water transport, amber for motorized or peak-heat legs. Crowd gauges borrow the parking-sign idiom to disperse visitors toward Mleiha, Kalba, and Khor Fakkan. Flat print-grade graphics run on low-end phones without heavy rendering.",
+ "references": [
+  {
+   "site": "navbar.gallery (Thonik entry, page 2)",
+   "url": "https://navbar.gallery/navbar/thonik",
+   "what": "Full-screen navbar entry for the Amsterdam studio Thonik. The live site thonik.nl lists Schiphol Airport and M+ Museum Hong Kong identity work, the exact airport and museum signage lineage of this seed, with one oversized H1 and a sharp drop to body-sized subheads. Gallery screenshots could not be viewed from this machine (Browser pane refused external sites); text content was fetched."
+  },
+  {
+   "site": "supahero.io (Flighty entry)",
+   "url": "https://supahero.io/hero/flighty",
+   "what": "Hero for the flight app Flighty (flighty.com). The live copy reads as airport information grammar: gate, terminal, and baggage belt assignments as short status rows. Taken as the model for sign-plate status lines; its emoji pictograms are exactly what this direction replaces with drawn symbols."
+  },
+  {
+   "site": "navbar.gallery (Chesapeake Plywood entry)",
+   "url": "https://navbar.gallery/navbar/chesapeake-plywood",
+   "what": "Mega menu with numbered sub-links (01, 02) under a single underlined headline and a white or green wordmark. Taken as the model for a numbered route index in the style of transit line listings, the one place where numbering is earned."
+  },
+  {
+   "site": "supahero.io (Lugano Living Lab entry)",
+   "url": "https://supahero.io/hero/lugano-living-lab",
+   "what": "Hero for a municipal innovation lab (luganolivinglab.ch) with a 'for the City' civic register; consulted for the public-authority tone SCTDA will expect. Visual treatment could not be verified from fetched text."
+  }
+ ],
+ "slop_guardrails": "Never a gradient of any kind, never glass or blur over the camera, never purple or blue-purple, never a cream or sand body. Bands are full-width horizontal strips only, never a left-border stripe on a card. Corner radius 0 to 4px on plates; pills only on 24px chips. No emoji pictograms, no sparkle or AI glyph, no chat-bubble tails, no shadow wider than 8px. No uppercase body copy, no tracked eyebrow kickers, no 01/02/03 scaffolding outside the route index. No decorative Arabic calligraphy as texture, no fake highway exit jokes, no stock photos of Dubai standing in for Sharjah.",
+ "risks": "Judges may read the sternness as a transport utility rather than a tourism product, so the photography has to carry the warmth in the deck. Eight bespoke pictograms is the ceiling in seven hours; the fallback is Material Symbols with credit in the disclosure document. Overpass has tight apertures below 14px, so small labels must use Atkinson. Readex Pro is a legibility face, not a calligraphic one, and Arabic-first judges may find it plain. Two contrast rules must live in the CSS tokens: amber never carries white text (3.22:1) and green text never sits on the dark plate (2.53:1). Three band colors can collide with basemap colors, so the map base must stay desaturated gray."
+}

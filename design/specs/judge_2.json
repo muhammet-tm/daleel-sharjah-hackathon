@@ -1,0 +1,102 @@
+{
+ "scores": [
+  {
+   "name": "Hashiya Folio",
+   "distinctiveness": 3,
+   "fit_sharjah": 5,
+   "fit_theme": 3,
+   "anti_slop": 4,
+   "pitch_impact": 3,
+   "buildable_in_hours": 4,
+   "total": 22,
+   "note": "Margin-note chat is the sharpest interaction idea here, but dense serif text dies on a projector; lead with the plate and red numerals."
+  },
+  {
+   "name": "Gypsum Hour",
+   "distinctiveness": 2,
+   "fit_sharjah": 4,
+   "fit_theme": 2,
+   "anti_slop": 2,
+   "pitch_impact": 3,
+   "buildable_in_hours": 3,
+   "total": 16,
+   "note": "The 2026 warm-editorial default by its own admission; sustainability is one caption line and the look depends on a photo shoot you cannot afford."
+  },
+  {
+   "name": "Lagoon After Dark",
+   "distinctiveness": 4,
+   "fit_sharjah": 4,
+   "fit_theme": 4,
+   "anti_slop": 4,
+   "pitch_impact": 5,
+   "buildable_in_hours": 4,
+   "total": 25,
+   "note": "Off-peak night walking is a real Gulf sustainability lever and poster type projects hard; keep copy civic so magenta never reads nightlife."
+  },
+  {
+   "name": "Girih Screen",
+   "distinctiveness": 4,
+   "fit_sharjah": 3,
+   "fit_theme": 4,
+   "anti_slop": 2,
+   "pitch_impact": 4,
+   "buildable_in_hours": 2,
+   "total": 19,
+   "note": "Lattice-as-mask is clever, but teal, brass and Cormorant is the luxury-Arabian AI palette, and the animated SVG mask will eat your seven hours."
+  },
+  {
+   "name": "Mleiha Field Sheet",
+   "distinctiveness": 3,
+   "fit_sharjah": 4,
+   "fit_theme": 5,
+   "anti_slop": 3,
+   "pitch_impact": 3,
+   "buildable_in_hours": 3,
+   "total": 21,
+   "note": "Carbon ledger is the best theme mechanic in the set, but stamps are badges by another name and MapLibre restyling burns an hour."
+  },
+  {
+   "name": "Coral Reticle",
+   "distinctiveness": 3,
+   "fit_sharjah": 3,
+   "fit_theme": 4,
+   "anti_slop": 2,
+   "pitch_impact": 4,
+   "buildable_in_hours": 3,
+   "total": 19,
+   "note": "Glass panels over a camera feed is exactly what every AI render of an AR tourist app looks like; the carbon row cannot rescue it."
+  },
+  {
+   "name": "Route Band Signage",
+   "distinctiveness": 5,
+   "fit_sharjah": 3,
+   "fit_theme": 5,
+   "anti_slop": 5,
+   "pitch_impact": 4,
+   "buildable_in_hours": 4,
+   "total": 26,
+   "note": "Footprint as route band makes sustainability the information architecture; flat plates build fast and project hard. Warm it with photography or it reads transit."
+  },
+  {
+   "name": "Khor Field Guide",
+   "distinctiveness": 3,
+   "fit_sharjah": 4,
+   "fit_theme": 5,
+   "anti_slop": 2,
+   "pitch_impact": 3,
+   "buildable_in_hours": 2,
+   "total": 19,
+   "note": "Kalba kingfisher and EPAA data are genuinely Sharjah, but sage plus botanical serif is wellness-brand slop and the plates will not finish today."
+  }
+ ],
+ "similar_pairs": [
+  [
+   "Hashiya Folio",
+   "Gypsum Hour"
+  ],
+  [
+   "Mleiha Field Sheet",
+   "Khor Field Guide"
+  ]
+ ]
+}

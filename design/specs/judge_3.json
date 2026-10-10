@@ -1,0 +1,106 @@
+{
+ "scores": [
+  {
+   "name": "Route Band Signage",
+   "distinctiveness": 5,
+   "fit_sharjah": 4,
+   "fit_theme": 5,
+   "anti_slop": 5,
+   "pitch_impact": 4,
+   "buildable_in_hours": 4,
+   "total": 27,
+   "note": "Bands encode footprint without a word of explanation; flat plates project cleanly and nobody mistakes signage for AI art. Pure CSS build. Watch sternness."
+  },
+  {
+   "name": "Lagoon After Dark",
+   "distinctiveness": 4,
+   "fit_sharjah": 4,
+   "fit_theme": 4,
+   "anti_slop": 3,
+   "pitch_impact": 5,
+   "buildable_in_hours": 4,
+   "total": 24,
+   "note": "Loudest slide in the room: magenta poster type on navy. Off-peak night walking is a credible Gulf sustainability lever. Needs real night photos tonight."
+  },
+  {
+   "name": "Girih Screen",
+   "distinctiveness": 5,
+   "fit_sharjah": 4,
+   "fit_theme": 4,
+   "anti_slop": 3,
+   "pitch_impact": 4,
+   "buildable_in_hours": 2,
+   "total": 22,
+   "note": "Lattice-as-mask is the most memorable concept and the hardest build; animated khatam SVG masks will eat the afternoon. Teal-brass flirts with hotel brochure."
+  },
+  {
+   "name": "Hashiya Folio",
+   "distinctiveness": 3,
+   "fit_sharjah": 5,
+   "fit_theme": 2,
+   "anti_slop": 4,
+   "pitch_impact": 2,
+   "buildable_in_hours": 4,
+   "total": 20,
+   "note": "Marginalia is the cleverest idea here but invisible at projector distance; hairlines and 14px notes vanish, sustainability is a footnote ledger. Brochure risk is real."
+  },
+  {
+   "name": "Mleiha Field Sheet",
+   "distinctiveness": 3,
+   "fit_sharjah": 4,
+   "fit_theme": 4,
+   "anti_slop": 3,
+   "pitch_impact": 3,
+   "buildable_in_hours": 3,
+   "total": 20,
+   "note": "Carbon ticket ledger is concrete, but stamps read as badges, which last year's winner built. Halftone and MapLibre recolor cost hours; twin of Khor."
+  },
+  {
+   "name": "Coral Reticle",
+   "distinctiveness": 3,
+   "fit_sharjah": 3,
+   "fit_theme": 5,
+   "anti_slop": 2,
+   "pitch_impact": 4,
+   "buildable_in_hours": 3,
+   "total": 20,
+   "note": "Sustainability row in every callout is the best theme integration here, but glass HUD on camera is exactly what AI renders. Heading jitter will show."
+  },
+  {
+   "name": "Khor Field Guide",
+   "distinctiveness": 3,
+   "fit_sharjah": 4,
+   "fit_theme": 5,
+   "anti_slop": 3,
+   "pitch_impact": 3,
+   "buildable_in_hours": 2,
+   "total": 20,
+   "note": "Strongest conservation story, weakest deliverability: species plates will not exist by 18:00 and muted sage washes out on a projector. Twin of Mleiha."
+  },
+  {
+   "name": "Gypsum Hour",
+   "distinctiveness": 2,
+   "fit_sharjah": 4,
+   "fit_theme": 3,
+   "anti_slop": 2,
+   "pitch_impact": 3,
+   "buildable_in_hours": 4,
+   "total": 18,
+   "note": "Big serif over desaturated photos is the default AI travel brand; shade hatching is a thin sustainability story. Easy to build, easy to forget."
+  }
+ ],
+ "similar_pairs": [
+  [
+   "Mleiha Field Sheet",
+   "Khor Field Guide"
+  ],
+  [
+   "Hashiya Folio",
+   "Gypsum Hour"
+  ],
+  [
+   "Coral Reticle",
+   "Lagoon After Dark"
+  ]
+ ]
+}

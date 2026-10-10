@@ -1,0 +1,63 @@
+{
+ "name": "Lagoon After Dark",
+ "family": "Civic night poster: event-bill typography, flat saturated accents on deep navy, documentary night photography",
+ "tagline": "Sharjah after dark, on foot.",
+ "palette": [
+  {
+   "role": "background: Khalid Lagoon navy, app and poster ground",
+   "hex": "#0B1530"
+  },
+  {
+   "role": "surface: wet corniche stone, bottom sheets and map chrome",
+   "hex": "#16234D"
+  },
+  {
+   "role": "ink: body and display text, 16.3:1 on background, 13.7:1 on surface",
+   "hex": "#F1F3F8"
+  },
+  {
+   "role": "accent: fountain magenta, primary action and AR stickers, 6.2:1 on background, 5.2:1 on surface",
+   "hex": "#FF5C99"
+  },
+  {
+   "role": "secondary accent: lagoon green, walk routes and quiet-hours signal, 11.2:1 on background",
+   "hex": "#2EE6A6"
+  },
+  {
+   "role": "sodium lamp amber: crowd pressure and warnings, 10.2:1 on background",
+   "hex": "#FFB454"
+  }
+ ],
+ "type_display": "Big Shoulders Display 800 and 900 (Google Fonts, verified on the CSS API), uppercase poster headlines at clamp(2.25rem, 8vw, 5rem), letter-spacing -0.02em, line-height 0.95. Arabic companion: Noto Kufi Arabic 800 (verified), set at 0.92 scale on the same line-height so mixed-script headlines share one baseline band. Button labels in navy on magenta or green fills, Big Shoulders 700 at 18 px, never white on magenta.",
+ "type_body": "IBM Plex Sans 400 and 500 at 16 to 17 px, line-height 1.5, measure capped at 68ch, with IBM Plex Sans Arabic 400 and 500 as a true matched pair from the same family (both verified on the CSS API). Chip and sticker labels in Plex 600 at 13 px, sentence case; uppercase only on sticker tags of four words or fewer. Numerals for walk minutes and quiet hours in Plex 600 tabular figures.",
+ "layout": "Mobile web first: a 4-column grid on 16 px gutters and an 8 px baseline, one poster statement per screen, a 1.333 type scale separating poster lines from body. Three lenses instead of tabs, held in a single bottom bar with the English/Arabic toggle (full RTL mirroring): Look, Go, Ask. Look is home: the full-bleed camera with landmark stickers anchored to buildings, solid magenta or green rectangles carrying condensed white type and one fact, no glass, no halo. Tapping a sticker opens Ask as a bottom sheet with that landmark already loaded; the sheet persists when the user swipes up into Go, so the chat and the map always share one context. Go is a dark basemap in the navy of the background where the corniche walk from Al Majaz to Al Qasba is a green stroke, crowd pressure per site fills in amber, and each site carries a quiet-hours chip and a walk-minutes figure. The only card-shaped elements are chat bubbles; everything else is type on ground or a flat sticker.",
+ "motion": "Short and hard-edged, like a poster being pasted up: ease-out-expo at 180 to 240 ms, no bounce, no elastic, no parallax. Stickers slide in along their anchor line with a clip-path reveal; route strokes draw with stroke-dashoffset; the quiet-hours chip flips once when a site drops below the crowd threshold. The top band's hue steps once per hour from amber dusk to lagoon navy, keyed to Sharjah local time rather than scroll. Chat replies arrive line by line in poster cadence. Reduced motion replaces all of it with 120 ms crossfades.",
+ "imagery": "Real night photography of Al Majaz Waterfront, the Al Qasba canal, and Al Noor Island, slightly underexposed, handheld at 1/30 so abra lights and fountain jets streak. No HDR glow, no drone shots with purple skies, no 3D renders, no AI-generated skylines. Marketing posters take a two-color treatment (navy plus one accent) over the photo with the headline cut across it; inside the app the photo stays full color under solid type. Pictograms are flat two-color marks at 2 px stroke drawn from the abra, the fountain arc, and the mosque silhouettes used in the Sharjah Light Festival.",
+ "hero_prompt": "Night photograph, Al Majaz Waterfront Sharjah, Khalid Lagoon, musical fountain mid-jet lit magenta, lit towers reflected in dark navy water, wet corniche stone, a young couple walking with a phone, handheld 1/30 motion streaks on abra lights, slight underexposure, no HDR, no purple sky, documentary realism, 35mm, space at bottom for condensed poster type.",
+ "why_sharjah": "Every color is already on the lagoon: the Al Majaz fountain's colored jets, sodium lamps along the corniche, green reflections off Khalid Lagoon and the Al Qasba canal, Al Noor Island's lit installations, and the Sharjah Light Festival projections on facades. Deep navy is the water. Big Shoulders gives headlines the register of a concert bill for Amphitheatre nights.",
+ "why_sustainable": "Off-peak, after-dark visiting is the sustainability lever: cooler hours, walking the corniche instead of driving, and spreading visitors beyond crowded daytime sites. The palette is built from light already switched on, so the brand adds no spectacle. Green marks quiet hours and walk routes; amber marks crowd pressure.",
+ "references": [
+  {
+   "site": "cta.gallery (Trevor Noah)",
+   "url": "https://cta.gallery/cta/trevornoah",
+   "what": "Tagged Dark, Button, Portfolio on the gallery. The live site trevornoah.com is a comedy-tour site built around a rotating set of 'tour_head' images and a 'Get Tickets' action repeated three times in the header and navigation: the entertainment-poster register this direction borrows. The browser pane denied navigation to the live site, so color and type values were not visually confirmed."
+  },
+  {
+   "site": "cta.gallery (counterpublic)",
+   "url": "https://cta.gallery/cta/counterpublic",
+   "what": "Tagged Dark, Button. The live site counterpublic.org is a civic art exhibition in St. Louis with the headline 'Reimagining the Possibilities of art in public life' and actions 'Join & Support' and 'Become a Member'. It is the model for a city-facing voice rather than a consumer app voice. Visuals not confirmed for the same reason."
+  },
+  {
+   "site": "cta.gallery (Animos)",
+   "url": "https://cta.gallery/cta/animos",
+   "what": "Tagged Dark, Tech. The live site animos.app sells motion templates for design showcases and is also the motion entry in the local design-references library; used as the benchmark for short, hard-edged motion on a dark surface. Visuals not confirmed."
+  },
+  {
+   "site": "godly.design",
+   "url": "https://godly.design/websites",
+   "what": "Fetched successfully, but the 40 listed entries carried no style or industry tags, none was tourism or nightlife, and the /style/dark and /tag/dark paths return 404, so no pick was taken from this gallery."
+  }
+ ],
+ "slop_guardrails": "Never glassmorphism over the camera; AR labels are solid rectangles with no blur and no border. Never a purple-to-blue gradient sky and never neon glow: the accent appears only as flat fill or 2 px stroke, never as box-shadow halo. No hero-metric tiles, no 01/02/03 section numbering, no tracked uppercase eyebrow above every section. No drone footage of Dubai passed off as Sharjah and no AI-rendered futuristic skyline. Display letter-spacing never tighter than -0.03em and headline clamp never above 5rem. No points, badges, or treasure hunts anywhere in the interface, because last year's winner built that. No Inter anywhere.",
+ "risks": "A dark, saturated interface is hard to read on a phone outdoors at 14:00 on the AUS lawn and in a bright judging room; keep ink at 16:1, keep the amber and green at 10:1 or better, and test the demo under sunlight before the pitch. Magenta on navy slides toward nightlife or casino if the type turns playful; keep Big Shoulders uppercase and the copy civic. Camera access and WebXR in iOS Safari are fragile, so the Look lens should degrade to a still-photo overlay for the live demo. Noto Kufi Arabic at the same size as Big Shoulders will not share a baseline without the 0.92 scale and a separate line-height, so mixed-script headlines need a test render before the slides are built. The three references were confirmed only by gallery tags and page copy, not by screenshots, because the browser pane refused external navigation in this session."
+}

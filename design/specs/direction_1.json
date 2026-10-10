@@ -1,0 +1,63 @@
+{
+ "name": "Hashiya Folio",
+ "family": "Scholarly editorial, manuscript-derived typographic UI: paper and ink with rubricated hierarchy and marginal commentary",
+ "tagline": "Sharjah, read in the margins.",
+ "palette": [
+  {
+   "role": "background (the desk page, chroma near zero so it never drifts to cream)",
+   "hex": "#EFEFED"
+  },
+  {
+   "role": "surface (the plate sheet that holds photographs, the AR frame, and the map)",
+   "hex": "#FBFBFA"
+  },
+  {
+   "role": "ink (lampblack text, 15.2:1 on background)",
+   "hex": "#1B1917"
+  },
+  {
+   "role": "accent (rubric red for headings, note numerals, and primary actions, 6.5:1 on background)",
+   "hex": "#9E2B18"
+  },
+  {
+   "role": "secondary accent (lapis for links, the map route, and the visitor's own position, 8.8:1 on background)",
+   "hex": "#22407A"
+  },
+  {
+   "role": "rule gray (hairline rules, captions, metadata, 6.1:1 on background so it stays readable in sun)",
+   "hex": "#5C5853"
+  }
+ ],
+ "type_display": "EB Garamond (weights 400 and 500) at 40 to 48px on phone and a 72px cap on desktop, letter-spacing 0 to -0.01em, with Amiri as the Arabic companion for headings and place names. Amiri is a revival of the Bulaq Press naskh used in early Arabic book printing, which ties the display face directly to the World Book Capital theme. Both are on Google Fonts.",
+ "type_body": "IBM Plex Sans 17/26 for body copy and UI controls, IBM Plex Sans Arabic for Arabic body text (the two are drawn to share metrics), and IBM Plex Mono 12px uppercase reserved for plate captions and ledger figures only. Marginal notes are set in EB Garamond 14/20. Three families, each with one job; Inter is not used anywhere. Separate line-height tokens for Arabic and Latin runs.",
+ "layout": "Phone first on a 4-column grid, 8px baseline, 16px gutters; the desktop judging demo at 1200px becomes a two-page spread on 12 columns with a 72ch measure. The app is one book. Navigation is a running head at the top: Index (map), Plate (AR view), Colophon (the day's ledger), set as three serif words over a hairline rule with the active word in rubric red; there is no icon tab bar. The AR camera view is the plate: it fills the top 60 percent of the leaf inside a hairline frame with a mono caption (Plate 7. Al Hisn Fort, east wall, coral stone). The guide chat is not a separate screen. Following the matn-and-hashiya convention of Arabic manuscripts, where commentary sits in the margin beside the main text, the guide's replies appear as numbered marginal notes beside the plate (right margin in English, mirrored to the left in Arabic). Tapping a red numeral on a landmark in the camera opens its note, and the question field sits at the foot of the margin where a reader would write a gloss. The map is the index: a single-color line map in lapis on the same page tone, routes as hairlines, sites listed beneath as index entries with leaf numbers, so a visitor reads the day as a table of contents. Density is high by app standards: text is the interface, blocks are separated by rules and whitespace, and cards are not used.",
+ "motion": "Marginal note numerals stamp in (scale 1.06 to 1, 120ms, ease-out-expo) when the camera recognizes a landmark, and a hairline leader draws from the landmark to its note with a clip-path reveal over 240ms. Guide replies are set a line at a time, like a typesetter filling a column (opacity per line, 80ms stagger), never a per-character typewriter. Leaves slide horizontally between Index, Plate, and Colophon (translateX 24px to 0 with opacity, 280ms, ease-out-quint). No page curl, no parallax, no bounce. Reduced motion replaces all of it with 150ms crossfades.",
+ "imagery": "Documentary photography of real Sharjah places, taken by the team during the event after 16:30 when the coral stone warms and shadows lengthen; full color printed flat, with no vignette, sepia, or filter. Photographs appear only as plates: hairline frame, mono caption with plate number, place, material, and year. Historical views use published archive photographs with credit lines, never AI reconstructions. No illustration, no arabesque pattern, no geometric wallpaper; the Arabic type itself is the ornament.",
+ "hero_prompt": "Open hardbound folio resting on a coral-stone ledge in Heart of Sharjah, late afternoon light, typeset pages with red rubric headings and Arabic naskh marginal notes, a phone lying on the page showing the same layout as an AR overlay on Al Hisn Fort wall, documentary photography, flat natural color, no gradients, no glow, shallow depth of field.",
+ "why_sharjah": "Sharjah was UNESCO World Book Capital 2019 and hosts the Sharjah International Book Fair and House of Wisdom library. The heritage area holds the Sharjah Calligraphy Museum and Al Hisn Fort's coral-stone walls. Amiri revives the Bulaq Press naskh of early Arabic printing. Rubric red and lapis come from manuscript illumination, not from a trend palette.",
+ "why_sustainable": "The margin keeps a ledger: meters walked, bus rides, dirhams spent with souq craftsmen, water refills. The day closes with a colophon page that totals it. AR annotates existing walls instead of rendering replacements, and the page is text and hairlines, so it loads on weak signal with low energy.",
+ "references": [
+  {
+   "site": "designmd.app",
+   "url": "https://designmd.app/library/minimalism-swiss-style",
+   "what": "DESIGN.md with black ink on #F5F1E8, 0px radius, no shadows or gradients, hierarchy from weight and spacing in three to four sizes, mono reserved for metadata. Taken for the rule that type alone carries hierarchy."
+  },
+  {
+   "site": "getdesign.md",
+   "url": "https://getdesign.md/wired/design-md",
+   "what": "WIRED analysis: paper-white broadsheet density, custom serif display, mono uppercase kickers, a single ink-blue link accent. Taken for the plate caption model and the single-accent link color."
+  },
+  {
+   "site": "footer.design",
+   "url": "https://trove.quest/",
+   "what": "Trove, flagged as an archive in the gallery: numbered steps and a grid of saved references each labeled with its source domain. Taken for index entries with leaf numbers and credit lines on archive photographs."
+  },
+  {
+   "site": "godly.design",
+   "url": "https://godly.design/websites",
+   "what": "Fetched and read (41 entries). All SaaS and AI product sites; no editorial, archive, or cultural entry on the pages consulted, so no pick was taken from it. The substitutes above come from the same reference library."
+  }
+ ],
+ "slop_guardrails": "No parchment or paper-grain textures (no feTurbulence), no sepia, no burnt or torn edges, no page curl. No warm cream drift: the page stays at #EFEFED with chroma near zero. No AI-generated Arabic calligraphy; every Arabic string is live text in Amiri or IBM Plex Sans Arabic, shaped and mirrored for RTL. No arabesque or geometric wallpaper, no gold on cream, no drop cap on every paragraph. The note numerals are the only numbered system and each must index a real note; no 01/02/03 section eyebrows. No cards, no icon tab bar, no glass, no green as a sustainability signal.",
+ "risks": "Judges may read paper and ink as a brochure rather than a product, so the AR plate must be the first thing shown in the pitch. Marginalia is unfamiliar; the five-minute pitch needs one sentence explaining the matn and hashiya idea. Amiri and EB Garamond have different vertical metrics, so Arabic and English need separate line-height tokens or lines collide. Rule gray passes at 6.1:1, but hairlines thinner than 1px vanish in direct sun. The team must resist cream palette drift and the temptation to add a 3D reconstruction, which breaks both the look and the seven-hour budget."
+}

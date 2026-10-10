@@ -1,0 +1,58 @@
+{
+ "name": "Girih Screen",
+ "family": "Islamic geometric lattice as structure: dark heritage editorial with drafting-line AR, not ornament",
+ "tagline": "Sharjah through the lattice: light in, heat out.",
+ "palette": [
+  {
+   "role": "background: deep teal, the body of every screen and the scrim behind the camera; ivory text on it measures 9.88:1",
+   "hex": "#0F3D3E"
+  },
+  {
+   "role": "surface: raised teal for the plan sheet and chat sheet; ivory on it measures 7.44:1",
+   "hex": "#175152"
+  },
+  {
+   "role": "ink: ivory, used only as text and stroke, never as a page background",
+   "hex": "#F1E9D6"
+  },
+  {
+   "role": "accent: brass, a flat stroke color for display type, rules, routes, and the AR wireframe; 5.45:1 on background, 14px bold or larger on surface",
+   "hex": "#D1AA4F"
+  },
+  {
+   "role": "secondary accent: coral stone from Heart of Sharjah walls; crowd markers, warnings, and large labels only (3.80:1), never body text",
+   "hex": "#D27A5A"
+  },
+  {
+   "role": "data: verdigris, oxidized brass, for shade routes, carbon figures, and all sustainability indicators; 5.95:1 on background",
+   "hex": "#86C3B2"
+  }
+ ],
+ "type_display": "Cormorant Garamond (Google Fonts), weights 500 and 600, Latin display at 32px and above only, letter-spacing -0.01em, never italic. Arabic display companion: Reem Kufi (Google Fonts), a geometric Kufi whose straight strokes follow the same construction lines as the girih tiles. Both set in brass or ivory on teal, never brass on ivory (1.99:1).",
+ "type_body": "IBM Plex Sans (Google Fonts) 400 and 500 for body copy, UI labels, and visitor messages, 16px with 1.6 line height and a 65ch cap. Arabic companion: IBM Plex Sans Arabic, the same family, so RTL mirroring keeps x-height and weight. IBM Plex Mono for coordinates, carbon figures, crowd counts, and the AI usage disclosure log. Three families in total.",
+ "layout": "Grid: an 8-fold khatam (star and cross) tiling drawn at a 56px module sets the 12-column phone grid; gutters fall on the tile seams and the 16px side gutter is the outer half cross. Panel edges are mitered to the tile angles (45 and 90 degrees), corners 0 or 2px. Density: the plan (map) is the dense surface, the guide chat is the quiet one, and the AR view is empty except for a 56px brass threshold bar at the bottom holding the three controls. Navigation model: one screen, three positions of a single mashrabiya sheet, no tab bar. Closed: the sheet covers the camera and shows the plan, a surveyor-style map in brass line on deep teal, shade routes hatched in verdigris, crowd density as coral dots, off-peak windows as Plex Mono times along the route. Half open: the sheet drops to the lower 45 percent and becomes the guide chat; the camera shows through the lattice apertures above it, so the visitor keeps orientation while reading. Guide replies are set in Cormorant, visitor messages in Plex, no bubbles, a thin brass rule between turns like manuscript rulings. Open: the sheet retracts to the brass frame, the camera fills the screen, and landmark facts plus the reconstructed facade are drawn as brass strokes on the live image with a one-line verdigris strip for shade, crowd, and carbon. The chat never covers the map, the map never covers the camera, and the lattice is the only element that moves between them. Judge demo on a laptop: the same three positions side by side, four columns each, with the lattice as the divider. Footer and about pages: four short link columns under plain headings that collapse into expandable rows on phones, with the AI usage disclosure as a plain list, no ornament.",
+ "motion": "Aperture motion only. Switching sheet positions animates the SVG mask of the khatam tiles, apertures growing from each star center with ease-out-expo over 480ms, so the camera appears to be revealed by light passing through the screen. Map routes draw as a brass stroke via dashoffset in 600ms. Guide replies appear line by line with a 60ms stagger, no per-character typewriter. Sheet drag follows the finger with no spring and no bounce. Reduced motion: every transition becomes a 200ms crossfade and the mask holds its final state. No parallax, no scroll-triggered section reveals, no hover scale.",
+ "imagery": "Photography only; the sole illustration is the line-drawn AR overlay. Late afternoon natural light around 16:30 in October, when coral stone and gypsum go warm against teal shadow. Frame subjects through a real lattice, doorway, or barjeel opening so part of the image is masked; crop tight on material: teak doors, carved gypsum, Central Souk tiles, Khalid Lagoon water. Archival photographs receive a two-tone treatment, teal shadows and ivory highlights, and sit on the surface teal. The AR reconstruction is a brass wireframe outline at 1.5px strokes, not a textured model, which also fits a seven-hour web build. No drone cityscapes, no HDR, no stock tourists holding phones.",
+ "hero_prompt": "Late afternoon in Heart of Sharjah, coral stone alley photographed through a dark teak mashrabiya lattice in the foreground, warm light cutting through the star-shaped apertures, deep teal shadows, sunlit ivory gypsum wall, one phone on a ledge showing a thin brass wireframe outline of the same facade, 35mm lens, natural light, no people, no text.",
+ "why_sharjah": "Heart of Sharjah houses use coral stone, gypsum, teak doors, barjeel wind towers, and lattice screens; the Sharjah Museum of Islamic Civilization holds the geometry; Souk Al Arsah sells the brass and copperware; Central Souk is tiled in blue; Khalid Lagoon supplies the teal. The palette and the lattice come from these specific places.",
+ "why_sustainable": "The mashrabiya is passive cooling: shade and airflow with no electricity. The interface uses it the same way, letting through only the information a walker needs, and extends it to shade routes, off-peak slots, and crowd dispersal. Dark teal saves OLED power; line-drawn AR replaces heavy 3D downloads.",
+ "references": [
+  {
+   "site": "footer.design (Museum filter)",
+   "url": "https://footer.design/types/museum",
+   "what": "Object & Archive (https://objectandarchive.com/): four link columns under plain small headings (Shop, Info, Connect, Etc.) that collapse into expandable rows on small screens; an archive register with no ornament. Model for the app's about, credits, and AI disclosure footer."
+  },
+  {
+   "site": "navbar.gallery (Full Screen type)",
+   "url": "https://navbar.gallery/type/full-screen",
+   "what": "Thonik (https://thonik.nl/), the studio behind the M+ Museum Hong Kong and Schiphol identities, listed as a full-screen takeover navigation. The text fetch confirmed the studio and its work but could not read the menu markup, so the takeover behavior is taken from the gallery's classification. Model for the lattice sheet that covers the page while the page stays visible through it."
+  },
+  {
+   "site": "footer.design (Patterns style filter)",
+   "url": "https://footer.design/styles/patterns",
+   "what": "Read for pattern-carrying footers. The twelve listed sites (ON Energy, Danish Urban Planning Laboratory, Arc & Atlas, PrimeAsia, and others) were checked by text; none describes its pattern in text or alt attributes and none uses it structurally, which is the opening this direction takes: pattern as mask and grid rather than as background."
+  }
+ ],
+ "slop_guardrails": "Never use the girih tiling as low-opacity wallpaper behind a hero or as a fading corner ornament; the lattice must mask, divide, or set the grid, or it is not drawn. No gold foil, metallic gradient, or bevel on the brass: brass is a flat stroke color and never a filled plane larger than a button. No cream, sand, or ivory page background; ivory is ink only. No glass cards and no blur over the camera. No calligraphy swash logo, no lantern, camel, or dune photography, no stock tourist in traditional dress holding a phone. No tracked uppercase eyebrow above sections and no 01/02/03 markers. Corners are 0 or 2px; nothing rounded except the single primary pill button. No purple or blue gradient, no Inter.",
+ "risks": "Reads as a mosque brochure or luxury hotel if Cormorant gets too large or italic; hold display to two sizes and never italic. SVG mask animation can stutter on low-end Android in a browser demo; precompute one mask per sheet position and animate only the mask scale. The lattice steals camera area in the half-open state, so test that the top 55 percent stays usable for orientation. Brass on surface teal is 4.10:1, so brass text on surfaces must be 14px bold or larger; coral is for shapes and large labels only. RTL mirroring needs a symmetric 8-fold module, so do not switch to a 10-fold girih late. The pattern is shared heritage, but avoid cropping mosque imagery with the lattice in ways that read as disrespect."
+}

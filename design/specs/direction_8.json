@@ -1,0 +1,63 @@
+{
+ "name": "Khor Field Guide",
+ "family": "Naturalist field guide: flat botanical-plate illustration on a light, green-tinted neutral, with a committed single-hue strategy (deep mangrove carries the hero, header, and guide sheet).",
+ "tagline": "A field guide to Sharjah's living coast.",
+ "palette": [
+  {
+   "role": "background: Silt (green-tinted neutral, not sand)",
+   "hex": "#E4E8E0"
+  },
+  {
+   "role": "surface: Reed white (cards, sheet body, chips)",
+   "hex": "#F4F6F1"
+  },
+  {
+   "role": "ink: Mangrove ink (all body text, 11.3:1 on Silt)",
+   "hex": "#17302A"
+  },
+  {
+   "role": "accent: Kingfisher teal (links, focus, active marker, 5.4:1 on Silt)",
+   "hex": "#1A6572"
+  },
+  {
+   "role": "secondary accent: Flamingo silt rose (capacity warnings, route highlight, 4.6:1 on Silt, 16px or larger)",
+   "hex": "#9E4F47"
+  },
+  {
+   "role": "brand surface: Deep mangrove (hero, header, guide sheet head; Reed text on it 9.2:1; never Kingfisher or Flamingo text on it)",
+   "hex": "#1F4A3D"
+  }
+ ],
+ "type_display": "Fraunces (Google Fonts, variable: opsz 9 to 144, SOFT 50 to 100, WONK 0, weights 500 to 600) for Latin headlines and site names; Amiri (Google Fonts, 400 and 700) as the Arabic display companion, set 4 to 6 percent larger than the Latin on the same line to balance x-height. Both share the serif plate-caption register of Linnaean field guides.",
+ "type_body": "Readex Pro (Google Fonts, variable weight 160 to 700) for all body, UI, labels, and the guide chat in both Arabic and Latin; one family covers both scripts with rounded terminals, so bilingual lines keep one rhythm. Body 16px/1.55, labels 13px weight 500, tabular numerals on capacity meters. Three families total; no mono.",
+ "layout": "Mobile-first web app on an 8px base unit, 16px side gutter, 72ch maximum measure, medium density, 12px card radius maximum, pills only for species and habitat tags. Navigation is a three-stop bottom bar: Map, Lens, Guide. The Map is home: a flat range-map rendering of Sharjah with silt land, soft green mangrove and wetland fills, hatched sabkha, and a dotted low-impact route; sites appear as numbered plate markers because the route is a real sequence. Tapping a marker opens a site plate: a two-tone illustration, a species list, opening hours, and the tide-gauge capacity meter. The Lens (AR camera page) overlays specimen callouts: a thin leader line from the subject to a text label on a reed-white chip anchored in the bottom third, never floating glass cards in the center of the frame; the plate number ties each label back to its map marker. The Guide is a bottom sheet (top corners 16px, deep-mangrove head, reed body) available over both Map and Lens; answers read as short field notes with a one-line source credit (EPAA, Sharjah Museums Authority). The desktop pitch view places the Map left at 60 percent and the active plate or guide right at 40 percent, asymmetric, with no three equal columns anywhere.",
+ "motion": "Tidal, not springy: ease-out-quint, 240 to 420ms, transform and opacity only. The map water layer breathes over 9s ease-in-out between 92 and 100 percent opacity; mangrove fills never move. Lens callouts draw the leader line with stroke-dashoffset over 300ms, then the label fades in 160ms later; one callout animates at a time. The guide sheet slides up with transform over 320ms and its list items stagger 60ms. The capacity meter fills once with a 480ms ease-out on first view. Under prefers-reduced-motion: 120ms crossfades, static water, meter rendered at its final state.",
+ "imagery": "Field-guide plates, not photography-led. Each site and species gets a flat two-tone vector plate (silt fill, mangrove-ink line at one consistent weight, one kingfisher or flamingo spot color) in the manner of a naturalist's identification plate with a numbered caption. Demo species: Avicennia marina, Arabian collared kingfisher, greater flamingo, mudskipper, ghost crab; heritage set: Kalba fort, Wasit bird hides, a Heart of Sharjah wind tower. Photography appears only inside a site plate as a muted-toned, full-width image with a 1px silt border and a captioned credit; no hero photo, no skyline drone shot, no generated people. For the hackathon, plates come from CC-licensed illustrations on Wikimedia Commons or the Biodiversity Heritage Library, recolored to the palette and credited on the credits page and in the AI Usage Disclosure, or from one consistent generated plate style if time allows.",
+ "hero_prompt": "Flat field-guide illustration plate of Khor Kalba mangroves at low tide: gray mangrove trees with pencil roots in silt-green water, an Arabian collared kingfisher on a branch, a pale coral-stone watchtower far behind, overcast Gulf light, muted sage, silt gray, kingfisher teal, dusty rose, two-tone vector shapes, even line weight, no text, no people.",
+ "why_sharjah": "Khor Kalba's gray mangroves shelter the Arabian collared kingfisher, found nowhere else; Wasit Wetland Centre's reed beds, bird hides, and flamingos (Aga Khan Award 2019); sabkha flats and creek silt; coral-stone and gypsum walls of the Heart of Sharjah; the hazy overcast Gulf light that flattens shadows and favors soft greens over hard contrast.",
+ "why_sustainable": "Habitats and species are first-class map objects beside monuments. Every site carries a tide-gauge capacity meter and a quiet-hours layer that steers visitors from crowded hides to open ones. Two-tone plates and no video backgrounds keep pages light. Conservation data is credited to EPAA sources, visible rather than decorative.",
+ "references": [
+  {
+   "site": "designmd.app",
+   "url": "https://designmd.app/en/library/vintage-botanical-scientific-illustration",
+   "what": "Botanical scientific illustration DESIGN.md: Playfair serif display, leaf green #4A6741, 8px radius, scientific-label diagram style, asymmetric grids, no three equal columns. Took the specimen-callout grammar and serif-plus-label register; rejected its parchment background, coffee stains, and vine borders."
+  },
+  {
+   "site": "designmd.app",
+   "url": "https://designmd.app/en/library/cerrado-minimalista",
+   "what": "Habitat-named minimalist system (Brazilian savanna): dry green #7A8B5C, stone gray #8B8680, 8px and 16px organic radii, a slow 8s sway for grass elements, shadow cap 0 2px 8px. Took the idea of one landscape as palette source and slow ambient motion; rejected its warm beige body."
+  },
+  {
+   "site": "designmd.app",
+   "url": "https://designmd.app/en/brands/natura-gaya",
+   "what": "Real brand with an organic green identity: 4px and 8px spacing scale, conservative 4px default radius, mandatory on-surface color pairing for contrast. Took the paired-contrast discipline; it also shows the cosmetics adjacency this direction must steer away from."
+  },
+  {
+   "site": "footer.design",
+   "url": "https://footer.design/styles/illustrative",
+   "what": "Fetched successfully (home page, the Illustrative filter, and detail pages for Trove, Harvest Hall, Bragg, Leedlime). No entry carried a nature or field-guide treatment; tags were Flat, Bright, Minimal, Grid, Retro. Recorded as consulted with no match. godly.design was fetched as a fallback and had no nature entry either."
+  }
+ ],
+ "slop_guardrails": "Never a cream, sand, parchment, or paper-grain background; the botanical reference used aged paper, this direction uses a green-tinted silt neutral instead. Never feTurbulence textures, coffee stains, ornate vine borders, or sketchy doodle SVG. Never leaf, globe, or hands-holding-sapling eco icons, and never the words eco-friendly or green as decoration; sustainability is shown only through the capacity meter, the quiet-hours layer, and credited sources. Never green-to-teal gradients or glass cards over mangrove photos. Never Kingfisher or Flamingo text on the Deep mangrove surface (1.5:1 and 2.4:1, both fail). Card corners capped at 12px; rounded forms live in the illustration plates and the Readex Pro terminals, not in pill-shaped everything. No tiny uppercase eyebrow above every section; plate numbers appear only on the real route sequence. No default Google Maps tiles; the map is restyled to the palette or drawn as a flat range map.",
+ "risks": "A soft green palette with botanical plates can read as a cosmetics or wellness brand (the Natura GaYa reference proves the adjacency) rather than tourism technology, so the Lens camera page must appear within the first minute of the pitch. Judges expecting AR spectacle may read the muted palette as low ambition; the kingfisher callout demo is the counter. Plates are the most expensive asset: budget one species plate plus recolored CC illustrations, and fall back to captioned photographs if plates are not finished by 18:00 today. Fraunces and Amiri baselines differ; test one bilingual headline before committing. Flamingo rose at #9E4F47 is 4.62:1 on Silt, AA with little margin, so keep it at 16px or larger."
+}
