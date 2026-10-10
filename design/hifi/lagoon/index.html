@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daleel</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0B1530">
+<meta name="description" content="Daleel, a guide for visitors to Sharjah: when and how to visit each place. Direction: Lagoon After Dark.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Big+Shoulders+Display:wght@700&display=swap">
+<style>/* THEME, locked: dark. The scene that forced it: a family walking the Al Majaz corniche at 19:30 with the fountain lit,
+   phone held at arm's length, so the screen has to sit inside that night rather than glow against it.
+   color-scheme is set to dark only and the page does not follow the OS setting. */
+:root {
+  color-scheme: dark;
+  /* surfaces */
+  --bg: #0B1530;      --bg: oklch(0.204 0.056 266.3);      /* Khalid Lagoon navy, the page */
+  --surface: #14213D; --surface: oklch(0.252 0.056 264);   /* brand navy as the raised plate */
+  --surface-2: #26324C;                                     /* hover tone of the plate; ink on it 11.51:1 */
+  --surface-3: #394158;                                     /* segmented-control thumb, grabber; ink on it 8.3:1 */
+  --line: #303950;                                          /* hairlines, non-text */
+  --bezel: #2A3450;                                         /* the desktop phone frame, non-text */
+  /* ink */
+  --ink: #F1F3F8;     --ink: oklch(0.964 0.007 268.5);      /* ink on bg 16.25:1, ink on surface 14.39:1 */
+  --ink-2: #B8BCC6;                                         /* secondary text: 9.49:1 on bg, 8.40:1 on surface (AA 4.5 met) */
+  /* accent, primary action only */
+  --accent: #FF5C99;  --accent: oklch(0.705 0.204 0.7);     /* fountain magenta; navy text on it 6.22:1, never white on it */
+  --accent-hover: #FF70A6;
+  --accent-active: #F04F8B;
+  --on-accent: #0B1530;
+  /* semantic state, separate from the accent */
+  --quiet: #2EE6A6;   --quiet: oklch(0.823 0.168 163.4);    /* lagoon green, quiet hours and walking legs: 11.15:1 on bg, 9.88:1 on surface */
+  --busy: #FFB454;    --busy: oklch(0.824 0.141 70.2);      /* sodium amber, crowd pressure: 10.23:1 on bg, 9.06:1 on surface */
+  /* AR label plate: solid ink, navy text 16.25:1 */
+  --plate: #F1F3F8;
+  --on-plate: #0B1530;
+  /* type, fixed rem scale, ratio about 1.17 to 1.2 */
+  --t-12: 0.75rem; --t-14: 0.875rem; --t-16: 1rem; --t-19: 1.1875rem; --t-23: 1.4375rem; --t-28: 1.75rem;
+  /* spacing */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 20px; --s-6: 24px; --s-8: 32px;
+  /* radii: 8 and 12 on plates, 16 on the sheet, buttons at 12 */
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+  /* motion: hard-edged like pasting a poster; open slower than close */
+  --d-quick: 150ms; --d-base: 200ms; --d-open: 240ms; --d-close: 150ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* z scale inside the camera stage */
+  --z-img: 1; --z-scrim: 2; --z-divider: 3; --z-label: 4; --z-control: 5;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: Rubik, "Segoe UI", system-ui, sans-serif;
+  font-size: var(--t-16); line-height: 1.5;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img { display: block; max-width: 100%; }
+img.is-missing { visibility: hidden; }
+button { font: inherit; color: inherit; }
+[lang="ar"] { font-size: 1.06em; }
+.ic { flex: none; }
+
+/* ---------------------------------------------------------------- page: the app on phones, three frames on larger screens */
+.deck-head { display: none; }
+.deck { height: 100vh; height: 100dvh; }
+.frame { height: 100%; }
+.frame + .frame { display: none; }
+
+@media (min-width: 760px) {
+  .deck-head {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: var(--s-6);
+    padding: var(--s-5) var(--s-6); border-bottom: 1px solid var(--line);
+  }
+  .deck-title {
+    margin: 0; font-family: "Big Shoulders Display", Rubik, sans-serif; font-weight: 700;
+    font-size: 2.5rem; line-height: 1; letter-spacing: 0.01em; text-transform: uppercase;
+  }
+  .deck-idea { margin: 0; max-width: 62ch; font-size: var(--t-14); color: var(--ink-2); line-height: 1.45; }
+  .deck-team { margin: 0; font-size: var(--t-14); color: var(--ink-2); white-space: nowrap; }
+  .deck { height: auto; display: grid; grid-template-columns: repeat(2, 390px); gap: var(--s-8); justify-content: center; padding: var(--s-6) var(--s-6) 48px; }
+  .frame, .frame + .frame { display: block; width: 390px; height: 844px; border-radius: 24px; border: 1px solid var(--bezel); overflow: hidden; background: var(--bg); }
+  .frame:nth-child(3) { grid-column: 1 / -1; justify-self: center; }
+}
+@media (min-width: 1024px) {
+  .deck { grid-template-columns: repeat(3, 390px); }
+  .frame:nth-child(3) { grid-column: auto; justify-self: auto; }
+}
+@media (max-width: 1023px) and (min-width: 760px) {
+  .deck-head { grid-template-columns: auto 1fr; }
+  .deck-team { grid-column: 1 / -1; }
+}
+
+/* ---------------------------------------------------------------- shell */
+.app { position: relative; display: flex; flex-direction: column; height: 100%; background: var(--bg); overflow: hidden; isolation: isolate; }
+.screen { display: none; flex: 1; min-height: 0; flex-direction: column; position: relative; }
+.app[data-screen="plan"] .screen-plan,
+.app[data-screen="look"] .screen-look,
+.app[data-screen="ask"] .screen-ask { display: flex; animation: screen-in var(--d-base) var(--ease-out-expo) both; }
+@keyframes screen-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* focus, hover, active, disabled: one vocabulary */
+:is(button, input, [tabindex]):focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button:disabled { cursor: not-allowed; opacity: 0.45; }
+
+/* ---------------------------------------------------------------- tab bar */
+.tabbar {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-1);
+  padding: var(--s-1) var(--s-2) calc(var(--s-2) + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--line); background: var(--bg);
+}
+.tab {
+  position: relative; appearance: none; background: none; border: 0; border-radius: var(--r-sm);
+  display: grid; justify-items: center; gap: 2px; padding: 8px 0 4px;
+  color: var(--ink-2); font-size: var(--t-12); font-weight: 500; line-height: 1.2;
+  transition: color var(--d-quick) var(--ease-out-expo), background-color var(--d-quick) var(--ease-out-expo), transform 80ms var(--ease-out-expo);
+}
+.tab::before { content: ""; position: absolute; top: 0; left: 50%; width: 20px; height: 3px; border-radius: 2px; background: var(--ink); transform: translateX(-50%) scaleX(0); transition: transform var(--d-base) var(--ease-out-expo); }
+.tab[aria-selected="true"] { color: var(--ink); }
+.tab[aria-selected="true"]::before { transform: translateX(-50%) scaleX(1); }
+@media (hover: hover) { .tab:hover { color: var(--ink); background: var(--surface); } }
+.tab:active { transform: scale(0.96); }
+.tab:focus-visible { outline-offset: -2px; }
+
+/* ---------------------------------------------------------------- buttons */
+.btn-primary {
+  display: flex; align-items: center; justify-content: center; width: 100%; min-height: 52px;
+  padding: 0 var(--s-5); border: 0; border-radius: var(--r-md);
+  background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: var(--t-16);
+  transition: background-color var(--d-quick) var(--ease-out-expo), transform 80ms var(--ease-out-expo);
+}
+@media (hover: hover) { .btn-primary:hover { background: var(--accent-hover); } }
+.btn-primary:active { background: var(--accent-active); transform: scale(0.985); }
+.btn-primary:disabled { background: var(--surface-3); color: var(--ink-2); opacity: 1; }
+
+.btn-secondary, .btn-plate {
+  display: inline-flex; align-items: center; gap: var(--s-2); min-height: 40px; padding: 0 var(--s-4) 0 var(--s-3);
+  border: 0; border-radius: 10px; background: var(--surface); color: var(--ink);
+  font-size: var(--t-14); font-weight: 500; line-height: 1.2; white-space: nowrap;
+  transition: background-color var(--d-quick) var(--ease-out-expo), transform 80ms var(--ease-out-expo);
+}
+@media (hover: hover) { .btn-secondary:hover, .btn-plate:hover { background: var(--surface-2); } }
+.btn-secondary:active, .btn-plate:active { background: var(--surface-3); transform: scale(0.98); }
+.btn-secondary[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.btn-secondary .ic-off { display: none; }
+.btn-secondary[aria-pressed="true"] .ic-on { display: none; }
+.btn-secondary[aria-pressed="true"] .ic-off { display: inline-flex; }
+.btn-plate { background: var(--bg); }
+
+/* ---------------------------------------------------------------- Plan */
+.head {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+  padding: calc(var(--s-3) + env(safe-area-inset-top, 0px)) var(--s-4) var(--s-2);
+}
+.brand { display: flex; align-items: center; gap: var(--s-2); }
+.brand .mark { color: var(--ink); }
+.wordmark { font-size: var(--t-19); font-weight: 700; letter-spacing: -0.01em; }
+.wordmark-ar { font-size: var(--t-16); font-weight: 500; color: var(--ink-2); margin-top: 1px; }
+.now { display: grid; justify-items: end; gap: 1px; text-align: right; font-size: var(--t-14); line-height: 1.3; }
+.now-date { font-weight: 500; }
+.now-temp { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+.plan-body, .thread { scrollbar-width: thin; scrollbar-color: var(--surface-3) transparent; }
+.plan-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; }
+.hero { margin: 0 var(--s-4); border-radius: var(--r-md); overflow: hidden; background: var(--surface); flex: none; }
+.hero img { width: 100%; height: 140px; object-fit: cover; }
+.title { margin: var(--s-3) var(--s-4) var(--s-1); font-size: var(--t-28); line-height: 1.15; font-weight: 700; letter-spacing: -0.015em; text-wrap: balance; }
+
+.stops { list-style: none; margin: 0; padding: 0 var(--s-4); }
+.stop { display: grid; grid-template-columns: 50px 14px 1fr; column-gap: var(--s-2); padding: 10px 0; align-items: start; }
+.stop-time { font-weight: 500; font-variant-numeric: tabular-nums; line-height: 22px; letter-spacing: -0.01em; }
+.stop-time small { display: block; font-size: var(--t-12); line-height: 14px; font-weight: 400; color: var(--ink-2); margin-top: -4px; }
+.stop-rail { position: relative; align-self: stretch; }
+.stop-rail::before { content: ""; position: absolute; left: 6px; top: -10px; bottom: -10px; width: 2px; background: var(--line); }
+.stop:first-child .stop-rail::before { top: 11px; }
+.stop:last-child .stop-rail::before { bottom: auto; height: 22px; }
+.stop-rail::after { content: ""; position: absolute; left: 3px; top: 7px; width: 8px; height: 8px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.stop-body { min-width: 0; }
+.stop-name { font-weight: 500; line-height: 22px; }
+.stop-name .ar { font-weight: 400; color: var(--ink-2); margin-left: var(--s-1); }
+.stop-status { font-size: var(--t-14); line-height: 20px; font-weight: 500; }
+.stop-meta { font-size: var(--t-14); line-height: 20px; color: var(--ink-2); }
+.dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.dot-quiet { background: var(--quiet); }
+.dot-busy { background: var(--busy); }
+.st-quiet { color: var(--quiet); }
+.st-busy { color: var(--busy); }
+
+.swap {
+  display: grid; grid-template-columns: 20px 1fr; gap: var(--s-3); align-items: start;
+  margin: var(--s-2) var(--s-4) 0; padding: var(--s-3) 14px; border-radius: var(--r-md); background: var(--surface);
+}
+.swap .ic { color: var(--ink-2); margin-top: 1px; }
+.swap p { margin: 0; font-size: var(--t-14); line-height: 1.45; }
+
+.score { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: start; margin: var(--s-4) var(--s-4) 0; }
+.score-num { font-size: var(--t-28); line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; padding-top: 1px; }
+.score-label { font-weight: 500; line-height: 20px; }
+.score-sub { font-size: var(--t-14); line-height: 1.4; color: var(--ink-2); margin-top: 2px; }
+.score-track { height: 3px; margin-top: var(--s-2); border-radius: 2px; background: var(--line); overflow: hidden; }
+.score-fill { display: block; height: 100%; background: var(--quiet); border-radius: 2px; }
+
+.cta { margin-top: auto; padding: var(--s-4); }
+
+/* ---------------------------------------------------------------- Look */
+.cam { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--surface); }
+.cam-stage { position: relative; flex: 1; min-height: 0; overflow: hidden; touch-action: none; cursor: ew-resize; user-select: none; -webkit-user-select: none; }
+.cam-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: var(--z-img); }
+.cam-past-wrap { position: absolute; inset: 0; z-index: var(--z-img); clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+.cam.is-anim .cam-past-wrap { transition: clip-path var(--d-open) var(--ease-out-expo); }
+.cam-past-fallback { display: none; position: absolute; inset: 0; place-items: center; background: var(--surface); color: var(--ink-2); text-align: center; font-size: var(--t-14); line-height: 1.4; }
+.cam.no-past .cam-past { display: none; }
+.cam.no-past .cam-past-fallback { display: grid; }
+.cam-scrim { position: absolute; inset: 0; z-index: var(--z-scrim); background: rgba(11, 21, 48, 0.12); pointer-events: none; }
+.divider { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--ink); z-index: var(--z-divider); pointer-events: none; }
+.cam.is-anim .divider { transition: left var(--d-open) var(--ease-out-expo); }
+.knob { position: absolute; top: 50%; left: clamp(22px, var(--pos), calc(100% - 22px)); width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; z-index: var(--z-divider); pointer-events: none; transition: transform 80ms var(--ease-out-expo); }
+.cam.is-anim .knob { transition: left var(--d-open) var(--ease-out-expo), transform 80ms var(--ease-out-expo); }
+.cam.is-drag .knob { transform: scale(1.08); }
+.cam.is-focus .knob { outline: 2px solid var(--ink); outline-offset: 3px; }
+.cam-range { position: absolute; left: 0; right: 0; top: 50%; height: 44px; margin: -22px 0 0; width: 100%; opacity: 0; z-index: var(--z-control); pointer-events: none; }
+
+.ar { position: absolute; left: var(--ax); top: var(--ay); z-index: var(--z-label); pointer-events: none; }
+.ar-dot { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; border-radius: 50%; background: var(--plate); border: 2px solid var(--on-plate); }
+.ar-line { position: absolute; left: -1px; top: 5px; width: 2px; height: 48px; background: var(--plate); transform-origin: top; animation: ar-line 160ms var(--ease-out-expo) both; }
+.ar-plate {
+  position: absolute; top: 53px; right: 0; width: 236px; padding: 10px 12px 11px;
+  background: var(--plate); color: var(--on-plate); font-size: var(--t-14); line-height: 1.4;
+  display: grid; gap: 2px; animation: ar-plate var(--d-open) var(--ease-out-expo) 140ms both;
+}
+.ar-plate strong { font-size: var(--t-16); font-weight: 700; line-height: 1.3; }
+.ar-quiet { font-weight: 500; margin-top: 2px; }
+@keyframes ar-line { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes ar-plate { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+
+.cam-top { position: absolute; left: var(--s-3); top: calc(var(--s-3) + env(safe-area-inset-top, 0px)); z-index: var(--z-control); }
+
+.sheet { flex: none; display: grid; gap: var(--s-3); padding: var(--s-2) var(--s-4) var(--s-4); background: var(--surface); border-radius: var(--r-lg) var(--r-lg) 0 0; margin-top: -16px; position: relative; z-index: var(--z-control); }
+.grabber { width: 36px; height: 4px; border-radius: 2px; background: var(--surface-3); justify-self: center; }
+.seg { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 3px; border-radius: 10px; background: var(--bg); }
+.seg-thumb { position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px); border-radius: 8px; background: var(--surface-3); transition: transform var(--d-open) var(--ease-smooth-out); }
+.seg[data-on="past"] .seg-thumb { transform: translateX(100%); }
+.seg-btn { position: relative; z-index: 1; min-height: 36px; border: 0; border-radius: 8px; background: none; color: var(--ink-2); font-size: var(--t-14); font-weight: 500; transition: color var(--d-quick) var(--ease-out-expo); }
+.seg-btn[aria-pressed="true"] { color: var(--ink); }
+@media (hover: hover) { .seg-btn:hover { color: var(--ink); } }
+.seg-btn:active { transform: scale(0.98); }
+.seg-btn:focus-visible { outline-offset: -2px; }
+.cam-note { margin: 0; min-height: 20px; font-size: var(--t-14); line-height: 20px; color: var(--ink-2); visibility: hidden; }
+.cam-note.is-on { visibility: visible; }
+.sheet-actions { display: flex; gap: var(--s-2); }
+.sheet-actions .btn-secondary { background: var(--bg); }
+@media (hover: hover) { .sheet-actions .btn-secondary:hover { background: var(--surface-2); } }
+
+/* ---------------------------------------------------------------- Ask */
+.ask-head { display: flex; align-items: center; gap: var(--s-3); padding: calc(var(--s-3) + env(safe-area-inset-top, 0px)) var(--s-4) var(--s-3); border-bottom: 1px solid var(--line); }
+.ask-map { width: 40px; height: 60px; object-fit: cover; border-radius: 6px; background: var(--surface); flex: none; }
+.ask-ctx { margin: 0; font-size: var(--t-14); font-weight: 500; line-height: 1.35; }
+.thread { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: var(--s-4); display: flex; flex-direction: column; gap: var(--s-4); }
+.msg p { margin: 0; line-height: 1.5; text-wrap: pretty; }
+.msg-you { align-self: flex-end; max-width: 82%; padding: 10px 14px; border-radius: var(--r-lg) var(--r-lg) 4px var(--r-lg); background: var(--surface); }
+.msg-guide { align-self: stretch; max-width: 92%; display: grid; gap: var(--s-2); }
+.msg-from { display: flex; align-items: center; gap: 6px; font-size: var(--t-14); font-weight: 500; color: var(--ink-2); }
+.msg-from .mark { color: var(--ink); }
+.msg-actions { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: 2px; }
+.msg.is-new { animation: msg-in var(--d-base) var(--ease-out-expo) both; }
+@keyframes msg-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.ask-form { display: flex; gap: var(--s-2); padding: var(--s-2) var(--s-4) var(--s-3); border-top: 1px solid var(--line); }
+.ask-input {
+  flex: 1; min-width: 0; height: 48px; padding: 0 14px; border-radius: var(--r-md);
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit;
+  transition: border-color var(--d-quick) var(--ease-out-expo), background-color var(--d-quick) var(--ease-out-expo);
+}
+.ask-input::placeholder { color: var(--ink-2); opacity: 1; }   /* placeholder 8.40:1 on surface */
+@media (hover: hover) { .ask-input:hover { border-color: var(--surface-3); } }
+.ask-input:focus { outline: none; border-color: var(--ink); }
+.ask-input:focus-visible { outline: none; border-color: var(--ink); }
+.ask-input:disabled { opacity: 0.45; }
+.send {
+  flex: none; width: 48px; height: 48px; border: 0; border-radius: var(--r-md);
+  background: var(--accent); color: var(--on-accent); display: grid; place-items: center;
+  transition: background-color var(--d-quick) var(--ease-out-expo), transform 80ms var(--ease-out-expo), opacity var(--d-quick) var(--ease-out-expo);
+}
+@media (hover: hover) { .send:hover:not(:disabled) { background: var(--accent-hover); } }
+.send:active:not(:disabled) { background: var(--accent-active); transform: scale(0.96); }
+.send:disabled { background: var(--surface-3); color: var(--ink-2); opacity: 1; }
+
+/* ---------------------------------------------------------------- reduced motion: instant states, no reveals */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0ms !important; transition-duration: 0.01ms !important; }
+}</style>
+</head>
+<body>
+<header class="deck-head">
+  <h1 class="deck-title">Lagoon After Dark</h1>
+  <p class="deck-idea">Daleel tells visitors when and how to see Sharjah: the plan moves each stop to its quieter, cooler hour, the camera shows Al Hisn Fort as it stood in 1823, and the guide answers from a curated corpus and reads aloud.</p>
+  <p class="deck-team">Team Daleel, Abu Dhabi University</p>
+</header>
+<main class="deck" aria-label="Daleel prototype">
+<div class="frame">
+<div class="app" data-screen="plan" id="a">
+  <section class="screen screen-plan" data-name="plan" id="a-screen-plan" role="tabpanel" aria-labelledby="a-tab-plan">
+    <header class="head">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><polygon points="22.16,16.21 16.21,22.16 7.79,22.16 1.84,16.21 1.84,7.79 7.79,1.84 16.21,1.84 22.16,7.79" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="12,4.6 14,12 10,12" fill="#C9A24D"/><polygon points="12,19.4 14,12 10,12" fill="currentColor"/></svg>
+        <span class="wordmark">Daleel</span>
+        <span class="wordmark-ar" lang="ar" dir="rtl">دليل</span>
+      </div>
+      <div class="now">
+        <span class="now-date">Sat 10 Oct</span>
+        <span class="now-temp">34°C now, 38°C at 12:00</span>
+      </div>
+    </header>
+    <div class="plan-body">
+      <figure class="hero">
+        <img src="../assets/khalid-lagoon-night.jpg" alt="Khalid Lagoon at night, the Al Majaz waterfront lit along the corniche" width="358" height="140" loading="eager" decoding="async">
+      </figure>
+      <h1 class="title">Today, at the right time</h1>
+      <ol class="stops" aria-label="Today's stops">
+        <li class="stop">
+          <div class="stop-time"><time datetime="2026-10-10T09:30">09:30</time></div>
+          <div class="stop-rail" aria-hidden="true"></div>
+          <div class="stop-body">
+            <div class="stop-name">Al Hisn Fort <span class="ar" lang="ar" dir="rtl">حصن الشارقة</span></div>
+            <div class="stop-status"><span class="dot dot-quiet"></span><span class="st-quiet">Quiet now</span></div>
+            <div class="stop-meta">Indoor, 6 min walk from your hotel</div>
+          </div>
+        </li>
+        <li class="stop">
+          <div class="stop-time"><time datetime="2026-10-10T19:00">19:00</time></div>
+          <div class="stop-rail" aria-hidden="true"></div>
+          <div class="stop-body">
+            <div class="stop-name">Al Noor Island <span class="ar" lang="ar" dir="rtl">جزيرة النور</span></div>
+            <div class="stop-status"><span class="dot dot-busy"></span><span class="st-busy">Busy 16:00 to 18:00</span>, go at 19:00</div>
+            <div class="stop-meta">After sunset, 31°C, 12 min by taxi</div>
+          </div>
+        </li>
+        <li class="stop">
+          <div class="stop-time"><small>Sat</small><time datetime="2026-10-17T08:00">08:00</time></div>
+          <div class="stop-rail" aria-hidden="true"></div>
+          <div class="stop-body">
+            <div class="stop-name">Kalba Mangroves <span class="ar" lang="ar" dir="rtl">قرم كلباء</span></div>
+            <div class="stop-status"><span class="dot dot-quiet"></span><span class="st-quiet">Shade route</span>, 40 min by car</div>
+            <div class="stop-meta">East Coast, under-visited, kayak tours from 08:30</div>
+          </div>
+        </li>
+      </ol>
+      <aside class="swap" aria-label="Why the order changed">
+        <svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>
+        <p>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</p>
+      </aside>
+      <section class="score" aria-label="Sustainability score 82 of 100">
+        <div class="score-num" aria-hidden="true">82</div>
+        <div class="score-text">
+          <div class="score-label">Sustainability score</div>
+          <div class="score-sub">Off-peak 2 of 3 stops, 1 East Coast stop, 38 min shaded walking</div>
+          <div class="score-track" role="meter" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" aria-label="Sustainability score"><span class="score-fill" style="width:82%"></span></div>
+        </div>
+      </section>
+      <div class="cta">
+        <button class="btn-primary" type="button" data-go="look">Start today's plan</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen screen-look" data-name="look" id="a-screen-look" role="tabpanel" aria-labelledby="a-tab-look">
+    <div class="cam" style="--pos:0%">
+      <div class="cam-stage">
+        <img class="cam-img cam-today" src="../assets/al-hisn-fort.jpg" alt="Al Hisn Fort today, daylight exterior seen from the square" decoding="async">
+        <div class="cam-past-wrap">
+          <img class="cam-img cam-past" src="../assets/al-hisn-1823.jpg" alt="Al Hisn Fort as it may have stood in 1823, an artist's impression" decoding="async">
+          <div class="cam-past-fallback"><span>1823 reconstruction<br>not yet rendered</span></div>
+        </div>
+        <div class="cam-scrim" aria-hidden="true"></div>
+        <div class="divider" aria-hidden="true"></div>
+        <span class="knob" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 8l-4 4 4 4M14 8l4 4-4 4"/></svg></span>
+        <input class="cam-range" type="range" min="0" max="100" value="0" step="1" aria-label="Time travel, from today to 1823" aria-valuetext="Today">
+        <div class="ar" style="--ax:64%;--ay:34%">
+          <span class="ar-dot"></span>
+          <span class="ar-line"></span>
+          <div class="ar-plate">
+            <strong>Al Hisn Fort</strong>
+            <span>Built 1823, demolished 1969, rebuilt and reopened as a museum in 2015.</span>
+            <span class="ar-quiet"><span class="dot dot-quiet"></span>Quiet until 11:00</span>
+          </div>
+        </div>
+        <div class="cam-top">
+          <button class="btn-plate" type="button" data-go="plan"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg><span class="lbl">Back to plan</span></button>
+        </div>
+      </div>
+      <div class="sheet">
+        <div class="grabber" aria-hidden="true"></div>
+        <div class="seg" role="group" aria-label="Choose the view" data-on="today">
+          <span class="seg-thumb" aria-hidden="true"></span>
+          <button class="seg-btn" type="button" data-seg="0" aria-pressed="true">Today</button>
+          <button class="seg-btn" type="button" data-seg="100" aria-pressed="false">1823</button>
+        </div>
+        <p class="cam-note">1823 view is an artist's impression</p>
+        <div class="sheet-actions">
+          <button class="btn-secondary" type="button" data-action="place"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg><span class="lbl">Place in your room</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen screen-ask" data-name="ask" id="a-screen-ask" role="tabpanel" aria-labelledby="a-tab-ask">
+    <header class="ask-head">
+      <img class="ask-map" src="../assets/map-heart-of-sharjah.png" alt="Street map centered on Al Hisn Fort" width="40" height="60" loading="eager" decoding="async">
+      <p class="ask-ctx">At Al Hisn Fort, 09:42, 34°C</p>
+    </header>
+    <div class="thread" role="log" aria-live="polite" aria-label="Conversation with Daleel">
+      <div class="msg msg-you"><p>Why was the fort demolished in 1969?</p></div>
+      <div class="msg msg-guide">
+        <div class="msg-from"><svg class="mark mark-sm" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><polygon points="22.16,16.21 16.21,22.16 7.79,22.16 1.84,16.21 1.84,7.79 7.79,1.84 16.21,1.84 22.16,7.79" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="12,4.6 14,12 10,12" fill="#C9A24D"/><polygon points="12,19.4 14,12 10,12" fill="currentColor"/></svg><span>Daleel</span></div>
+        <p>In 1969 most of Al Hisn was pulled down to make room for the modern city center. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</p>
+        <div class="msg-actions">
+          <button class="btn-secondary" type="button" data-action="read" aria-pressed="false"><span class="ic-on"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10v4h3l5 4V6l-5 4H4z"/><path d="M16 9a4.2 4.2 0 0 1 0 6"/></svg></span><span class="ic-off"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg></span><span class="lbl">Read aloud</span></button>
+          <button class="btn-secondary" type="button" data-action="quiet"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg><span class="lbl">Quiet hours today</span></button>
+        </div>
+      </div>
+    </div>
+    <form class="ask-form" autocomplete="off">
+      <input class="ask-input" type="text" name="q" placeholder="Ask about this place" aria-label="Ask about this place" enterkeyhint="send" maxlength="200">
+      <button class="send" type="submit" aria-label="Send question" disabled><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+    </form>
+    <template class="tpl-you"><div class="msg msg-you is-new"><p></p></div></template>
+    <template class="tpl-guide"><div class="msg msg-guide is-new"><div class="msg-from"><svg class="mark mark-sm" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><polygon points="22.16,16.21 16.21,22.16 7.79,22.16 1.84,16.21 1.84,7.79 7.79,1.84 16.21,1.84 22.16,7.79" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="12,4.6 14,12 10,12" fill="#C9A24D"/><polygon points="12,19.4 14,12 10,12" fill="currentColor"/></svg><span>Daleel</span></div><p></p></div></template>
+  </section>
+
+  <nav class="tabbar" role="tablist" aria-label="Daleel sections">
+    <button class="tab" type="button" role="tab" id="a-tab-plan" data-tab="plan" aria-controls="a-screen-plan" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="20" r="2.5"/><path d="M8.5 6h6a3.5 3.5 0 0 1 0 7h-5a3.5 3.5 0 0 0 0 7h6"/></svg><span>Plan</span></button>
+    <button class="tab" type="button" role="tab" id="a-tab-look" data-tab="look" aria-controls="a-screen-look" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="3.5"/></svg><span>Look</span></button>
+    <button class="tab" type="button" role="tab" id="a-tab-ask" data-tab="ask" aria-controls="a-screen-ask" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4c-4.4 0-8 3-8 6.8 0 2.1 1.1 4 2.9 5.2L6 20l4-1.7c.6.1 1.3.2 2 .2 4.4 0 8-3 8-6.8S16.4 4 12 4z"/></svg><span>Ask</span></button>
+  </nav>
+</div>
+</div>
+<div class="frame">
+<div class="app" data-screen="look" id="b">
+  <section class="screen screen-plan" data-name="plan" id="b-screen-plan" role="tabpanel" aria-labelledby="b-tab-plan">
+    <header class="head">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><polygon points="22.16,16.21 16.21,22.16 7.79,22.16 1.84,16.21 1.84,7.79 7.79,1.84 16.21,1.84 22.16,7.79" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="12,4.6 14,12 10,12" fill="#C9A24D"/><polygon points="12,19.4 14,12 10,12" fill="currentColor"/></svg>
+        <span class="wordmark">Daleel</span>
+        <span class="wordmark-ar" lang="ar" dir="rtl">دليل</span>
+      </div>
+      <div class="now">
+        <span class="now-date">Sat 10 Oct</span>
+        <span class="now-temp">34°C now, 38°C at 12:00</span>
+      </div>
+    </header>
+    <div class="plan-body">
+      <figure class="hero">
+        <img src="../assets/khalid-lagoon-night.jpg" alt="Khalid Lagoon at night, the Al Majaz waterfront lit along the corniche" width="358" height="140" loading="eager" decoding="async">
+      </figure>
+      <h1 class="title">Today, at the right time</h1>
+      <ol class="stops" aria-label="Today's stops">
+        <li class="stop">
+          <div class="stop-time"><time datetime="2026-10-10T09:30">09:30</time></div>
+          <div class="stop-rail" aria-hidden="true"></div>
+          <div class="stop-body">
+            <div class="stop-name">Al Hisn Fort <span class="ar" lang="ar" dir="rtl">حصن الشارقة</span></div>
+            <div class="stop-status"><span class="dot dot-quiet"></span><span class="st-quiet">Quiet now</span></div>
+            <div class="stop-meta">Indoor, 6 min walk from your hotel</div>
+          </div>
+        </li>
+        <li class="stop">
+          <div class="stop-time"><time datetime="2026-10-10T19:00">19:00</time></div>
+          <div class="stop-rail" aria-hidden="true"></div>
+          <div class="stop-body">
+            <div class="stop-name">Al Noor Island <span class="ar" lang="ar" dir="rtl">جزيرة النور</span></div>
+            <div class="stop-status"><span class="dot dot-busy"></span><span class="st-busy">Busy 16:00 to 18:00</span>, go at 19:00</div>
+            <div class="stop-meta">After sunset, 31°C, 12 min by taxi</div>
+          </div>
+        </li>
+        <li class="stop">
+          <div class="stop-time"><small>Sat</small><time datetime="2026-10-17T08:00">08:00</time></div>
+          <div class="stop-rail" aria-hidden="true"></div>
+          <div class="stop-body">
+            <div class="stop-name">Kalba Mangroves <span class="ar" lang="ar" dir="rtl">قرم كلباء</span></div>
+            <div class="stop-status"><span class="dot dot-quiet"></span><span class="st-quiet">Shade route</span>, 40 min by car</div>
+            <div class="stop-meta">East Coast, under-visited, kayak tours from 08:30</div>
+          </div>
+        </li>
+      </ol>
+      <aside class="swap" aria-label="Why the order changed">
+        <svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>
+        <p>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</p>
+      </aside>
+      <section class="score" aria-label="Sustainability score 82 of 100">
+        <div class="score-num" aria-hidden="true">82</div>
+        <div class="score-text">
+          <div class="score-label">Sustainability score</div>
+          <div class="score-sub">Off-peak 2 of 3 stops, 1 East Coast stop, 38 min shaded walking</div>
+          <div class="score-track" role="meter" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" aria-label="Sustainability score"><span class="score-fill" style="width:82%"></span></div>
+        </div>
+      </section>
+      <div class="cta">
+        <button class="btn-primary" type="button" data-go="look">Start today's plan</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen screen-look" data-name="look" id="b-screen-look" role="tabpanel" aria-labelledby="b-tab-look">
+    <div class="cam" style="--pos:0%">
+      <div class="cam-stage">
+        <img class="cam-img cam-today" src="../assets/al-hisn-fort.jpg" alt="Al Hisn Fort today, daylight exterior seen from the square" decoding="async">
+        <div class="cam-past-wrap">
+          <img class="cam-img cam-past" src="../assets/al-hisn-1823.jpg" alt="Al Hisn Fort as it may have stood in 1823, an artist's impression" decoding="async">
+          <div class="cam-past-fallback"><span>1823 reconstruction<br>not yet rendered</span></div>
+        </div>
+        <div class="cam-scrim" aria-hidden="true"></div>
+        <div class="divider" aria-hidden="true"></div>
+        <span class="knob" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 8l-4 4 4 4M14 8l4 4-4 4"/></svg></span>
+        <input class="cam-range" type="range" min="0" max="100" value="0" step="1" aria-label="Time travel, from today to 1823" aria-valuetext="Today">
+        <div class="ar" style="--ax:64%;--ay:34%">
+          <span class="ar-dot"></span>
+          <span class="ar-line"></span>
+          <div class="ar-plate">
+            <strong>Al Hisn Fort</strong>
+            <span>Built 1823, demolished 1969, rebuilt and reopened as a museum in 2015.</span>
+            <span class="ar-quiet"><span class="dot dot-quiet"></span>Quiet until 11:00</span>
+          </div>
+        </div>
+        <div class="cam-top">
+          <button class="btn-plate" type="button" data-go="plan"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg><span class="lbl">Back to plan</span></button>
+        </div>
+      </div>
+      <div class="sheet">
+        <div class="grabber" aria-hidden="true"></div>
+        <div class="seg" role="group" aria-label="Choose the view" data-on="today">
+          <span class="seg-thumb" aria-hidden="true"></span>
+          <button class="seg-btn" type="button" data-seg="0" aria-pressed="true">Today</button>
+          <button class="seg-btn" type="button" data-seg="100" aria-pressed="false">1823</button>
+        </div>
+        <p class="cam-note">1823 view is an artist's impression</p>
+        <div class="sheet-actions">
+          <button class="btn-secondary" type="button" data-action="place"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg><span class="lbl">Place in your room</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen screen-ask" data-name="ask" id="b-screen-ask" role="tabpanel" aria-labelledby="b-tab-ask">
+    <header class="ask-head">
+      <img class="ask-map" src="../assets/map-heart-of-sharjah.png" alt="Street map centered on Al Hisn Fort" width="40" height="60" loading="eager" decoding="async">
+      <p class="ask-ctx">At Al Hisn Fort, 09:42, 34°C</p>
+    </header>
+    <div class="thread" role="log" aria-live="polite" aria-label="Conversation with Daleel">
+      <div class="msg msg-you"><p>Why was the fort demolished in 1969?</p></div>
+      <div class="msg msg-guide">
+        <div class="msg-from"><svg class="mark mark-sm" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><polygon points="22.16,16.21 16.21,22.16 7.79,22.16 1.84,16.21 1.84,7.79 7.79,1.84 16.21,1.84 22.16,7.79" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="12,4.6 14,12 10,12" fill="#C9A24D"/><polygon points="12,19.4 14,12 10,12" fill="currentColor"/></svg><span>Daleel</span></div>
+        <p>In 1969 most of Al Hisn was pulled down to make room for the modern city center. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</p>
+        <div class="msg-actions">
+          <button class="btn-secondary" type="button" data-action="read" aria-pressed="false"><span class="ic-on"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10v4h3l5 4V6l-5 4H4z"/><path d="M16 9a4.2 4.2 0 0 1 0 6"/></svg></span><span class="ic-off"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg></span><span class="lbl">Read aloud</span></button>
+          <button class="btn-secondary" type="button" data-action="quiet"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg><span class="lbl">Quiet hours today</span></button>
+        </div>
+      </div>
+    </div>
+    <form class="ask-form" autocomplete="off">
+      <input class="ask-input" type="text" name="q" placeholder="Ask about this place" aria-label="Ask about this place" enterkeyhint="send" maxlength="200">
+      <button class="send" type="submit" aria-label="Send question" disabled><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+    </form>
+    <template class="tpl-you"><div class="msg msg-you is-new"><p></p></div></template>
+    <template class="tpl-guide"><div class="msg msg-guide is-new"><div class="msg-from"><svg class="mark mark-sm" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><polygon points="22.16,16.21 16.21,22.16 7.79,22.16 1.84,16.21 1.84,7.79 7.79,1.84 16.21,1.84 22.16,7.79" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="12,4.6 14,12 10,12" fill="#C9A24D"/><polygon points="12,19.4 14,12 10,12" fill="currentColor"/></svg><span>Daleel</span></div><p></p></div></template>
+  </section>
+
+  <nav class="tabbar" role="tablist" aria-label="Daleel sections">
+    <button class="tab" type="button" role="tab" id="b-tab-plan" data-tab="plan" aria-controls="b-screen-plan" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="20" r="2.5"/><path d="M8.5 6h6a3.5 3.5 0 0 1 0 7h-5a3.5 3.5 0 0 0 0 7h6"/></svg><span>Plan</span></button>
+    <button class="tab" type="button" role="tab" id="b-tab-look" data-tab="look" aria-controls="b-screen-look" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="3.5"/></svg><span>Look</span></button>
+    <button class="tab" type="button" role="tab" id="b-tab-ask" data-tab="ask" aria-controls="b-screen-ask" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4c-4.4 0-8 3-8 6.8 0 2.1 1.1 4 2.9 5.2L6 20l4-1.7c.6.1 1.3.2 2 .2 4.4 0 8-3 8-6.8S16.4 4 12 4z"/></svg><span>Ask</span></button>
+  </nav>
+</div>
+</div>
+<div class="frame">
+<div class="app" data-screen="ask" id="c">
+  <section class="screen screen-plan" data-name="plan" id="c-screen-plan" role="tabpanel" aria-labelledby="c-tab-plan">
+    <header class="head">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><polygon points="22.16,16.21 16.21,22.16 7.79,22.16 1.84,16.21 1.84,7.79 7.79,1.84 16.21,1.84 22.16,7.79" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="12,4.6 14,12 10,12" fill="#C9A24D"/><polygon points="12,19.4 14,12 10,12" fill="currentColor"/></svg>
+        <span class="wordmark">Daleel</span>
+        <span class="wordmark-ar" lang="ar" dir="rtl">دليل</span>
+      </div>
+      <div class="now">
+        <span class="now-date">Sat 10 Oct</span>
+        <span class="now-temp">34°C now, 38°C at 12:00</span>
+      </div>
+    </header>
+    <div class="plan-body">
+      <figure class="hero">
+        <img src="../assets/khalid-lagoon-night.jpg" alt="Khalid Lagoon at night, the Al Majaz waterfront lit along the corniche" width="358" height="140" loading="eager" decoding="async">
+      </figure>
+      <h1 class="title">Today, at the right time</h1>
+      <ol class="stops" aria-label="Today's stops">
+        <li class="stop">
+          <div class="stop-time"><time datetime="2026-10-10T09:30">09:30</time></div>
+          <div class="stop-rail" aria-hidden="true"></div>
+          <div class="stop-body">
+            <div class="stop-name">Al Hisn Fort <span class="ar" lang="ar" dir="rtl">حصن الشارقة</span></div>
+            <div class="stop-status"><span class="dot dot-quiet"></span><span class="st-quiet">Quiet now</span></div>
+            <div class="stop-meta">Indoor, 6 min walk from your hotel</div>
+          </div>
+        </li>
+        <li class="stop">
+          <div class="stop-time"><time datetime="2026-10-10T19:00">19:00</time></div>
+          <div class="stop-rail" aria-hidden="true"></div>
+          <div class="stop-body">
+            <div class="stop-name">Al Noor Island <span class="ar" lang="ar" dir="rtl">جزيرة النور</span></div>
+            <div class="stop-status"><span class="dot dot-busy"></span><span class="st-busy">Busy 16:00 to 18:00</span>, go at 19:00</div>
+            <div class="stop-meta">After sunset, 31°C, 12 min by taxi</div>
+          </div>
+        </li>
+        <li class="stop">
+          <div class="stop-time"><small>Sat</small><time datetime="2026-10-17T08:00">08:00</time></div>
+          <div class="stop-rail" aria-hidden="true"></div>
+          <div class="stop-body">
+            <div class="stop-name">Kalba Mangroves <span class="ar" lang="ar" dir="rtl">قرم كلباء</span></div>
+            <div class="stop-status"><span class="dot dot-quiet"></span><span class="st-quiet">Shade route</span>, 40 min by car</div>
+            <div class="stop-meta">East Coast, under-visited, kayak tours from 08:30</div>
+          </div>
+        </li>
+      </ol>
+      <aside class="swap" aria-label="Why the order changed">
+        <svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>
+        <p>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</p>
+      </aside>
+      <section class="score" aria-label="Sustainability score 82 of 100">
+        <div class="score-num" aria-hidden="true">82</div>
+        <div class="score-text">
+          <div class="score-label">Sustainability score</div>
+          <div class="score-sub">Off-peak 2 of 3 stops, 1 East Coast stop, 38 min shaded walking</div>
+          <div class="score-track" role="meter" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" aria-label="Sustainability score"><span class="score-fill" style="width:82%"></span></div>
+        </div>
+      </section>
+      <div class="cta">
+        <button class="btn-primary" type="button" data-go="look">Start today's plan</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen screen-look" data-name="look" id="c-screen-look" role="tabpanel" aria-labelledby="c-tab-look">
+    <div class="cam" style="--pos:0%">
+      <div class="cam-stage">
+        <img class="cam-img cam-today" src="../assets/al-hisn-fort.jpg" alt="Al Hisn Fort today, daylight exterior seen from the square" decoding="async">
+        <div class="cam-past-wrap">
+          <img class="cam-img cam-past" src="../assets/al-hisn-1823.jpg" alt="Al Hisn Fort as it may have stood in 1823, an artist's impression" decoding="async">
+          <div class="cam-past-fallback"><span>1823 reconstruction<br>not yet rendered</span></div>
+        </div>
+        <div class="cam-scrim" aria-hidden="true"></div>
+        <div class="divider" aria-hidden="true"></div>
+        <span class="knob" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 8l-4 4 4 4M14 8l4 4-4 4"/></svg></span>
+        <input class="cam-range" type="range" min="0" max="100" value="0" step="1" aria-label="Time travel, from today to 1823" aria-valuetext="Today">
+        <div class="ar" style="--ax:64%;--ay:34%">
+          <span class="ar-dot"></span>
+          <span class="ar-line"></span>
+          <div class="ar-plate">
+            <strong>Al Hisn Fort</strong>
+            <span>Built 1823, demolished 1969, rebuilt and reopened as a museum in 2015.</span>
+            <span class="ar-quiet"><span class="dot dot-quiet"></span>Quiet until 11:00</span>
+          </div>
+        </div>
+        <div class="cam-top">
+          <button class="btn-plate" type="button" data-go="plan"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg><span class="lbl">Back to plan</span></button>
+        </div>
+      </div>
+      <div class="sheet">
+        <div class="grabber" aria-hidden="true"></div>
+        <div class="seg" role="group" aria-label="Choose the view" data-on="today">
+          <span class="seg-thumb" aria-hidden="true"></span>
+          <button class="seg-btn" type="button" data-seg="0" aria-pressed="true">Today</button>
+          <button class="seg-btn" type="button" data-seg="100" aria-pressed="false">1823</button>
+        </div>
+        <p class="cam-note">1823 view is an artist's impression</p>
+        <div class="sheet-actions">
+          <button class="btn-secondary" type="button" data-action="place"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg><span class="lbl">Place in your room</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen screen-ask" data-name="ask" id="c-screen-ask" role="tabpanel" aria-labelledby="c-tab-ask">
+    <header class="ask-head">
+      <img class="ask-map" src="../assets/map-heart-of-sharjah.png" alt="Street map centered on Al Hisn Fort" width="40" height="60" loading="eager" decoding="async">
+      <p class="ask-ctx">At Al Hisn Fort, 09:42, 34°C</p>
+    </header>
+    <div class="thread" role="log" aria-live="polite" aria-label="Conversation with Daleel">
+      <div class="msg msg-you"><p>Why was the fort demolished in 1969?</p></div>
+      <div class="msg msg-guide">
+        <div class="msg-from"><svg class="mark mark-sm" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><polygon points="22.16,16.21 16.21,22.16 7.79,22.16 1.84,16.21 1.84,7.79 7.79,1.84 16.21,1.84 22.16,7.79" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="12,4.6 14,12 10,12" fill="#C9A24D"/><polygon points="12,19.4 14,12 10,12" fill="currentColor"/></svg><span>Daleel</span></div>
+        <p>In 1969 most of Al Hisn was pulled down to make room for the modern city center. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</p>
+        <div class="msg-actions">
+          <button class="btn-secondary" type="button" data-action="read" aria-pressed="false"><span class="ic-on"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 10v4h3l5 4V6l-5 4H4z"/><path d="M16 9a4.2 4.2 0 0 1 0 6"/></svg></span><span class="ic-off"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg></span><span class="lbl">Read aloud</span></button>
+          <button class="btn-secondary" type="button" data-action="quiet"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2.5"/></svg><span class="lbl">Quiet hours today</span></button>
+        </div>
+      </div>
+    </div>
+    <form class="ask-form" autocomplete="off">
+      <input class="ask-input" type="text" name="q" placeholder="Ask about this place" aria-label="Ask about this place" enterkeyhint="send" maxlength="200">
+      <button class="send" type="submit" aria-label="Send question" disabled><svg class="ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+    </form>
+    <template class="tpl-you"><div class="msg msg-you is-new"><p></p></div></template>
+    <template class="tpl-guide"><div class="msg msg-guide is-new"><div class="msg-from"><svg class="mark mark-sm" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><polygon points="22.16,16.21 16.21,22.16 7.79,22.16 1.84,16.21 1.84,7.79 7.79,1.84 16.21,1.84 22.16,7.79" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><polygon points="12,4.6 14,12 10,12" fill="#C9A24D"/><polygon points="12,19.4 14,12 10,12" fill="currentColor"/></svg><span>Daleel</span></div><p></p></div></template>
+  </section>
+
+  <nav class="tabbar" role="tablist" aria-label="Daleel sections">
+    <button class="tab" type="button" role="tab" id="c-tab-plan" data-tab="plan" aria-controls="c-screen-plan" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="20" r="2.5"/><path d="M8.5 6h6a3.5 3.5 0 0 1 0 7h-5a3.5 3.5 0 0 0 0 7h6"/></svg><span>Plan</span></button>
+    <button class="tab" type="button" role="tab" id="c-tab-look" data-tab="look" aria-controls="c-screen-look" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="3.5"/></svg><span>Look</span></button>
+    <button class="tab" type="button" role="tab" id="c-tab-ask" data-tab="ask" aria-controls="c-screen-ask" aria-selected="false"><svg class="ic" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4c-4.4 0-8 3-8 6.8 0 2.1 1.1 4 2.9 5.2L6 20l4-1.7c.6.1 1.3.2 2 .2 4.4 0 8-3 8-6.8S16.4 4 12 4z"/></svg><span>Ask</span></button>
+  </nav>
+</div>
+</div>
+</main>
+<script>(function () {
+  'use strict';
+  var REDUCED = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var ANSWERS = {
+    demolished: 'In 1969 most of Al Hisn was pulled down to make room for the modern city center. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.',
+    quiet: 'Al Hisn Fort is quiet until 11:00. Al Noor Island is busy from 16:00 to 18:00, so the plan moves it to 19:00, when the walk is 31°C.',
+    built: 'Al Hisn Fort was built in 1823. Most of it was demolished in 1969, one tower was saved, and the fort was rebuilt from old photographs and plans before reopening as a museum in 2015.',
+    fallback: 'I answer from the curated Sharjah corpus. Ask about opening hours, the history of this place, or the quietest time to visit.'
+  };
+
+  function initApp(app) {
+    var tabs = Array.prototype.slice.call(app.querySelectorAll('.tab'));
+
+    function show(name) {
+      app.setAttribute('data-screen', name);
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-tab') === name;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+      });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { show(t.getAttribute('data-tab')); });
+      t.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) { return; }
+        e.preventDefault();
+        var n = tabs[(i + d + tabs.length) % tabs.length];
+        n.focus();
+        show(n.getAttribute('data-tab'));
+      });
+    });
+    Array.prototype.forEach.call(app.querySelectorAll('[data-go]'), function (b) {
+      b.addEventListener('click', function () {
+        var name = b.getAttribute('data-go');
+        show(name);
+        var t = app.querySelector('.tab[data-tab="' + name + '"]');
+        if (t) { t.focus({ preventScroll: true }); }
+      });
+    });
+    show(app.getAttribute('data-screen') || 'plan');
+
+    /* Look: the compare divider. Pointer drags anywhere on the stage; the range input carries keyboard and screen readers. */
+    var cam = app.querySelector('.cam');
+    var stage = app.querySelector('.cam-stage');
+    var range = app.querySelector('.cam-range');
+    var seg = app.querySelector('.seg');
+    var segBtns = Array.prototype.slice.call(app.querySelectorAll('.seg-btn'));
+    var note = app.querySelector('.cam-note');
+    var pos = 0, animTimer = null, dragging = false;
+
+    function setPos(v, animate) {
+      pos = Math.max(0, Math.min(100, Math.round(v)));
+      clearTimeout(animTimer);
+      if (animate && !REDUCED) {
+        cam.classList.add('is-anim');
+        animTimer = setTimeout(function () { cam.classList.remove('is-anim'); }, 300);
+      } else {
+        cam.classList.remove('is-anim');
+      }
+      cam.style.setProperty('--pos', pos + '%');
+      if (String(range.value) !== String(pos)) { range.value = pos; }
+      range.setAttribute('aria-valuetext', pos === 0 ? 'Today' : pos === 100 ? '1823' : pos + ' percent toward 1823');
+      var past = pos >= 50;
+      seg.setAttribute('data-on', past ? 'past' : 'today');
+      segBtns.forEach(function (b) {
+        b.setAttribute('aria-pressed', b.getAttribute('data-seg') === (past ? '100' : '0') ? 'true' : 'false');
+      });
+      note.classList.toggle('is-on', pos > 0);
+    }
+    function posFromEvent(e) {
+      var r = stage.getBoundingClientRect();
+      return r.width ? (e.clientX - r.left) / r.width * 100 : pos;
+    }
+    range.addEventListener('input', function () { setPos(Number(range.value), false); });
+    range.addEventListener('focus', function () {
+      var vis = true;
+      try { vis = range.matches(':focus-visible'); } catch (err) { vis = true; }
+      if (vis) { cam.classList.add('is-focus'); }
+    });
+    range.addEventListener('blur', function () { cam.classList.remove('is-focus'); });
+    segBtns.forEach(function (b) {
+      b.addEventListener('click', function () { setPos(Number(b.getAttribute('data-seg')), true); });
+    });
+    stage.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) { return; }
+      if (e.target.closest && e.target.closest('button')) { return; }
+      dragging = true;
+      cam.classList.add('is-drag');
+      try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      setPos(posFromEvent(e), false);
+      e.preventDefault();
+    });
+    stage.addEventListener('pointermove', function (e) { if (dragging) { setPos(posFromEvent(e), false); } });
+    function endDrag() { if (!dragging) { return; } dragging = false; cam.classList.remove('is-drag'); }
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointercancel', endDrag);
+    stage.addEventListener('lostpointercapture', endDrag);
+    setPos(0, false);
+
+    var place = app.querySelector('[data-action="place"]');
+    place.addEventListener('click', function () {
+      var lbl = place.querySelector('.lbl');
+      lbl.textContent = 'Opens the AR viewer on the phone build';
+      place.disabled = true;
+      setTimeout(function () { place.disabled = false; lbl.textContent = 'Place in your room'; }, 2400);
+    });
+
+    /* Ask: a real thread. Replies come from a small canned set tied to the demo data. */
+    var thread = app.querySelector('.thread');
+    var form = app.querySelector('.ask-form');
+    var input = form.querySelector('.ask-input');
+    var send = form.querySelector('.send');
+    var tplYou = app.querySelector('.tpl-you');
+    var tplGuide = app.querySelector('.tpl-guide');
+
+    function say(tpl, text) {
+      var node = tpl.content.firstElementChild.cloneNode(true);
+      node.querySelector('p').textContent = text;
+      thread.appendChild(node);
+      thread.scrollTop = thread.scrollHeight;
+      return node;
+    }
+    function answer(q) {
+      var s = q.toLowerCase();
+      if (s.indexOf('quiet') > -1 || s.indexOf('hour') > -1 || s.indexOf('busy') > -1 || s.indexOf('crowd') > -1 || s.indexOf('when') > -1) { return ANSWERS.quiet; }
+      if (s.indexOf('1969') > -1 || s.indexOf('demolish') > -1 || s.indexOf('pulled') > -1 || s.indexOf('destroy') > -1) { return ANSWERS.demolished; }
+      if (s.indexOf('1823') > -1 || s.indexOf('built') > -1 || s.indexOf('history') > -1 || s.indexOf('old') > -1) { return ANSWERS.built; }
+      return ANSWERS.fallback;
+    }
+    input.addEventListener('input', function () { send.disabled = input.value.trim() === ''; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = input.value.trim();
+      if (!q) { return; }
+      say(tplYou, q);
+      input.value = '';
+      send.disabled = true;
+      setTimeout(function () { say(tplGuide, answer(q)); }, REDUCED ? 0 : 240);
+    });
+    app.querySelector('[data-action="quiet"]').addEventListener('click', function () {
+      say(tplYou, 'Quiet hours today');
+      setTimeout(function () { say(tplGuide, ANSWERS.quiet); }, REDUCED ? 0 : 240);
+    });
+
+    var readBtn = app.querySelector('[data-action="read"]');
+    var synth = window.speechSynthesis;
+    function stopReading() {
+      if (synth) { synth.cancel(); }
+      readBtn.setAttribute('aria-pressed', 'false');
+      readBtn.querySelector('.lbl').textContent = 'Read aloud';
+    }
+    readBtn.addEventListener('click', function () {
+      if (readBtn.getAttribute('aria-pressed') === 'true') { stopReading(); return; }
+      if (!synth || !window.SpeechSynthesisUtterance) {
+        say(tplGuide, 'Reading aloud needs a browser with speech output. Safari and Chrome on a phone both have it.');
+        return;
+      }
+      var text = readBtn.closest('.msg-guide').querySelector('p').textContent;
+      var u = new window.SpeechSynthesisUtterance(text);
+      u.lang = 'en-GB';
+      u.rate = 0.95;
+      u.onend = stopReading;
+      u.onerror = stopReading;
+      readBtn.setAttribute('aria-pressed', 'true');
+      readBtn.querySelector('.lbl').textContent = 'Stop reading';
+      synth.cancel();
+      synth.speak(u);
+    });
+  }
+
+  /* Images: a missing file hides the broken glyph; a missing 1823 plate falls back to a flat panel. */
+  function markMissing(img) {
+    img.classList.add('is-missing');
+    if (img.classList.contains('cam-past')) {
+      var cam = img.closest('.cam');
+      if (cam) { cam.classList.add('no-past'); }
+    }
+  }
+  document.addEventListener('error', function (e) {
+    var t = e.target;
+    if (t && t.tagName === 'IMG') { markMissing(t); }
+  }, true);
+  Array.prototype.forEach.call(document.images, function (img) {
+    if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) { markMissing(img); }
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll('.app'), initApp);
+})();</script>
+</body>
+</html>

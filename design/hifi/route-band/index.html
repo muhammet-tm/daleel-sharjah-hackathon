@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daleel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;700&display=swap">
+<style>
+/* ============================================================
+   Daleel, Route Band Signage direction
+   Design read: clickable high-fidelity prototype of a consumer travel app for
+   hackathon judges and Sharjah visitors, premium-consumer language, product
+   register, native CSS, no framework. Dials: VARIANCE 5, MOTION 4, DENSITY 4.
+
+   THEME: light, locked (color-scheme: light; the OS setting is ignored).
+   Scene that forced it: a visitor stands on the Sharjah Corniche at 09:40 in
+   October sun, phone at arm's length, reading the plan the way she reads the
+   bilingual road plate behind her, and the same page is projected at 11:30 in
+   a bright judging room; a white sign with navy plates survives both, a dark
+   screen washes to gray.
+
+   Type: Public Sans (Latin, civic signage lineage) with Noto Sans Arabic as the
+   Arabic companion. Both carry the tnum feature, so every time and temperature
+   is tabular. One <link>, weights 400/500/600/700.
+   ============================================================ */
+:root {
+  color-scheme: light;
+
+  /* ---- Neutrals: chroma-0 ground, one navy-tinted second layer ---- */
+  --bg: #F3F3F3;            --bg: oklch(96.4% 0 0);
+  --surface: #FFFFFF;       --surface: oklch(100% 0 0);
+  --tint: #E8EAF0;          --tint: oklch(93.7% 0.008 271);     /* second neutral layer: sheets, hover on secondary, disabled send */
+  --line: #D2D5DC;          --line: oklch(87.3% 0.010 267);     /* hairlines and gauge track; never carries text */
+  --border-ui: #6F7890;     --border-ui: oklch(57.1% 0.034 268); /* input borders and the grabber: 3.97:1 on bg, 4.41:1 on surface (UI minimum 3:1) */
+
+  /* ---- Ink and plates: the one brand color that survives ---- */
+  --navy: #14213D;          --navy: oklch(25.2% 0.056 264);
+  --navy-hover: #1C2D52;    --navy-hover: oklch(30.3% 0.071 264);
+  --navy-active: #0F192F;   --navy-active: oklch(21.7% 0.046 264);
+  --ink: var(--navy);                                          /* navy on bg 14.40:1, navy on surface 15.97:1, navy on tint 13.28:1 */
+  --ink-2: #3F4860;         --ink-2: oklch(40.4% 0.042 268);   /* secondary text: 8.20:1 on bg, 9.10:1 on surface, 7.57:1 on tint */
+  --on-navy: #FFFFFF;                                          /* white on navy 15.97:1, on navy-hover 13.58:1 */
+  --on-navy-2: #C7CDDB;     --on-navy-2: oklch(84.8% 0.021 267); /* secondary text on navy plates: 10.03:1 */
+
+  /* ---- Semantic route bands and state dots (separate from the accent) ---- */
+  --green: #0F6B3F;         --green: oklch(46.6% 0.108 156);   /* shaded or walking leg; white on green 6.57:1; dot on bg 5.92:1 */
+  --blue: #1F4E8C;          --blue: oklch(42.6% 0.115 257);    /* water or creek leg; white on blue 8.31:1; dot on bg 7.49:1 */
+  --amber: #E0891C;         --amber: oklch(70.6% 0.152 64);    /* motorized or peak-heat leg; band text is navy, 5.91:1 */
+  --amber-ink: #A85A0C;     --amber-ink: oklch(54.9% 0.129 57); /* amber as a dot or as text on light ground: 4.58:1 on bg */
+
+  /* ---- The mark's needle: the only place brass may appear ---- */
+  --brass: #C9A24D;         --brass: oklch(73.1% 0.113 85);    /* brass on navy 6.66:1; the mark sits on navy plates only */
+
+  /* ---- Page chrome around the phone frames (desktop only) ---- */
+  --page: #E4E4E4;          --page: oklch(91.9% 0 0);
+  --bezel: #B5B9C4;         --bezel: oklch(78.6% 0.016 270);
+  --stage: #7D8595;         --stage: oklch(60% 0.02 268);      /* camera fallback while the photograph loads; white on it 3.71:1 */
+
+  /* ---- Type: fixed rem scale, ratio about 1.17 ---- */
+  --font: "Public Sans", "Noto Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ar: "Noto Sans Arabic", "Public Sans", system-ui, sans-serif;
+  --t-1: 0.75rem;    /* 12 */
+  --t-2: 0.875rem;   /* 14 */
+  --t-3: 1rem;       /* 16 */
+  --t-4: 1.1875rem;  /* 19 */
+  --t-5: 1.4375rem;  /* 23 */
+
+  /* ---- Motion tokens (transitions.dev scale) ---- */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --d-stagger: 40ms;
+  --d-quick: 150ms;    /* hover, exit, label fade */
+  --d-rise: 180ms;     /* plate entry, 8px rise */
+  --d-fast: 250ms;     /* segmented control slide, tab state */
+  --d-draw: 400ms;     /* route band and leader draw */
+
+  --radius: 4px;
+  --frame-w: 390px;
+  --frame-h: 844px;
+  --gap: 24px;
+}
+
+@property --pos { syntax: "<length-percentage>"; inherits: true; initial-value: 62%; }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 400 var(--t-2) / 1.45 var(--font);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  -webkit-font-smoothing: antialiased;
+}
+[lang="ar"] { font-family: var(--font-ar); direction: rtl; unicode-bidi: isolate; }
+button, input { font: inherit; color: inherit; font-variant-numeric: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+h1, h2, h3, p { margin: 0; }
+img { display: block; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.ico { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.ico-sm { width: 20px; height: 20px; }
+
+/* ---------- Page chrome: deck header and phone frames ---------- */
+.deck-head {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 32px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 20px;
+}
+.deck-head h1 { font-size: var(--t-4); font-weight: 700; letter-spacing: -0.005em; }
+.deck-head p { color: var(--ink-2); max-width: 70ch; }
+.deck-head .deck-team { margin-left: auto; color: var(--ink); font-weight: 500; }
+.deck { position: relative; padding: 0 32px 40px; }
+.frames {
+  display: grid;
+  grid-template-columns: repeat(3, var(--frame-w));
+  gap: var(--gap);
+  justify-content: center;
+  transform: scale(var(--s, 1));
+  transform-origin: top center;
+}
+.cell { display: grid; gap: 12px; justify-items: center; }
+.frame {
+  position: relative;
+  width: var(--frame-w);
+  height: var(--frame-h);
+  border: 1px solid var(--bezel);
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--bg);
+  isolation: isolate;
+}
+.cap { font-size: var(--t-1); color: var(--ink-2); text-align: center; max-width: 36ch; }
+
+@media (min-width: 760px) and (max-width: 1023.98px) {
+  .frames { grid-template-columns: repeat(2, var(--frame-w)); }
+}
+@media (max-width: 759.98px) {
+  body { background: var(--bg); overflow: hidden; }
+  .deck-head, .cell + .cell, .cap { display: none; }
+  .deck { padding: 0; }
+  .frames { display: block; transform: none; }
+  .frame {
+    position: fixed;
+    inset: 0;
+    width: auto;
+    height: 100vh;
+    height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+}
+
+/* ---------- App shell ---------- */
+.shell {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+}
+.screen { display: none; flex: 1 1 auto; min-height: 0; flex-direction: column; }
+.screen.is-active { display: flex; }
+
+/* Header plate: navy, white text, the mark on the left */
+.top {
+  flex: none;
+  background: var(--navy);
+  color: var(--on-navy);
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brand .ico { width: 28px; height: 28px; }
+.wordmark { font-size: var(--t-4); font-weight: 700; letter-spacing: -0.005em; line-height: 1; display: flex; align-items: baseline; gap: 10px; }
+.wordmark [lang="ar"] { font-size: var(--t-3); font-weight: 500; }
+.top-right { text-align: right; line-height: 1.25; }
+.top-right .date { display: block; font-size: var(--t-1); font-weight: 500; color: var(--on-navy-2); }
+.top-right .temp { display: block; font-size: var(--t-2); font-weight: 600; }
+.top-label { font-size: var(--t-2); font-weight: 600; color: var(--on-navy-2); }
+
+.scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+.title { padding: 18px 16px 10px; font-size: var(--t-4); font-weight: 600; letter-spacing: -0.005em; text-wrap: balance; }
+
+/* ---------- Stops list with route bands ---------- */
+.stops { list-style: none; margin: 0; padding: 0; }
+.stop { display: block; }
+.band {
+  position: relative;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  color: var(--on-navy);
+  font-size: var(--t-1);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.band-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.band-svg line { stroke: var(--band); stroke-width: 22; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.band-label { position: relative; }
+.band-green { --band: var(--green); }
+.band-blue { --band: var(--blue); }
+.band-amber { --band: var(--amber); color: var(--navy); }
+
+.row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 0 12px;
+  padding: 12px 16px 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.t { font-size: var(--t-2); font-weight: 600; line-height: 1.3; padding-top: 1px; }
+.t .t-day { display: block; font-size: var(--t-1); font-weight: 500; color: var(--ink-2); }
+.place-line { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 12px; flex-wrap: wrap; }
+.place { font-size: var(--t-3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.2; }
+.place-ar { font-size: var(--t-2); font-weight: 500; color: var(--ink-2); line-height: 1.4; }
+.status { display: flex; align-items: center; gap: 8px; margin-top: 6px; font-weight: 600; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--dot, var(--navy)); flex: none; }
+.dot-quiet { --dot: var(--green); }
+.dot-busy { --dot: var(--amber-ink); }
+.dot-shade { --dot: var(--blue); }
+.meta { margin-top: 2px; color: var(--ink-2); }
+
+/* Swap explanation and score sit on the same 64px leading column as the times */
+.swap, .score {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 0 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.swap .ico { color: var(--ink-2); }
+.swap p { color: var(--ink); }
+.score-num { font-size: var(--t-5); font-weight: 700; line-height: 1; letter-spacing: -0.01em; padding-top: 2px; }
+.score-label { font-weight: 600; }
+.gauge { display: flex; gap: 3px; margin: 8px 0 6px; }
+.gauge i { flex: 1 1 0; height: 8px; background: var(--line); }
+.gauge i.on { background: var(--navy); }
+.cta { flex: none; padding: 12px 16px; background: var(--bg); border-top: 1px solid var(--line); }
+
+/* ---------- Buttons: one vocabulary across screens ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: var(--radius);
+  font-size: var(--t-3);
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: background-color var(--d-quick) var(--ease-out-quart), color var(--d-quick) var(--ease-out-quart), transform var(--d-quick) var(--ease-out-quart);
+  white-space: nowrap;
+}
+.btn-block { width: 100%; }
+.btn-primary { background: var(--navy); color: var(--on-navy); border-color: var(--navy); }
+.btn-primary:hover { background: var(--navy-hover); border-color: var(--navy-hover); }
+.btn-primary:active { background: var(--navy-active); transform: translateY(1px); }
+.btn-secondary { background: var(--surface); color: var(--navy); border-color: var(--navy); height: 40px; font-size: var(--t-2); padding: 0 12px; }
+.btn-secondary:hover { background: var(--tint); }
+.btn-secondary:active { background: var(--line); transform: translateY(1px); }
+.btn-secondary[aria-pressed="true"] { background: var(--navy); color: var(--on-navy); }
+.btn:disabled { opacity: 0.45; transform: none; }
+.btn:focus-visible, .tab:focus-visible, .input:focus-visible, .send:focus-visible, .seg [role="radio"]:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+.back:focus-visible, .cmp-handle:focus-visible { outline: 3px solid var(--on-navy); outline-offset: 2px; }
+
+/* ---------- Bottom tab bar: the active tab is a navy plate ---------- */
+.tabs {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.tab {
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: none;
+  border: 0;
+  color: var(--navy);
+  font-size: var(--t-1);
+  font-weight: 600;
+  transition: background-color var(--d-quick) var(--ease-out-quart), color var(--d-quick) var(--ease-out-quart);
+}
+.tab:hover { background: var(--tint); }
+.tab:active { background: var(--line); }
+.tab:focus-visible { outline-offset: -4px; }
+.tab.is-active { background: var(--navy); color: var(--on-navy); }
+.tab.is-active:hover { background: var(--navy-hover); }
+.tab:disabled { color: var(--ink-2); opacity: 0.5; }
+
+/* ---------- Look: camera stage, comparison, callout, sheet ---------- */
+.top-look { padding-left: 8px; }
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 40px;
+  padding: 0 10px 0 4px;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--on-navy);
+  font-size: var(--t-2);
+  font-weight: 600;
+  transition: background-color var(--d-quick) var(--ease-out-quart);
+}
+.back:hover { background: rgba(255, 255, 255, 0.12); }
+.back:active { background: rgba(255, 255, 255, 0.2); }
+.place-plate { text-align: right; line-height: 1.2; }
+.place-plate .place { display: block; }
+.place-plate [lang="ar"] { display: block; font-size: var(--t-2); font-weight: 500; color: var(--on-navy-2); }
+
+.stage { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; background: var(--stage); --pos: 62%; transition: --pos var(--d-draw) var(--ease-out-quart); }
+.stage.is-dragging { transition: none; }
+.cmp { position: absolute; inset: 0; touch-action: none; cursor: ew-resize; user-select: none; -webkit-user-select: none; }
+.cmp img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; color: var(--on-navy); -webkit-user-drag: none; }
+.cmp-past { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos)); background: var(--navy); }
+.cmp-past-note { display: none; position: absolute; left: var(--pos); right: 0; top: 0; bottom: 0; align-items: center; justify-content: center; padding: 24px; color: var(--on-navy); font-weight: 600; text-align: center; }
+.no-past .cmp-past img { visibility: hidden; }
+.no-past .cmp-past-note { display: flex; }
+.cmp-divider { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--surface); pointer-events: none; }
+.cmp-handle {
+  position: absolute;
+  top: 50%;
+  left: clamp(22px, var(--pos), calc(100% - 22px));
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  color: var(--on-navy);
+  border: 2px solid var(--surface);
+  border-radius: var(--radius);
+  cursor: ew-resize;
+  touch-action: none;
+  transition: background-color var(--d-quick) var(--ease-out-quart);
+}
+.cmp-handle:hover { background: var(--navy-hover); }
+.cmp-handle:active { background: var(--navy-active); }
+
+.leader { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.leader line { stroke: var(--navy); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.leader circle { fill: var(--navy); stroke: var(--surface); stroke-width: 2; }
+.callout {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 236px;
+  padding: 12px 14px 12px;
+  background: var(--navy);
+  color: var(--on-navy);
+  border-radius: var(--radius);
+}
+.callout .place { display: block; margin-bottom: 4px; }
+.callout-body { font-size: var(--t-2); line-height: 1.4; }
+.callout-crowd { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; margin-top: 10px; font-size: var(--t-1); font-weight: 600; color: var(--on-navy-2); }
+.callout-crowd .gauge { margin: 0; }
+.callout-crowd .gauge i { background: rgba(255, 255, 255, 0.22); height: 6px; }
+.callout-crowd .gauge i.on { background: var(--surface); }
+.callout-crowd .lvl { color: var(--on-navy); }
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  padding: 8px 16px 14px;
+}
+.grabber { width: 36px; height: 4px; border-radius: 2px; background: var(--border-ui); margin: 0 auto 10px; }
+.sheet-row { display: flex; align-items: center; gap: 12px; }
+.seg {
+  position: relative;
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2px;
+  border: 1px solid var(--navy);
+  border-radius: var(--radius);
+  background: var(--surface);
+  --seg: 0;
+}
+.seg::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc(50% - 2px);
+  background: var(--navy);
+  border-radius: 2px;
+  transform: translateX(calc(var(--seg) * 100%));
+  transition: transform var(--d-fast) var(--ease-out-quart);
+}
+.seg [role="radio"] {
+  position: relative;
+  z-index: 1;
+  height: 34px;
+  border: 0;
+  background: none;
+  color: var(--navy);
+  font-size: var(--t-2);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+  transition: color var(--d-fast) var(--ease-out-quart), background-color var(--d-quick) var(--ease-out-quart);
+}
+.seg [role="radio"]:hover { background: var(--tint); }
+.seg [role="radio"][aria-checked="true"] { color: var(--on-navy); }
+.seg [role="radio"][aria-checked="true"]:hover { background: none; }
+.seg [role="radio"]:active { transform: translateY(1px); }
+.seg [role="radio"]:disabled { color: var(--ink-2); opacity: 0.5; }
+.sheet-note { margin-top: 10px; font-size: var(--t-1); font-weight: 500; color: var(--ink-2); }
+
+/* ---------- Ask: context line, thread, composer ---------- */
+.context {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  font-weight: 600;
+}
+.context .ico { color: var(--ink-2); }
+.thread {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.thread > :first-child { margin-top: auto; } /* the exchange sits next to the composer, as in any messaging thread */
+.msg { max-width: 86%; padding: 10px 12px; border-radius: var(--radius); font-size: var(--t-3); line-height: 1.45; }
+.msg-user { align-self: flex-end; background: var(--surface); border: 1px solid var(--border-ui); }
+.msg-guide { align-self: flex-start; max-width: 92%; background: var(--navy); color: var(--on-navy); display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start; }
+.msg-guide .msg-mark { color: var(--on-navy); margin-top: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+.ask-form {
+  flex: none;
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+}
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border-ui);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--t-3);
+  transition: border-color var(--d-quick) var(--ease-out-quart);
+}
+.input::placeholder { color: var(--ink-2); opacity: 1; }
+.input:hover { border-color: var(--navy); }
+.input:focus-visible { border-color: var(--navy); outline-offset: 1px; }
+.input:disabled { background: var(--tint); color: var(--ink-2); }
+.send {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--navy);
+  color: var(--on-navy);
+  transition: background-color var(--d-quick) var(--ease-out-quart), transform var(--d-quick) var(--ease-out-quart);
+}
+.send:hover { background: var(--navy-hover); }
+.send:active { background: var(--navy-active); transform: translateY(1px); }
+.send:disabled { background: var(--tint); color: var(--ink-2); transform: none; }
+
+/* ---------- Motion: plates rise 8px, bands draw, gauges fill cell by cell ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+
+.screen.is-entering .rise { animation: rise var(--d-rise) var(--ease-out-quart) both; animation-delay: calc(var(--i, 0) * var(--d-stagger)); }
+.screen.is-entering .band-svg line { animation: draw var(--d-draw) var(--ease-out-quart) both; animation-delay: calc(var(--i, 0) * var(--d-stagger)); }
+.screen.is-entering .band-label { animation: appear var(--d-quick) linear both; animation-delay: calc(var(--i, 0) * var(--d-stagger) + 260ms); }
+.screen.is-entering .leader line { animation: draw var(--d-draw) var(--ease-out-quart) both; animation-delay: var(--d-rise); }
+.screen.is-entering .leader circle { animation: appear var(--d-quick) linear both; animation-delay: calc(var(--d-rise) + 320ms); }
+.screen.is-entering .gauge i.on { animation: appear 120ms var(--ease-out-quart) both; animation-delay: calc(var(--c, 0) * var(--d-stagger) + 200ms); }
+.msg-new { animation: rise var(--d-rise) var(--ease-out-quart) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-delay: 0ms !important; transition-duration: 1ms !important; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <!-- The mark: octagon outline and a compass needle; brass lives only in the needle. -->
+  <symbol id="i-mark" viewBox="0 0 28 28">
+    <path d="M9.2 2.5h9.6l6.7 6.7v9.6l-6.7 6.7H9.2l-6.7-6.7V9.2z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+    <path d="M14 14 8.2 19.8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+    <path d="M14 14 19.8 8.2" fill="none" stroke="#C9A24D" stroke-width="1.75" stroke-linecap="round"/>
+    <circle cx="14" cy="14" r="1.75" fill="currentColor"/>
+  </symbol>
+  <symbol id="i-plan" viewBox="0 0 24 24"><path d="M4 6h2M10 6h10M4 12h2M10 12h10M4 18h2M10 18h10"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7H8l1.5-2.5h5L16 7h2.5A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="13" r="3.25"/></symbol>
+  <symbol id="i-ask" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-5 4v-4h-.5A1.5 1.5 0 0 1 4 14.5z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 4v12M3.5 12.5 7 16l3.5-3.5M17 20V8M13.5 11.5 17 8l3.5 3.5"/></symbol>
+  <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.25"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></symbol>
+  <symbol id="i-arrows" viewBox="0 0 24 24"><path d="M3.5 12h17M7.5 8l-4 4 4 4M16.5 8l4 4-4 4"/></symbol>
+</svg>
+
+<header class="deck-head">
+  <h1>Route Band Signage</h1>
+  <p>Daleel signposts Sharjah the way the Corniche road plates do: navy plates carry the facts, three route bands say how each leg is travelled, and the photograph is left alone.</p>
+  <p class="deck-team">Team Daleel, Abu Dhabi University</p>
+</header>
+
+<main class="deck">
+  <div class="frames">
+
+    <div class="cell">
+      <div class="frame" data-screen="plan">
+        <!-- The shell is authored once here; the script clones it into the other two frames. -->
+        <div class="shell" data-screen="plan">
+
+          <!-- ================= PLAN ================= -->
+          <section class="screen" data-name="plan" aria-label="Plan">
+            <header class="top rise">
+              <div class="brand">
+                <svg class="ico" aria-hidden="true"><use href="#i-mark"></use></svg>
+                <span class="wordmark">Daleel <span lang="ar" dir="rtl">دليل</span></span>
+              </div>
+              <div class="top-right">
+                <span class="date">Sat 10 Oct</span>
+                <span class="temp">34°C now, 38°C at 12:00</span>
+              </div>
+            </header>
+
+            <div class="scroll">
+              <h2 class="title rise">Today, at the right time</h2>
+
+              <ol class="stops">
+                <li class="stop rise" style="--i:0">
+                  <div class="band band-green">
+                    <svg class="band-svg" viewBox="0 0 100 22" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="11" x2="100" y2="11" pathLength="1"/></svg>
+                    <span class="band-label">6 min walk, shaded</span>
+                  </div>
+                  <div class="row">
+                    <time class="t">09:30</time>
+                    <div>
+                      <div class="place-line">
+                        <h3 class="place">Al Hisn Fort</h3>
+                        <span class="place-ar" lang="ar" dir="rtl">حصن الشارقة</span>
+                      </div>
+                      <p class="status"><i class="dot dot-quiet" aria-hidden="true"></i>Quiet now</p>
+                      <p class="meta">Indoor, 6 min walk from your hotel</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="stop rise" style="--i:1">
+                  <div class="band band-amber">
+                    <svg class="band-svg" viewBox="0 0 100 22" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="11" x2="100" y2="11" pathLength="1"/></svg>
+                    <span class="band-label">12 min by taxi, after sunset</span>
+                  </div>
+                  <div class="row">
+                    <time class="t">19:00</time>
+                    <div>
+                      <div class="place-line">
+                        <h3 class="place">Al Noor Island</h3>
+                        <span class="place-ar" lang="ar" dir="rtl">جزيرة النور</span>
+                      </div>
+                      <p class="status"><i class="dot dot-busy" aria-hidden="true"></i>Busy 16:00 to 18:00, go at 19:00</p>
+                      <p class="meta">After sunset, 31°C, 12 min by taxi</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="stop rise" style="--i:2">
+                  <div class="band band-amber">
+                    <svg class="band-svg" viewBox="0 0 100 22" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="11" x2="100" y2="11" pathLength="1"/></svg>
+                    <span class="band-label">40 min by car, East Coast</span>
+                  </div>
+                  <div class="row">
+                    <time class="t"><span class="t-day">Sat</span>08:00</time>
+                    <div>
+                      <div class="place-line">
+                        <h3 class="place">Kalba Mangroves</h3>
+                        <span class="place-ar" lang="ar" dir="rtl">قرم كلباء</span>
+                      </div>
+                      <p class="status"><i class="dot dot-shade" aria-hidden="true"></i>Shade route, 40 min by car</p>
+                      <p class="meta">East Coast, under-visited, kayak tours from 08:30</p>
+                    </div>
+                  </div>
+                  <div class="band band-blue">
+                    <svg class="band-svg" viewBox="0 0 100 22" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="11" x2="100" y2="11" pathLength="1"/></svg>
+                    <span class="band-label">Kayak route from 08:30, on the water</span>
+                  </div>
+                </li>
+              </ol>
+
+              <div class="swap rise">
+                <svg class="ico" aria-hidden="true"><use href="#i-swap"></use></svg>
+                <p>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</p>
+              </div>
+
+              <div class="score rise">
+                <div class="score-num" aria-hidden="true">82</div>
+                <div>
+                  <p class="score-label">Sustainability score<span class="sr-only">, 82 of 100</span></p>
+                  <div class="gauge" role="img" aria-label="Score 82 of 100">
+                    <i class="on" style="--c:0"></i><i class="on" style="--c:1"></i><i class="on" style="--c:2"></i><i class="on" style="--c:3"></i><i class="on" style="--c:4"></i><i class="on" style="--c:5"></i><i class="on" style="--c:6"></i><i class="on" style="--c:7"></i><i></i><i></i>
+                  </div>
+                  <p class="meta">Off-peak 2 of 3 stops, 1 East Coast stop, 38 min shaded walking</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="cta">
+              <button type="button" class="btn btn-primary btn-block">Start today’s plan</button>
+            </div>
+          </section>
+
+          <!-- ================= LOOK ================= -->
+          <section class="screen" data-name="look" aria-label="Look">
+            <header class="top top-look rise">
+              <button type="button" class="back" data-go="plan">
+                <svg class="ico" aria-hidden="true"><use href="#i-back"></use></svg>
+                Plan
+              </button>
+              <div class="place-plate">
+                <span class="place">Al Hisn Fort</span>
+                <span lang="ar" dir="rtl">حصن الشارقة</span>
+              </div>
+            </header>
+
+            <div class="stage">
+              <div class="cmp">
+                <img class="cmp-today" src="../assets/al-hisn-fort.jpg" alt="Al Hisn Fort in Sharjah, the coral-stone fort in daylight, seen through the camera">
+                <div class="cmp-past">
+                  <img src="../assets/al-hisn-1823.jpg" alt="Al Hisn Fort as it stood in 1823, an artist’s impression" onerror="this.closest('.stage').classList.add('no-past')">
+                  <p class="cmp-past-note">1823 view is being prepared</p>
+                </div>
+                <div class="cmp-divider" aria-hidden="true"></div>
+                <div class="cmp-handle" role="slider" tabindex="0" aria-label="Compare today with 1823" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62" aria-valuetext="62 percent today">
+                  <svg class="ico ico-sm" aria-hidden="true"><use href="#i-arrows"></use></svg>
+                </div>
+              </div>
+
+              <svg class="leader" aria-hidden="true">
+                <line x1="134" y1="150" x2="44%" y2="60%" pathLength="1"/>
+                <circle cx="44%" cy="60%" r="5"/>
+              </svg>
+
+              <div class="callout rise">
+                <span class="place">Al Hisn Fort</span>
+                <p class="callout-body">Built 1823, demolished 1969, rebuilt and reopened as a museum in 2015. Quiet until 11:00.</p>
+                <div class="callout-crowd">
+                  <span>Crowd now</span>
+                  <div class="gauge" role="img" aria-label="Crowd level 1 of 5"><i class="on" style="--c:0"></i><i></i><i></i><i></i><i></i></div>
+                  <span class="lvl">Low</span>
+                </div>
+              </div>
+
+              <div class="sheet rise">
+                <div class="grabber" aria-hidden="true"></div>
+                <div class="sheet-row">
+                  <div class="seg" role="radiogroup" aria-label="View">
+                    <button type="button" role="radio" aria-checked="true" data-seg="today">Today</button>
+                    <button type="button" role="radio" aria-checked="false" data-seg="past">1823</button>
+                  </div>
+                  <button type="button" class="btn btn-secondary" data-act="place">
+                    <svg class="ico ico-sm" aria-hidden="true"><use href="#i-cube"></use></svg>
+                    Place in your room
+                  </button>
+                </div>
+                <p class="sheet-note">1823 view is an artist’s impression. Drag the divider to compare.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= ASK ================= -->
+          <section class="screen" data-name="ask" aria-label="Ask">
+            <header class="top rise">
+              <div class="brand">
+                <svg class="ico" aria-hidden="true"><use href="#i-mark"></use></svg>
+                <span class="wordmark">Daleel <span lang="ar" dir="rtl">دليل</span></span>
+              </div>
+              <span class="top-label">Guide</span>
+            </header>
+
+            <p class="context rise">
+              <svg class="ico ico-sm" aria-hidden="true"><use href="#i-pin"></use></svg>
+              At Al Hisn Fort, 09:42, 34°C
+            </p>
+
+            <div class="thread" role="log" aria-live="polite" aria-label="Conversation with Daleel">
+              <div class="msg msg-user rise"><p>Why was the fort demolished in 1969?</p></div>
+              <div class="msg msg-guide rise" style="--i:1">
+                <span class="msg-mark"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-mark"></use></svg></span>
+                <p>In 1969 most of Al Hisn was pulled down to make room for the modern city centre. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</p>
+              </div>
+              <div class="actions rise" style="--i:2">
+                <button type="button" class="btn btn-secondary" data-act="read" aria-pressed="false" aria-label="Read aloud">
+                  <svg class="ico ico-sm" aria-hidden="true"><use href="#i-speaker"></use></svg>
+                  <span>Read aloud</span>
+                </button>
+                <button type="button" class="btn btn-secondary" data-act="quiet">
+                  <svg class="ico ico-sm" aria-hidden="true"><use href="#i-clock"></use></svg>
+                  Quiet hours today
+                </button>
+              </div>
+            </div>
+
+            <form class="ask-form" autocomplete="off">
+              <input type="text" name="q" class="input" placeholder="Ask about this place" aria-label="Ask about this place" enterkeyhint="send">
+              <button type="submit" class="send" aria-label="Send question" disabled>
+                <svg class="ico" aria-hidden="true"><use href="#i-send"></use></svg>
+              </button>
+            </form>
+          </section>
+
+          <!-- ================= TAB BAR ================= -->
+          <nav class="tabs" aria-label="Daleel sections">
+            <button type="button" class="tab is-active" data-go="plan" aria-current="page">
+              <svg class="ico" aria-hidden="true"><use href="#i-plan"></use></svg>
+              Plan
+            </button>
+            <button type="button" class="tab" data-go="look">
+              <svg class="ico" aria-hidden="true"><use href="#i-camera"></use></svg>
+              Look
+            </button>
+            <button type="button" class="tab" data-go="ask">
+              <svg class="ico" aria-hidden="true"><use href="#i-ask"></use></svg>
+              Ask
+            </button>
+          </nav>
+
+        </div>
+      </div>
+      <p class="cap">Plan: today’s stops scored for crowd, heat, and travel, with one swap explained.</p>
+    </div>
+
+    <div class="cell">
+      <div class="frame" data-screen="look"></div>
+      <p class="cap">Look: the camera at Al Hisn Fort, a navy callout on a leader line, and the divider back to 1823.</p>
+    </div>
+
+    <div class="cell">
+      <div class="frame" data-screen="ask"></div>
+      <p class="cap">Ask: the guide answers from the curated Sharjah corpus and reads aloud.</p>
+    </div>
+
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var source = document.querySelector('.frame .shell');
+  if (!source) { return; }
+
+  /* Demo corpus for the Ask screen. The shipped app answers from the curated
+     Sharjah corpus; these five replies stand in for it during the prototype demo. */
+  var corpus = [
+    { test: /quiet|crowd|busy|hour/i, reply: 'Al Hisn Fort is quiet until 11:00 today. The busiest hour is 12:00 to 13:00, and it settles again after 15:00.' },
+    { test: /1969|demolish|pulled|torn/i, reply: 'In 1969 most of Al Hisn was pulled down to make room for the modern city centre. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.' },
+    { test: /1823|built|build|when|old|coral|wall/i, reply: 'Al Hisn was built in 1823 as the ruler’s residence and seat of government. The walls are coral stone and gypsum. The 1823 view in Look is an artist’s impression, not a photograph.' },
+    { test: /noor|island|next|taxi/i, reply: 'Your next stop is Al Noor Island at 19:00. It is busy from 16:00 to 18:00, and after sunset the walk cools from 39°C to 31°C.' },
+    { test: /kalba|mangrove|east|kayak/i, reply: 'Kalba Mangroves are on the East Coast, about 40 minutes by car. The route is shaded and kayak tours start from 08:30.' }
+  ];
+  var fallback = 'I answer from the curated Sharjah corpus. Ask about the fort’s history, today’s quiet hours, or how to reach your next stop.';
+
+  function qsa(root, sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); }
+
+  /* Entry motion only runs when it can be seen: reduced motion or a hidden tab
+     (where CSS animations pause at their first frame) renders the rest state. */
+  function stillPage() { return reduce || document.hidden; }
+  function replay(el) {
+    el.classList.remove('is-entering');
+    window.clearTimeout(el._settle);
+    if (stillPage()) { return; }
+    void el.offsetWidth;
+    el.classList.add('is-entering');
+    /* The longest entry sequence ends by 700 ms; after that the screen is plain rest state,
+       so a throttled renderer can never leave a plate half-drawn. */
+    el._settle = window.setTimeout(function () { el.classList.remove('is-entering'); }, 1200);
+  }
+
+  /* ---------- Leader line: from the callout's bottom edge to the fort ---------- */
+  function placeLeader(shell) {
+    var callout = shell.querySelector('.callout');
+    var line = shell.querySelector('.leader line');
+    if (!callout || !line || !callout.offsetParent) { return; }
+    line.setAttribute('x1', callout.offsetLeft + Math.round(callout.offsetWidth * 0.5));
+    line.setAttribute('y1', callout.offsetTop + callout.offsetHeight);
+  }
+
+  /* ---------- Tabs: switch screens in place ---------- */
+  function initTabs(shell, preset) {
+    var screens = qsa(shell, '.screen');
+    function go(name, animate) {
+      shell.setAttribute('data-screen', name);
+      screens.forEach(function (s) {
+        var on = s.getAttribute('data-name') === name;
+        s.classList.toggle('is-active', on);
+        if (on && animate) { replay(s); }
+      });
+      qsa(shell, '.tab').forEach(function (t) {
+        var on = t.getAttribute('data-go') === name;
+        t.classList.toggle('is-active', on);
+        if (on) { t.setAttribute('aria-current', 'page'); } else { t.removeAttribute('aria-current'); }
+      });
+      if (name === 'look') { placeLeader(shell); }
+    }
+    qsa(shell, '[data-go]').forEach(function (t) {
+      t.addEventListener('click', function () { go(t.getAttribute('data-go'), true); });
+    });
+    go(preset, true);
+    return go;
+  }
+
+  /* ---------- Look: comparison divider with pointer and keyboard ---------- */
+  function initCompare(shell) {
+    var stage = shell.querySelector('.stage');
+    if (!stage) { return; }
+    var cmp = stage.querySelector('.cmp');
+    var handle = stage.querySelector('.cmp-handle');
+    var seg = stage.querySelector('.seg');
+    var radios = qsa(stage, '.seg [role="radio"]');
+    var pos = 62;
+    var dragging = false;
+
+    function render() {
+      var r = Math.round(pos);
+      stage.style.setProperty('--pos', pos + '%');
+      handle.setAttribute('aria-valuenow', r);
+      handle.setAttribute('aria-valuetext', r + ' percent today');
+      var today = pos >= 50;
+      radios.forEach(function (b) {
+        b.setAttribute('aria-checked', String((b.getAttribute('data-seg') === 'today') === today));
+      });
+      seg.style.setProperty('--seg', today ? 0 : 1);
+    }
+    function set(p) { pos = Math.max(0, Math.min(100, p)); render(); }
+    function fromEvent(e) {
+      var r = cmp.getBoundingClientRect();
+      if (!r.width) { return pos; }
+      return (e.clientX - r.left) / r.width * 100;
+    }
+    cmp.addEventListener('pointerdown', function (e) {
+      if (e.button !== undefined && e.button !== 0) { return; }
+      dragging = true;
+      stage.classList.add('is-dragging');
+      if (cmp.setPointerCapture) { try { cmp.setPointerCapture(e.pointerId); } catch (err) { /* synthetic pointer, nothing to capture */ } }
+      /* A tap on the photograph jumps the divider there; a press on the handle only starts the drag. */
+      if (!handle.contains(e.target)) { set(fromEvent(e)); }
+      try { handle.focus({ preventScroll: true }); } catch (err) { handle.focus(); }
+    });
+    cmp.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    cmp.addEventListener('pointermove', function (e) { if (dragging) { set(fromEvent(e)); } });
+    function up() { if (!dragging) { return; } dragging = false; stage.classList.remove('is-dragging'); }
+    cmp.addEventListener('pointerup', up);
+    cmp.addEventListener('pointercancel', up);
+    cmp.addEventListener('lostpointercapture', up);
+
+    handle.addEventListener('keydown', function (e) {
+      var step = e.shiftKey ? 10 : 2;
+      switch (e.key) {
+        case 'ArrowLeft': case 'ArrowDown': set(pos - step); break;
+        case 'ArrowRight': case 'ArrowUp': set(pos + step); break;
+        case 'PageDown': set(pos - 10); break;
+        case 'PageUp': set(pos + 10); break;
+        case 'Home': set(0); break;
+        case 'End': set(100); break;
+        default: return;
+      }
+      e.preventDefault();
+    });
+
+    radios.forEach(function (b) {
+      b.addEventListener('click', function () { set(b.getAttribute('data-seg') === 'today' ? 100 : 0); });
+    });
+
+    var place = stage.querySelector('[data-act="place"]');
+    if (place) {
+      place.addEventListener('click', function () {
+        /* The shipped app launches model-viewer here; the prototype acknowledges the tap. */
+        place.setAttribute('aria-pressed', 'true');
+        place.lastChild.textContent = ' Placing in your room';
+        window.setTimeout(function () {
+          place.setAttribute('aria-pressed', 'false');
+          place.lastChild.textContent = ' Place in your room';
+        }, 1200);
+      });
+    }
+
+    render();
+  }
+
+  /* ---------- Ask: composer, canned replies, read aloud ---------- */
+  function initAsk(shell) {
+    var form = shell.querySelector('.ask-form');
+    if (!form) { return; }
+    var input = form.querySelector('input');
+    var send = form.querySelector('.send');
+    var thread = shell.querySelector('.thread');
+    var actions = thread.querySelector('.actions');
+    var readBtn = thread.querySelector('[data-act="read"]');
+    var quietBtn = thread.querySelector('[data-act="quiet"]');
+    var synth = window.speechSynthesis;
+
+    function markSvg() {
+      var w = document.createElement('span');
+      w.className = 'msg-mark';
+      w.innerHTML = '<svg class="ico ico-sm" aria-hidden="true"><use href="#i-mark"></use></svg>';
+      return w;
+    }
+    function add(kind, text) {
+      var el = document.createElement('div');
+      el.className = 'msg msg-' + kind + (stillPage() ? '' : ' msg-new');
+      if (kind === 'guide') { el.appendChild(markSvg()); }
+      var p = document.createElement('p');
+      p.textContent = text;
+      el.appendChild(p);
+      thread.appendChild(el);
+      if (kind === 'guide') { thread.appendChild(actions); }
+      thread.scrollTop = thread.scrollHeight;
+      window.setTimeout(function () { el.classList.remove('msg-new'); }, 600);
+    }
+
+    input.addEventListener('input', function () { send.disabled = input.value.trim() === ''; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = input.value.trim();
+      if (!q) { return; }
+      add('user', q);
+      input.value = '';
+      send.disabled = true;
+      var hit = null;
+      for (var i = 0; i < corpus.length; i += 1) { if (corpus[i].test.test(q)) { hit = corpus[i]; break; } }
+      window.setTimeout(function () { add('guide', hit ? hit.reply : fallback); }, 500);
+    });
+
+    quietBtn.addEventListener('click', function () { add('guide', corpus[0].reply); });
+
+    function setReading(on) {
+      readBtn.setAttribute('aria-pressed', String(on));
+      readBtn.setAttribute('aria-label', on ? 'Stop reading' : 'Read aloud');
+      readBtn.querySelector('span').textContent = on ? 'Stop reading' : 'Read aloud';
+    }
+    readBtn.addEventListener('click', function () {
+      if (!synth || typeof SpeechSynthesisUtterance === 'undefined') {
+        readBtn.disabled = true;
+        readBtn.title = 'Read aloud is not available in this browser';
+        return;
+      }
+      if (synth.speaking) { synth.cancel(); setReading(false); return; }
+      var last = qsa(thread, '.msg-guide p').pop();
+      if (!last) { return; }
+      var u = new SpeechSynthesisUtterance(last.textContent);
+      u.lang = 'en-GB';
+      u.onend = function () { setReading(false); };
+      u.onerror = function () { setReading(false); };
+      setReading(true);
+      synth.speak(u);
+    });
+  }
+
+  function initShell(shell, preset) {
+    initCompare(shell);
+    initAsk(shell);
+    return initTabs(shell, preset);
+  }
+
+  /* ---------- Build the three instances ----------
+     On a phone only the first frame is visible; a hash (#plan, #look, #ask)
+     opens it on that screen so the demo can deep-link straight to Look. */
+  function screenFromHash() {
+    var hash = (window.location.hash || '').replace('#', '');
+    return /^(plan|look|ask)$/.test(hash) ? hash : null;
+  }
+  var phoneGo = null;
+  qsa(document, '.frame').forEach(function (frame, index) {
+    var shell = frame.querySelector('.shell');
+    if (!shell) {
+      shell = source.cloneNode(true);
+      frame.appendChild(shell);
+    }
+    var preset = frame.getAttribute('data-screen') || 'plan';
+    if (index === 0 && screenFromHash() && window.innerWidth < 760) { preset = screenFromHash(); }
+    var go = initShell(shell, preset);
+    if (index === 0) { phoneGo = go; }
+  });
+  window.addEventListener('hashchange', function () {
+    var name = screenFromHash();
+    if (name && phoneGo && window.innerWidth < 760) { phoneGo(name, true); }
+  });
+
+  /* ---------- Fit the frames to the viewport on desktop ---------- */
+  var deck = document.querySelector('.deck');
+  var grid = document.querySelector('.frames');
+  function fit() {
+    var w = window.innerWidth;
+    if (w < 760) {
+      grid.style.removeProperty('--s');
+      deck.style.removeProperty('height');
+      return;
+    }
+    var cols = w >= 1024 ? 3 : 2;
+    var natural = cols * 390 + (cols - 1) * 24;
+    var s = Math.min(1, deck.clientWidth / natural);
+    grid.style.setProperty('--s', s.toFixed(4));
+    deck.style.height = Math.ceil(grid.getBoundingClientRect().height) + 'px';
+  }
+  function relayout() {
+    fit();
+    qsa(document, '.shell').forEach(placeLeader);
+  }
+  window.addEventListener('resize', relayout);
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(relayout); }
+  relayout();
+})();
+</script>
+</body>
+</html>
