@@ -1,0 +1,169 @@
+{
+ "findings": "## Official destination apps\n\n**Sharjah (SCTDA).** The only SCTDA app on the App Store is Shj AI Guide: a voice and text chatbot in English, Arabic, German, Russian, and Chinese for planning, booking, and discovering attractions. Its last update was version 7.0 on 21 December 2022; it has no AR, no map, no itinerary builder, no sustainability content, and too few ratings to display (https://apps.apple.com/us/app/shj-ai-guide/id1480995300). SharjahVerse (October 2022, Multiverse Labs) is a headset metaverse of selected attractions, not a visitor-side mobile tool (https://www.ttgasia.com/2022/10/12/sharjah-establishes-in-metaverse/). visitsharjah.com has static suggested itineraries and no app links, chatbot, or interactive map (https://www.visitsharjah.com/). Sharjah Museums Authority's VGuide SMA (April 2025) is an audio guide with sign-language support and no AR (https://apps.apple.com/us/app/vguide-sma/id6740347232). The Sharjah Archaeology Authority Metaverse Centre (December 2024) simulates a Mleiha excavation but needs a Meta Quest (https://www.wam.ae/en/article/b6qkbwj-saa-launches-global-digital-platform-for-cultural).\n\n**Dubai, Abu Dhabi, Saudi.** Visit Dubai (version 11.2.1) offers AI-powered recommendations, custom itineraries, booking, and offline access; no AR, no sustainability (https://apps.apple.com/us/app/visit-dubai-travel-guide/id925400191). Visit Abu Dhabi lists eight languages, Near Me, an interactive map, and Tripadvisor reviews; no AI, AR, or itinerary builder (https://visitabudhabi.ae/en/plan-your-trip/visit-abu-dhabi-mobile-app). Visit Saudi's SARA is a beta conversational guide unveiled at WTM London in November 2024 (https://www.arabnews.com/node/2578602/saudi-arabia). Nusuk has over 130 services, a voice and text Nusuk AI assistant, and real-time crowd density with shortest routes; it is the only Gulf official app that surfaces crowd data, and it does so for pilgrim safety, not sustainability (https://gulfnews.com/world/gulf/saudi/saudi-arabia-nusuk-app-unveils-new-features-to-enhance-pilgrim-experience-in-mecca-and-medina-1.500039691).\n\n## AR and historical reconstruction\n\n- AthAR+ (Atharcom FZC, version 1.0 on 6 November 2025) is a UAE-wide iPhone app with 3D reconstructions of monuments, AR navigation, point-collecting challenges, and English/Arabic; it names no sites, has no AI, and no ratings (https://apps.apple.com/py/app/athar/id6754697595). This is the closest direct overlap with the team's AR feature list.\n- Sharjah Fort (Al Hisn) AR, built by AUS students under Dr. Suhail Dahdal and shown at WTM November 2023, uses gesture recognition and AI-animated historical figures on site (https://www.aus.edu/node/102406). Khor Fakkan Resistance Monument AR (SMA and Sheraa) uses area-target tracking, on site only (https://gulfnews.com/amp/uae/government/sharjah-museums-authority-brings-khor-fakkans-resistance-monument-to-life-1.94466380).\n- Louvre Abu Dhabi's \"A Journey Through History\" (August 2025) is a 25-minute, ten-person wireless VR installation by Small Creative, running 12 months (https://gulfnews.com/uae/people/louvre-abu-dhabi-unveils-vr-time-travel-experience-a-journey-through-history-1.500229280). Expo City Dubai's app handles tickets, GPS map, and Smart Queue; its Snapchat AR cube closed 31 March 2022 (https://campaignme.com/snapchat-and-expo-2020-dubai-invite-visitors-to-explore-the-power-of-connections-across-the-physical-and-digital-worlds/).\n- HistoPad (Histovery) is a rented AR tablet at 18 European sites, shown at the Expo 2020 France pavilion (https://www.khaleejtimes.com/lifestyle/expo-2020-dubai-how-france-used-ar-technology-to-bring-notre-dame-de-paris-to-life). Lithodomos sold 360-degree VR reconstructions of 22 ancient sites; no 2024-2026 coverage found (https://www.worldhistory.org/article/1673/). Timelooper's location-locked Cardboard VR app is gone from its site, which now sells museum exhibit services (https://www.timelooper.com/). Hidden Florence is a free GPS-triggered audio walk over a 1584 map with character narrators, no AR (https://news-archive.exeter.ac.uk/2014/august/title_406169_en.html).\n\n## AI trip planners, 2024-2026\n\nGoogle AI Mode Canvas (18 November 2025) builds a side-panel itinerary with live flight and hotel prices and Maps reviews; booking is not live (https://www.techloy.com/googles-ai-mode-can-now-plan-your-entire-trip/). Gemini Live's free camera mode already answers \"what is this building\" with history and hours (https://true-tech.net/gemini-live-with-camera-and-screen-sharing-unveiled/), so generic landmark recognition is no longer a differentiator. Mindtrip (11 million POIs, free, editable itineraries), Layla (Skyscanner and Booking, offline, USD 49 per year), and GuideGeek (WhatsApp; a tester got identical itineraries for EUR 900 and EUR 2,000 budgets) are reviewed at https://www.unite.ai/best-ai-tools-for-travel-planning/ and https://t3n.de/news/?p=1622515. Tripadvisor Trips (July 2023, OpenAI) produces day-by-day plans without conversation (https://tripadvisor.mediaroom.com/Tripadvisor-launches-AI-powered-travel-planning-product). UAE entrants: Obaid claims a Ministry of Tourism partnership (https://apps.apple.com/us/app/-/id6755113763); DubAI runs at chat.dubai.ae (https://scoopempire.com/move-over-chatgpt-dubai-introduces-its-own-ai-dubai/). None expose crowd, carbon, or season data.\n\n## UAE academic and hackathon work\n\nLast year's winner, Sharjah Quest by Team Hayyakum (AED 20,000), was an AR digital passport with stamps, mascots, badges, leaderboards, and curated itineraries; the team already claimed its guidance \"spreads visitor traffic\" (https://www.aus.edu/node/121001). Two of its four members, Mahmoud Darwish and Afif Zughayer, share names with two of this year's mentors; verify in person. Second was Nomad (coral reef monitoring), third TRAIL/S (accessibility, Ajman University); 20 teams competed and criteria included relevance to Sharjah, practicality, and value creation (https://www.ajman.ac.ae/en/news/2025/ajman-university-students-win-third-place-at-sharjah-tourism-innovation-hackathon-2025). An Amity Dubai IEEE paper (December 2025) tested Unity and Vuforia AR with QR triggers at three UAE heritage sites and reported 25 to 30% higher engagement (https://dir.muni.ac.ug/items/966c46da-6fb5-4679-b5b2-4b504ffad165/full). Zayed University published a VR cultural-tourism study at WMSCI 2025 (https://zuscholars.zu.ac.ae/works/7713). No public release of Sharjah Quest was found.\n\n## Sustainability precedents outside the region\n\nESA's Rural Tourism 5.0 ran an \"attract and disperse\" eco-algorithm in Cornwall and the Lake District in 2024: visitors rose 13.31%, car use fell 7.13%, cycling rose 23% (https://business.esa.int/projects/rt50). A 2024 TU Munich study found sustainability labels and crowd-season indicators significantly shift user choices (https://arxiv.org/abs/2405.11243). Dubai's Sustainable Tourism Stamp covers 237 hotels with no visitor-facing app (https://www.khaleejtimes.com/business/including-atlantis-the-palm-conrad-237-dubai-hotels-win-sustainability-stamp). Sharjah's nature-based stays grew 5% in August 2026 (https://www.khaleejtimes.com/sharjah-nature-based-resort-stays-5-rise-in-guests-august-2026-vs-2025-ecotourism-shurooq).\n\n## Defensible differentiation (150 words)\n\nEvery official Gulf app answers \"what is here\"; none answers \"when and how should I visit so the place survives\". Sharjah has the assets: Kalba's Ramsar mangroves, Al Hefaiyah, Mleiha, the Heart of Sharjah souqs, and 2022-era digital tools that no longer compete. The defensible position is a web-first guide whose AI plans each stop against three live signals: crowd level, heat and season, and transport carbon. The itinerary shows a sustainability score per plan, nudges visitors toward off-peak windows and lower-impact routes, and moves spend from four crowded sites toward Shurooq's east-coast and desert sites. AR is the delivery layer, not the pitch: a browser AR view of a souq or fort at an earlier period, with the AI narrator explaining what is fragile about it today. Anonymized flow data returns to SCTDA as a dispersal dashboard. Sharjah Quest gamified visits; AthAR+ reconstructs monuments; this plans for preservation.",
+ "claims": [
+  {
+   "claim": "SCTDA's only official app, Shj AI Guide, was last updated on 21 December 2022 (version 7.0) and offers a five-language chatbot with no AR, map, itinerary builder, or sustainability features.",
+   "source_url": "https://apps.apple.com/us/app/shj-ai-guide/id1480995300",
+   "importance": "high"
+  },
+  {
+   "claim": "Last year's winner Sharjah Quest (Team Hayyakum, AED 20,000) already combined AR, a digital passport, badges, leaderboards, and curated itineraries, and claimed that its real-time guidance spreads visitor traffic; two listed members, Mahmoud Darwish and Afif Zughayer, share names with two of this year's mentors.",
+   "source_url": "https://www.aus.edu/node/121001",
+   "importance": "high"
+  },
+  {
+   "claim": "AthAR+ (Atharcom FZC, first release 6 November 2025) is a live UAE-wide iPhone app offering 3D reconstructions of monuments, AR navigation, point-collecting challenges, and English/Arabic content, with no AI and no named sites.",
+   "source_url": "https://apps.apple.com/py/app/athar/id6754697595",
+   "importance": "high"
+  },
+  {
+   "claim": "No official Gulf destination app exposes crowd, carbon, or season data to visitors for sustainability purposes; the only one surfacing crowd data is Nusuk, whose crowd-density service exists for pilgrim flow at the holy sites.",
+   "source_url": "https://gulfnews.com/world/gulf/saudi/saudi-arabia-nusuk-app-unveils-new-features-to-enhance-pilgrim-experience-in-mecca-and-medina-1.500039691",
+   "importance": "high"
+  },
+  {
+   "claim": "Gemini Live's camera mode already lets users point a phone at a landmark and receive its history, hours, and prices for free, so generic landmark-recognition AR is no longer a differentiator.",
+   "source_url": "https://true-tech.net/gemini-live-with-camera-and-screen-sharing-unveiled/",
+   "importance": "medium"
+  },
+  {
+   "claim": "ESA's Rural Tourism 5.0 attract-and-disperse eco-algorithm, piloted in Cornwall and the Lake District in 2024, raised visitor numbers 13.31% while cutting private car use 7.13% and raising cycling 23%, giving the team a cited precedent for dispersal-based sustainable routing.",
+   "source_url": "https://business.esa.int/projects/rt50",
+   "importance": "medium"
+  }
+ ],
+ "sources": [
+  {
+   "title": "Shj AI Guide (SCTDA) on the App Store",
+   "url": "https://apps.apple.com/us/app/shj-ai-guide/id1480995300"
+  },
+  {
+   "title": "Sharjah establishes in metaverse (SharjahVerse), TTG Asia",
+   "url": "https://www.ttgasia.com/2022/10/12/sharjah-establishes-in-metaverse/"
+  },
+  {
+   "title": "Visit Sharjah official site",
+   "url": "https://www.visitsharjah.com/"
+  },
+  {
+   "title": "VGuide SMA (Sharjah Museums Authority) on the App Store",
+   "url": "https://apps.apple.com/us/app/vguide-sma/id6740347232"
+  },
+  {
+   "title": "SAA launches global digital platform for cultural heritage, WAM",
+   "url": "https://www.wam.ae/en/article/b6qkbwj-saa-launches-global-digital-platform-for-cultural"
+  },
+  {
+   "title": "Visit Dubai: Travel Guide on the App Store",
+   "url": "https://apps.apple.com/us/app/visit-dubai-travel-guide/id925400191"
+  },
+  {
+   "title": "Visit Abu Dhabi mobile app page",
+   "url": "https://visitabudhabi.ae/en/plan-your-trip/visit-abu-dhabi-mobile-app"
+  },
+  {
+   "title": "Virtual, AI-powered Saudi travel companion SARA, Arab News",
+   "url": "https://www.arabnews.com/node/2578602/saudi-arabia"
+  },
+  {
+   "title": "Nusuk app unveils new features, Gulf News",
+   "url": "https://gulfnews.com/world/gulf/saudi/saudi-arabia-nusuk-app-unveils-new-features-to-enhance-pilgrim-experience-in-mecca-and-medina-1.500039691"
+  },
+  {
+   "title": "AthAR+ on the App Store",
+   "url": "https://apps.apple.com/py/app/athar/id6754697595"
+  },
+  {
+   "title": "AUS AR experience at Sharjah Fort shown at WTM 2023",
+   "url": "https://www.aus.edu/node/102406"
+  },
+  {
+   "title": "Sharjah Museums Authority brings Khor Fakkan's Resistance Monument to life, Gulf News",
+   "url": "https://gulfnews.com/amp/uae/government/sharjah-museums-authority-brings-khor-fakkans-resistance-monument-to-life-1.94466380"
+  },
+  {
+   "title": "Louvre Abu Dhabi unveils VR time-travel experience, Gulf News",
+   "url": "https://gulfnews.com/uae/people/louvre-abu-dhabi-unveils-vr-time-travel-experience-a-journey-through-history-1.500229280"
+  },
+  {
+   "title": "Snapchat and Expo 2020 Dubai AR Connections, Campaign ME",
+   "url": "https://campaignme.com/snapchat-and-expo-2020-dubai-invite-visitors-to-explore-the-power-of-connections-across-the-physical-and-digital-worlds/"
+  },
+  {
+   "title": "How France used AR (HistoPad) to bring Notre-Dame to Expo 2020, Khaleej Times",
+   "url": "https://www.khaleejtimes.com/lifestyle/expo-2020-dubai-how-france-used-ar-technology-to-bring-notre-dame-de-paris-to-life"
+  },
+  {
+   "title": "Interview with Simon Young, Lithodomos VR, World History Encyclopedia",
+   "url": "https://www.worldhistory.org/article/1673/"
+  },
+  {
+   "title": "Timelooper official site",
+   "url": "https://www.timelooper.com/"
+  },
+  {
+   "title": "Hidden Florence app, University of Exeter",
+   "url": "https://news-archive.exeter.ac.uk/2014/august/title_406169_en.html"
+  },
+  {
+   "title": "Google's AI Mode can now plan your entire trip, Techloy",
+   "url": "https://www.techloy.com/googles-ai-mode-can-now-plan-your-entire-trip/"
+  },
+  {
+   "title": "Gemini Live with camera and screen sharing, True-Tech",
+   "url": "https://true-tech.net/gemini-live-with-camera-and-screen-sharing-unveiled/"
+  },
+  {
+   "title": "Best AI tools for travel planning (Mindtrip, Layla, GuideGeek), Unite.AI",
+   "url": "https://www.unite.ai/best-ai-tools-for-travel-planning/"
+  },
+  {
+   "title": "GuideGeek vs Mindtrip test, t3n",
+   "url": "https://t3n.de/news/?p=1622515"
+  },
+  {
+   "title": "Tripadvisor launches AI-powered travel planning product",
+   "url": "https://tripadvisor.mediaroom.com/Tripadvisor-launches-AI-powered-travel-planning-product"
+  },
+  {
+   "title": "Obaid UAE Travel Guide on the App Store",
+   "url": "https://apps.apple.com/us/app/-/id6755113763"
+  },
+  {
+   "title": "Dubai introduces DubAI, Scoop Empire",
+   "url": "https://scoopempire.com/move-over-chatgpt-dubai-introduces-its-own-ai-dubai/"
+  },
+  {
+   "title": "Sharjah Tourism Innovation Hackathon 2025 results, AUS",
+   "url": "https://www.aus.edu/node/121001"
+  },
+  {
+   "title": "Ajman University students win third place at Sharjah Tourism Innovation Hackathon 2025",
+   "url": "https://www.ajman.ac.ae/en/news/2025/ajman-university-students-win-third-place-at-sharjah-tourism-innovation-hackathon-2025"
+  },
+  {
+   "title": "Augmented heritage: AR and QR code integration for cultural storytelling in the UAE (IEEE, Amity Dubai)",
+   "url": "https://dir.muni.ac.ug/items/966c46da-6fb5-4679-b5b2-4b504ffad165/full"
+  },
+  {
+   "title": "The Impact of Virtual Reality on Cultural Tourism and Heritage Preservation in the UAE, Zayed University",
+   "url": "https://zuscholars.zu.ac.ae/works/7713"
+  },
+  {
+   "title": "Rural Tourism 5.0 attract-and-disperse eco-algorithm, ESA",
+   "url": "https://business.esa.int/projects/rt50"
+  },
+  {
+   "title": "A User Interface Study on Sustainable City Trip Recommendations, arXiv 2405.11243",
+   "url": "https://arxiv.org/abs/2405.11243"
+  },
+  {
+   "title": "237 Dubai hotels win Sustainable Tourism Stamp, Khaleej Times",
+   "url": "https://www.khaleejtimes.com/business/including-atlantis-the-palm-conrad-237-dubai-hotels-win-sustainability-stamp"
+  },
+  {
+   "title": "Sharjah nature-based stays rise 5% in August 2026, Khaleej Times",
+   "url": "https://www.khaleejtimes.com/sharjah-nature-based-resort-stays-5-rise-in-guests-august-2026-vs-2025-ecotourism-shurooq"
+  }
+ ]
+}

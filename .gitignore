@@ -1,0 +1,32 @@
+# Secrets and local configuration
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.p12
+secrets/
+credentials/
+.dev.vars
+wrangler.toml.local
+.claude/settings.local.json
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
+.wrangler/
+.vercel/
+.cache/
+*.log
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Large generated media kept out of git unless needed for the demo
+*.mp4
+*.mov

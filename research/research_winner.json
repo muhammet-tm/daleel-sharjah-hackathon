@@ -1,0 +1,109 @@
+{
+ "findings": "## Headline: the team's belief is confirmed, and the overlap is larger than they think\n\nThe Sharjah Tourism Innovation Hackathon 2025 (1 to 2 November 2025, AUS Main Building, run by SCTDA with the AUS Department of Computer Science and Engineering) was won by team Hayyakum from AUS with \"Sharjah Quest\" (https://www.aus.edu/media/news/sharjah-tourism-innovation-hackathon-at-aus-reimagines-travel-and-tourism-experience). The AUS release describes it as a gamified tourism application in which visitors collect digital stamps, unlock mascots, and follow curated itineraries to local sites and businesses. Team member Mahmoud Darwish called it an \"augmented reality-powered mobile adventure that turns the city into an interactive game,\" with quests, stamps, badges, and leaderboards across museums, souqs, heritage houses, natural sites, and local SMEs; the team framed it around spreading footfall to neighborhood businesses, UAE Vision 2031, and inclusivity (same AUS URL). Sharjah24 and the pre-event coverage independently call it an augmented reality app with interactive digital passports and heritage-based challenges (https://sharjah24.ae/en/Articles/2025/11/06/Innovation-Hackathon-reimagines-tourism-experience-at-AUS; https://www.onearabia.me/business/innovation-hackathon-reimagines-tourism-experience-at-aus-011-129847.html). The prize was AED 20,000 and a presentation at SITTF 2025.\n\nIn practice, this means the 2025 winner already combined AR, curated route guidance, and gamification. The team's draft therefore overlaps with Sharjah Quest on three features (AR guide, route planning, and the treasure-hunt or badge layer), not only on the gamification feature they planned to replace.\n\n## The 2025 winners are on the 2026 mentor list\n\nThe AUS release names the Hayyakum members as Mahmoud Darwish, Amr Mohi Aldeen, Mohamad Dabbagh, and Afif Zughayer (https://www.aus.edu/media/news/sharjah-tourism-innovation-hackathon-at-aus-reimagines-travel-and-tourism-experience). The 2026 mentor roster supplied by the organizers lists \"Mahmoud Darwish (Founder, ReteIntel)\" and \"Afif Zughayer (Founder, Amana Vision).\" The names match exactly. A LinkedIn search snippet for Darwish's profile (https://www.linkedin.com/in/darwish-mahmoud/) describes him as an AUS computer engineering student who presented Sharjah Quest on the SITTF 2025 main stage. I could not fetch LinkedIn directly (HTTP 999), and neither \"ReteIntel\" nor \"Amana Vision\" is indexed in web search, so the company affiliations are unverified; the identity match rests on the exact names in an AUS-run event one year later. The practical consequence is that two mentors circulating in the room today built the AR gamified guide the team's draft resembles.\n\n## Full 2025 podium\n\n- First, AED 20,000: Hayyakum (AUS), Sharjah Quest, as above.\n- Second, AED 15,000: Nomad (AUS; Rana Gharaibeh, Halla Daas, Osama Ali, Moustafa Mughrabi), a coral reef health monitoring system that uses underwater vibrations to help Sharjah protect and showcase its marine life (https://sharjah24.ae/en/Articles/2025/11/06/Innovation-Hackathon-reimagines-tourism-experience-at-AUS).\n- Third, AED 10,000: trail/s (Ajman University; Jon Zaccary Regala, Nouran Talal, Samia Bayoumi, Maryam Al Shanqiti), a unified accessibility platform for people of determination that recommends accessible places, acts as a virtual tour guide, and lets tourists rent assistive devices such as smart wheelchairs; Ajman describes it as a website with a planned browser extension (https://www.ajman.ac.ae/en/news/2025/ajman-university-students-win-third-place-at-sharjah-tourism-innovation-hackathon-2025).\n\nNote that second and third place were sustainability and inclusion plays with a narrow, concrete mechanism, not broad platforms.\n\n## Other finalists: only partial, self-reported evidence\n\nNo official source publishes finalists beyond the top three. Scale figures: about 500 applicants from 29 universities, 80 students from 11 universities shortlisted (https://sharjah24.ae/en/Articles/2025/11/06/Innovation-Hackathon-reimagines-tourism-experience-at-AUS); Ajman University counts this as 20 teams (Ajman URL above). LinkedIn search snippets show a team of Bashaar Naik, Abdulrahman Khalifa, Ehsan Fijhas, and Samir Daadouch claiming a \"Most Innovative Hack\" award for a tech-embedded tourist destination with a prototype hologram experience (https://ae.linkedin.com/in/bashaar-naik; https://www.linkedin.com/in/abdulrahman-khalifa-402693336/). This award appears in no official release, so treat it as unconfirmed.\n\n## 2025 theme and judging criteria, and the 2026 weights\n\nThe 2025 theme was smart, sustainable tourism; the pre-event announcement phrased it as \"Innovative & Sustainable Solutions in Technology for the Future of Tourism\" (https://www.travelandtourworld.com/news/article/sharjah-invites-young-innovators-to-transform-tourism-with-new-hackathon-heres-all-you-need-to-know/). The 2025 panel judged clarity of the problem, relevance to Sharjah and the theme, practicality and scalability, potential value creation, innovative use of technology, and overall quality of presentation (Sharjah24 URL above). The 2025 judges and mentors were never named publicly.\n\nThe official AUS CSE page for the 2026 edition publishes weighted criteria: startup viability and commercial feasibility 20%, potential impact and value creation 20%, innovative utilization of emerging technologies 20%, problem definition clarity 10%, relevance to the theme 10%, relevance to Sharjah and the UAE context 10%, creativity and quality of presentation 10% (https://auscse.com/hackathon/). The same page confirms 10 shortlisted teams pitch for 5 minutes, accepted formats include concept pitch, MVP, data visualizations, 1 to 3 minute video, or UX/UI prototypes, and all ideas must be developed during the hackathon. Commercial feasibility, absent from the 2025 list, is now worth as much as the technology.\n\n## Edition history and SITTF stage\n\n2025 was the first edition: Sharjah24 lists the hackathon as a new category of the 12th SITTF (https://sharjah24.ae/en/Articles/2025/11/19/Sharjah-Tourism-Forum-launches-its-12th-edition), and the SITTF 2025 agenda carries an 11:15 to 11:25 slot titled \"SITTF-Sharjah Tourism Innovation Hackathon Winner Presentation\" (https://shf.sharjahtourism.ae/media/fkbnw1ez/agenda-v12-sittf.pdf). On 8 April 2026 SCTDA and AUS signed an MoU making the hackathon an annual, co-designed event (https://sharjah24.ae/en/Articles/2026/04/09/Ma03; https://gulfnews.com/uae/how-sharjahs-new-university-partnership-will-drive-tourism-opportunities-in-the-uae-1.500501107).\n\n## What could not be found\n\nNo Gulf News, Khaleej Times, or The National coverage of the 2025 results exists in search (Gulf News covered only the 2026 MoU). No Instagram posts surfaced. The WAM article exists (https://www.wam.ae/en/article/bmkxm3s-innovation-hackathon-reimagines-tourism-experience) but its body could not be fetched. No Sheraa page mentions the hackathon. No full finalist list, no 2025 judge or mentor names, and no 2025 archived version of the event page were retrievable.",
+ "claims": [
+  {
+   "claim": "The 2025 winner was team Hayyakum (AUS) with Sharjah Quest, an augmented reality-powered gamified tourism app with digital stamps, mascots, curated itineraries, quests, badges, and leaderboards across museums, souqs, heritage houses, natural sites, and SMEs; it won AED 20,000 and a SITTF 2025 stage slot. The team's belief is confirmed, and the overlap with their draft covers AR guide, route planning, and gamification, not only the treasure-hunt feature.",
+   "source_url": "https://www.aus.edu/media/news/sharjah-tourism-innovation-hackathon-at-aus-reimagines-travel-and-tourism-experience",
+   "importance": "high"
+  },
+  {
+   "claim": "Two 2026 mentors, Mahmoud Darwish and Afif Zughayer, share exact names with two members of the 2025 winning team Hayyakum; their ReteIntel and Amana Vision affiliations could not be verified online, but the name match in an AUS-run event one year later is strong.",
+   "source_url": "https://www.aus.edu/media/news/sharjah-tourism-innovation-hackathon-at-aus-reimagines-travel-and-tourism-experience",
+   "importance": "high"
+  },
+  {
+   "claim": "The official 2026 judging weights are startup viability and commercial feasibility 20%, potential impact and value creation 20%, innovative use of emerging technologies 20%, problem definition clarity 10%, relevance to the theme 10%, relevance to Sharjah and the UAE 10%, and creativity and presentation 10%; commercial feasibility was not on the 2025 criteria list.",
+   "source_url": "https://auscse.com/hackathon/",
+   "importance": "high"
+  },
+  {
+   "claim": "Second place (AED 15,000) went to Nomad (AUS) for a coral reef health monitoring system using underwater vibrations, and third place (AED 10,000) to trail/s (Ajman University) for an accessibility platform with assistive-device rental for people of determination; both were narrow sustainability or inclusion mechanisms rather than broad platforms.",
+   "source_url": "https://sharjah24.ae/en/Articles/2025/11/06/Innovation-Hackathon-reimagines-tourism-experience-at-AUS",
+   "importance": "medium"
+  },
+  {
+   "claim": "2025 was the first edition, introduced as a new category of the 12th SITTF; an SCTDA-AUS MoU signed on 8 April 2026 made the hackathon an annual co-designed event, and the 2025 theme was smart, sustainable tourism judged on problem clarity, relevance to Sharjah and theme, practicality and scalability, value creation, innovative technology use, and presentation.",
+   "source_url": "https://sharjah24.ae/en/Articles/2026/04/09/Ma03",
+   "importance": "medium"
+  },
+  {
+   "claim": "No official list of finalists beyond the top three, and no 2025 judge or mentor names, were published; the only additional finalist evidence is a self-reported LinkedIn claim of a 'Most Innovative Hack' award for a tech-embedded destination with a hologram prototype (Bashaar Naik, Abdulrahman Khalifa, Ehsan Fijhas, Samir Daadouch), which is unconfirmed.",
+   "source_url": "https://ae.linkedin.com/in/bashaar-naik",
+   "importance": "medium"
+  }
+ ],
+ "sources": [
+  {
+   "title": "AUS News: Sharjah Tourism Innovation Hackathon at AUS reimagines travel and tourism experience",
+   "url": "https://www.aus.edu/media/news/sharjah-tourism-innovation-hackathon-at-aus-reimagines-travel-and-tourism-experience"
+  },
+  {
+   "title": "Sharjah24 (English): Innovation Hackathon reimagines tourism experience at AUS",
+   "url": "https://sharjah24.ae/en/Articles/2025/11/06/Innovation-Hackathon-reimagines-tourism-experience-at-AUS"
+  },
+  {
+   "title": "Sharjah24 (Arabic): Innovation Hackathon reimagines tourism experience at AUS",
+   "url": "https://sharjah24.ae/ar/Articles/2025/11/06/Innovation-Hackathon-reimagines-tourism-experience-at-AUS"
+  },
+  {
+   "title": "WAM: Innovation Hackathon reimagines tourism experience at AUS",
+   "url": "https://www.wam.ae/en/article/bmkxm3s-innovation-hackathon-reimagines-tourism-experience"
+  },
+  {
+   "title": "Ajman University: Students win third place at Sharjah Tourism Innovation Hackathon 2025",
+   "url": "https://www.ajman.ac.ae/en/news/2025/ajman-university-students-win-third-place-at-sharjah-tourism-innovation-hackathon-2025"
+  },
+  {
+   "title": "OneArabia: Innovation Hackathon at AUS redefines tourism experience with student solutions",
+   "url": "https://www.onearabia.me/business/innovation-hackathon-reimagines-tourism-experience-at-aus-011-129847.html"
+  },
+  {
+   "title": "Travel And Tour World: Sharjah invites young innovators to transform tourism with new hackathon",
+   "url": "https://www.travelandtourworld.com/news/article/sharjah-invites-young-innovators-to-transform-tourism-with-new-hackathon-heres-all-you-need-to-know/"
+  },
+  {
+   "title": "AUS CSE: Sharjah Tourism Innovation Hackathon 2026 official page (criteria, format, prizes)",
+   "url": "https://auscse.com/hackathon/"
+  },
+  {
+   "title": "SITTF 2025 agenda PDF (hackathon winner presentation slot)",
+   "url": "https://shf.sharjahtourism.ae/media/fkbnw1ez/agenda-v12-sittf.pdf"
+  },
+  {
+   "title": "Sharjah24: Sharjah Tourism Forum launches its 12th edition (hackathon as new category)",
+   "url": "https://sharjah24.ae/en/Articles/2025/11/19/Sharjah-Tourism-Forum-launches-its-12th-edition"
+  },
+  {
+   "title": "Sharjah24: SCTDA and AUS MoU, April 2026 (annual hackathon)",
+   "url": "https://sharjah24.ae/en/Articles/2026/04/09/Ma03"
+  },
+  {
+   "title": "Sharjah24: Al Midfa on the MoU and last year's hackathon",
+   "url": "https://sharjah24.ae/en/Articles/2026/04/09/Ma14"
+  },
+  {
+   "title": "AUS News: SCTDA and AUS memorandum of understanding",
+   "url": "https://www.aus.edu/node/125676"
+  },
+  {
+   "title": "Gulf News: How Sharjah's new university partnership will drive tourism opportunities",
+   "url": "https://gulfnews.com/uae/how-sharjahs-new-university-partnership-will-drive-tourism-opportunities-in-the-uae-1.500501107"
+  },
+  {
+   "title": "LinkedIn: Mahmoud Darwish (AUS) profile, Sharjah Quest post (search snippet only)",
+   "url": "https://www.linkedin.com/in/darwish-mahmoud/"
+  },
+  {
+   "title": "LinkedIn: Bashaar Naik (AUS) profile, Most Innovative Hack claim (search snippet only)",
+   "url": "https://ae.linkedin.com/in/bashaar-naik"
+  },
+  {
+   "title": "LinkedIn: Abdulrahman Khalifa profile, hackathon participation post (search snippet only)",
+   "url": "https://www.linkedin.com/in/abdulrahman-khalifa-402693336/"
+  },
+  {
+   "title": "LinkedIn: Jon Zaccary Regala profile, TRAIL/S third place (search snippet only)",
+   "url": "https://ae.linkedin.com/in/jon-zaccary-regala-13b46b27b"
+  }
+ ]
+}

@@ -1,0 +1,253 @@
+{
+ "findings": "## What will not work on iPhone (blunt)\n\n- WebXR `immersive-ar` is \"Not supported\" in Safari on iOS through 27.2; Chrome for Android 154 is \"Partial support\" (https://caniuse.com/webxr). Google states WebXR AR runs on Chrome for Android via ARCore (https://developers.google.com/ar/develop/webxr). Any \"AR overlay with our own HUD\" is Android-only.\n- iPhone AR is AR Quick Look only: a USDZ file, iOS 12+, launched by `<a rel=\"ar\"><img></a>`, served as `model/vnd.usdz+zip`, feature-detected with `relList.supports(\"ar\")` (https://webkit.org/blog/8421/viewing-augmented-reality-assets-in-safari-for-ios/). It is Apple's viewer, so no custom UI on top.\n- Camera needs HTTPS: `getUserMedia()` works only in secure contexts; on HTTP `navigator.mediaDevices` is undefined (https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia).\n- `speechSynthesis` is supported on iOS 7+ (https://caniuse.com/speech-synthesis). Speech recognition is only \"Partial\" on iOS 14.5+ (https://caniuse.com/speech-recognition); a caniuse mirror notes Siri must be enabled and it is unavailable in home-screen web apps (https://docs.w3cub.com/browser_support_tables/speech-recognition). Use text input plus TTS on iPhone.\n- Fullscreen API is \"Partial\" on iOS 12+ (https://caniuse.com/fullscreen) and there is no WebXR VR, so \"VR mode\" on iPhone can only be a panorama viewer. `DeviceOrientationEvent.requestPermission()` requires a user tap (https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent/requestPermission_static), listed from iOS 14.5 (https://caniuse.com/mdn-api_deviceorientationevent_requestpermission_static).\n\n## Recommended stack (web-first)\n\n**3D and AR: `<model-viewer>` 4.4.0** (https://registry.npmjs.org/@google/model-viewer/latest), CDN `https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js`. Default `ar-modes=\"webxr scene-viewer quick-look\"`; adding `quick-look` without `ios-src` \"will generate a USDZ on the fly\"; `canActivateAR` detects support (https://raw.githubusercontent.com/google/model-viewer/master/packages/modelviewer.dev/data/docs.json). Scene Viewer needs Android 7.0+, an ARCore device, Google app, GLB input, and a `browser_fallback_url`; no deprecation notice (https://developers.google.com/ar/develop/scene-viewer).\n\n**Time-travel slider:** `img-comparison-slider` 8.0.7, MIT, under 12 kB, `slot=\"first\"/\"second\"` (https://cdn.jsdelivr.net/npm/img-comparison-slider@8.0.7/README.md) between today's photo and a Higgsfield reconstruction. 3D variant if time allows: three.js `renderer.localClippingEnabled = true` plus `material.clippingPlanes` (https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/webgl_clipping.html) or `setScissor` views (https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/webgl_multiple_views.html); drei `<View>` uses gl.scissor for the same in R3F (https://drei.docs.pmnd.rs/portals/view).\n\n**Guide: Claude API** via `@anthropic-ai/sdk`, which supports Cloudflare Workers and Vercel Edge; browser use is disabled by default (https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/README.md). Call it from a Pages Function or Vercel Function, model `claude-opus-5-5`, `client.messages.stream`. No vector database: put the curated Sharjah corpus in `system` with `cache_control: {type:\"ephemeral\"}`; minimum cacheable prefix is 512 tokens on Opus 5.5, cache reads 0.05x (https://platform.claude.com/docs/en/build-with-claude/prompt-caching.md). TTS: Web Speech first; ElevenLabs Free gives 10,000 credits, about 10 minutes, no commercial license (https://elevenlabs.io/pricing), `POST /v1/text-to-speech/{voice_id}` with `xi-api-key` (https://elevenlabs.io/docs/api-reference/text-to-speech/convert).\n\n**Map:** MapLibre with OpenFreeMap: no keys, no request limits, commercial use allowed, no SLA (https://openfreemap.org/). Routing: OSRM demo `/route/v1/{profile}/{lon,lat;lon,lat}?overview=full&geometries=geojson` (https://project-osrm.org/docs/v5.24.0/api/), now under FOSSGIS terms, \"One request per second max\" (https://routing.openstreetmap.de/about.html). Fallback: Mapbox Directions, 100,000 requests and 50,000 web map loads free monthly (https://www.mapbox.com/pricing).\n\n**Deploy:** Cloudflare Pages Free: 500 builds/month, 20,000 files, 25 MiB per asset (https://developers.cloudflare.com/pages/platform/limits/index.md); Functions bill against Workers Free, 100,000 requests/day, 10 ms CPU (https://developers.cloudflare.com/workers/platform/limits/index.md); previews are `https://<preview>.pages.dev` (https://developers.cloudflare.com/pages/configuration/preview-deployments/index.md). Vercel Hobby: 12 functions per deployment (https://vercel.com/docs/functions/runtimes), 300 s max duration (https://vercel.com/docs/limits), 100 GB and 1,000,000 invocations, non-commercial only (https://vercel.com/docs/limits/fair-use-guidelines), automatic Let's Encrypt certificates (https://vercel.com/docs/domains/working-with-ssl).\n\n**Higgsfield CLI:** `higgsfield generate create nano_banana_2 --prompt \"...\" --wait` for images; `kling3_0 --start-image ./first.png --duration 5 --mode pro` for image-to-video; `seedance_2_5 --mode t2v` for text-to-video; `--json`, `higgsfield model list` (https://raw.githubusercontent.com/higgsfield-ai/cli/main/README.md).\n\n## Verified assets (download needs a free Sketchfab login; glTF is auto-generated)\n\n- Dhow: \"Low Poly Ancient Dhow Ship\", CC BY 4.0, 1.6k triangles (https://sketchfab.com/3d-models/low-poly-ancient-dhow-ship-f25b4552dce24d379833160dd217db84); \"Dhow01\" CC BY, 92k faces (https://sketchfab.com/models/44cd10977ae646268d87f850ff321186).\n- Sharjah heritage, all CC BY-NC by Global Digital Heritage: \"Khor Fakkan Portuguese Fort\", 187.3k triangles (https://sketchfab.com/3d-models/khor-fakkan-portuguese-fort-sharjah-uae-4cc18b0663cd4626a6e88614d8a0f147); \"Excavation of the Al Midfa Mosque\", 2.1M faces (https://www.sketchfab.com/3d-models/excavation-of-the-al-midfa-mosque-sharjah-47ce73cf844c464585906ec4b7b7fdc9); \"East Fort at Fili\", 2.4M faces (https://sketchfab.com/models/85eeb6d1e6084ee1856b4d3b04892d30); \"Pre-Islamic bronze eagle, Mleiha\", 97k (https://sketchfab.com/models/048576620b8743a2a2cd40a48b45e143). NC is fine for the hackathon with credit, not for a startup.\n- Islamic architecture, CC BY: \"Mosque Low Poly\" 8k (https://sketchfab.com/models/b0ca82895c484acfa8e172b3881a2fb9); \"Arabic mosque\" 6.1k (https://sketchfab.com/models/e04f80ea13a94f879e7a26b1628e1a21); \"Hall of Ambassadors, Alcázar of Seville\" 68k (https://sketchfab.com/models/c5c4347421444f66b15129b028d2cc7a); \"Nurulla Minaret\" 61k (https://sketchfab.com/models/e68284ae9a3c4a0fb87887e260fd9bd9).\n- Props, CC BY: \"Low Poly Camel\" 4.2k (https://sketchfab.com/models/e2571167e3d846e59769b61913f1de64); \"Ornate Islamic Arabian lantern lamp Hanging\" 80k (https://sketchfab.com/models/4936156b05734b09bc3b0404c1ce8fd9); \"Oasis Trading Post\" 492k (https://sketchfab.com/models/09f6ee9fa51b4331a950c15720b24759); \"Low-Poly Arabic House\" CC BY-SA 35k (https://sketchfab.com/models/133c8e55597949beabbec37fb06d4dd7).\n- Not found: zero downloadable results for \"falaj\", \"qanat\", \"badgir\", \"wind tower barjeel\" (https://api.sketchfab.com/v3/search?type=models&q=falaj&downloadable=true); Poly Pizza has no dhow (https://poly.pizza/search/dhow). Fake the falaj with a three.js box channel or a Higgsfield image.\n- Shrink the 2M-face scans with `gltf-transform optimize in.glb out.glb --compress draco --texture-compress webp` (https://gltf-transform.dev/cli).\n\n## Tracking fallbacks (ranked)\n\n1. MindAR 1.2.5, MIT, image and face tracking, targets compiled at https://hiukim.github.io/mind-ar-js-doc/tools/compile (https://registry.npmjs.org/mind-ar/latest). Its docs state no browser matrix; iOS Safari support is forum-reported only (https://discourse.threejs.org/t/how-to-make-ar-app-that-can-run-on-ios-devices-too/68978.md). Test on the real iPhone in the first 30 minutes.\n2. AR.js location-based needs GPS, accelerometer and magnetometer; \"sensors may be miscalibrated, resulting in an incorrect North\" (https://ar-js-org.github.io/AR.js-Docs/location-based/). Demo risk; fake with the map.\n3. 8th Wall: \"All paid subscriptions ended on February 28, 2026 when the hosted platform was retired\"; engine binary is free, no account (https://8thwall.org/?site_path=pricing), MIT framework without SLAM, SLAM only in the binary (https://8thwall.org/blog/8th-wall-open-source). Not a seven-hour integration.\n4. Zappar: no free plan; Developer $12.99/month, non-commercial, 14-day trial \"not intended for use in public-facing projects\" (https://zap.works/pricing/).\n\n## Build order, real versus faked\n\nHour 0: deploy a skeleton to HTTPS, open it on one iPhone and one Android, confirm camera and `activateAR`. Hours 1 to 2: model-viewer AR with the dhow and Khor Fakkan fort. Hours 2 to 4: Claude guide with the corpus and Web Speech. Hour 4 to 5: image slider. Tomorrow 09:30 to 11:00: MapLibre route between Heart of Sharjah sites and Higgsfield hero video; write the AI Usage Disclosure as you go. Real: AR launch, guide, slider, map, deploy. Faked and labelled: crowd levels (static \"typical hours\" JSON), authority dashboard (static), reconstructions (\"artist's impression\"), group tours (cut). Sustainability hook: visitor dispersal to under-visited heritage sites tied to the Heart of Sharjah restoration led by Shurooq (https://en.wikipedia.org/wiki/Heart_of_Sharjah).",
+ "claims": [
+  {
+   "claim": "Safari on iOS has no WebXR support through version 27.2, so any in-browser AR overlay is Android-only; iPhone AR must go through Apple AR Quick Look with a USDZ file.",
+   "source_url": "https://caniuse.com/webxr",
+   "importance": "high"
+  },
+  {
+   "claim": "model-viewer 4.4.0 defaults to ar-modes \"webxr scene-viewer quick-look\" and generates the iOS USDZ on the fly, so one GLB covers Android WebXR, Scene Viewer, and iOS Quick Look without native code.",
+   "source_url": "https://raw.githubusercontent.com/google/model-viewer/master/packages/modelviewer.dev/data/docs.json",
+   "importance": "high"
+  },
+  {
+   "claim": "getUserMedia only works in secure contexts (HTTPS or localhost); the demo must be deployed to an HTTPS host before any camera feature can be tested on a phone.",
+   "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia",
+   "importance": "high"
+  },
+  {
+   "claim": "Verified CC assets: \"Low Poly Ancient Dhow Ship\" (CC BY 4.0, 1.6k triangles) and \"Khor Fakkan Portuguese Fort, Sharjah\" (CC BY-NC, 187.3k triangles); no downloadable falaj, qanat, or barjeel models exist on Sketchfab.",
+   "source_url": "https://sketchfab.com/3d-models/khor-fakkan-portuguese-fort-sharjah-uae-4cc18b0663cd4626a6e88614d8a0f147",
+   "importance": "high"
+  },
+  {
+   "claim": "8th Wall's hosted platform and paid plans ended on 28 February 2026; it is now a free engine binary plus MIT framework without SLAM, and Zappar has no free plan (Developer $12.99/month, non-commercial), so neither is a quick hackathon path.",
+   "source_url": "https://8thwall.org/?site_path=pricing",
+   "importance": "medium"
+  },
+  {
+   "claim": "The Anthropic TypeScript SDK runs on Cloudflare Workers and Vercel Edge, and prompt caching on claude-opus-5-5 needs only a 512-token prefix, so the Sharjah corpus can live in a cached system prompt behind a serverless function with no vector database.",
+   "source_url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching.md",
+   "importance": "medium"
+  }
+ ],
+ "sources": [
+  {
+   "title": "Can I use: WebXR Device API",
+   "url": "https://caniuse.com/webxr"
+  },
+  {
+   "title": "Google AR: WebXR on Chrome for Android via ARCore",
+   "url": "https://developers.google.com/ar/develop/webxr"
+  },
+  {
+   "title": "Google AR: Scene Viewer requirements",
+   "url": "https://developers.google.com/ar/develop/scene-viewer"
+  },
+  {
+   "title": "WebKit blog: Viewing Augmented Reality Assets in Safari for iOS",
+   "url": "https://webkit.org/blog/8421/viewing-augmented-reality-assets-in-safari-for-ios/"
+  },
+  {
+   "title": "Apple: AR Quick Look",
+   "url": "https://developer.apple.com/augmented-reality/quick-look/"
+  },
+  {
+   "title": "model-viewer documentation data (AR attributes)",
+   "url": "https://raw.githubusercontent.com/google/model-viewer/master/packages/modelviewer.dev/data/docs.json"
+  },
+  {
+   "title": "npm: @google/model-viewer latest (4.4.0)",
+   "url": "https://registry.npmjs.org/@google/model-viewer/latest"
+  },
+  {
+   "title": "MDN: MediaDevices.getUserMedia (secure context)",
+   "url": "https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia"
+  },
+  {
+   "title": "MDN: DeviceOrientationEvent.requestPermission()",
+   "url": "https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent/requestPermission_static"
+  },
+  {
+   "title": "Can I use: DeviceOrientationEvent.requestPermission",
+   "url": "https://caniuse.com/mdn-api_deviceorientationevent_requestpermission_static"
+  },
+  {
+   "title": "Can I use: Speech Synthesis API",
+   "url": "https://caniuse.com/speech-synthesis"
+  },
+  {
+   "title": "Can I use: Speech Recognition API",
+   "url": "https://caniuse.com/speech-recognition"
+  },
+  {
+   "title": "Speech Recognition support notes (caniuse mirror)",
+   "url": "https://docs.w3cub.com/browser_support_tables/speech-recognition"
+  },
+  {
+   "title": "Can I use: Fullscreen API",
+   "url": "https://caniuse.com/fullscreen"
+  },
+  {
+   "title": "MindAR README",
+   "url": "https://raw.githubusercontent.com/hiukim/mind-ar-js/master/README.md"
+  },
+  {
+   "title": "npm: mind-ar latest (1.2.5, MIT)",
+   "url": "https://registry.npmjs.org/mind-ar/latest"
+  },
+  {
+   "title": "three.js forum: AR app on iOS devices (MindAR reports)",
+   "url": "https://discourse.threejs.org/t/how-to-make-ar-app-that-can-run-on-ios-devices-too/68978.md"
+  },
+  {
+   "title": "AR.js location-based AR docs",
+   "url": "https://ar-js-org.github.io/AR.js-Docs/location-based/"
+  },
+  {
+   "title": "8th Wall pricing (platform retired 28 Feb 2026)",
+   "url": "https://8thwall.org/?site_path=pricing"
+  },
+  {
+   "title": "8th Wall is now open source (blog, 2 March 2026)",
+   "url": "https://8thwall.org/blog/8th-wall-open-source"
+  },
+  {
+   "title": "8th Wall migration FAQ",
+   "url": "https://8thwall.org/docs/migration/faq"
+  },
+  {
+   "title": "Zapworks pricing",
+   "url": "https://zap.works/pricing/"
+  },
+  {
+   "title": "Zapworks workspace plans",
+   "url": "https://docs.zap.works/workspaces/workspace-plans/"
+  },
+  {
+   "title": "img-comparison-slider README (8.0.7)",
+   "url": "https://cdn.jsdelivr.net/npm/img-comparison-slider@8.0.7/README.md"
+  },
+  {
+   "title": "three.js example: clipping planes",
+   "url": "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/webgl_clipping.html"
+  },
+  {
+   "title": "three.js example: multiple views (scissor)",
+   "url": "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/webgl_multiple_views.html"
+  },
+  {
+   "title": "drei View component",
+   "url": "https://drei.docs.pmnd.rs/portals/view"
+  },
+  {
+   "title": "Anthropic TypeScript SDK README (runtimes)",
+   "url": "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/README.md"
+  },
+  {
+   "title": "Claude prompt caching documentation",
+   "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching.md"
+  },
+  {
+   "title": "ElevenLabs pricing",
+   "url": "https://elevenlabs.io/pricing"
+  },
+  {
+   "title": "ElevenLabs text-to-speech API reference",
+   "url": "https://elevenlabs.io/docs/api-reference/text-to-speech/convert"
+  },
+  {
+   "title": "OpenFreeMap",
+   "url": "https://openfreemap.org/"
+  },
+  {
+   "title": "OSRM HTTP API (route service)",
+   "url": "https://project-osrm.org/docs/v5.24.0/api/"
+  },
+  {
+   "title": "FOSSGIS routing server terms",
+   "url": "https://routing.openstreetmap.de/about.html"
+  },
+  {
+   "title": "OSRM demo server usage policy",
+   "url": "https://github.com/Project-OSRM/osrm-backend/wiki/API-Usage-Policy"
+  },
+  {
+   "title": "Mapbox pricing",
+   "url": "https://www.mapbox.com/pricing"
+  },
+  {
+   "title": "Cloudflare Pages limits",
+   "url": "https://developers.cloudflare.com/pages/platform/limits/index.md"
+  },
+  {
+   "title": "Cloudflare Workers limits",
+   "url": "https://developers.cloudflare.com/workers/platform/limits/index.md"
+  },
+  {
+   "title": "Cloudflare Pages preview deployments",
+   "url": "https://developers.cloudflare.com/pages/configuration/preview-deployments/index.md"
+  },
+  {
+   "title": "Vercel limits",
+   "url": "https://vercel.com/docs/limits"
+  },
+  {
+   "title": "Vercel runtimes (functions per deployment)",
+   "url": "https://vercel.com/docs/functions/runtimes"
+  },
+  {
+   "title": "Vercel fair use guidelines",
+   "url": "https://vercel.com/docs/limits/fair-use-guidelines"
+  },
+  {
+   "title": "Vercel SSL certificates",
+   "url": "https://vercel.com/docs/domains/working-with-ssl"
+  },
+  {
+   "title": "Higgsfield CLI README",
+   "url": "https://raw.githubusercontent.com/higgsfield-ai/cli/main/README.md"
+  },
+  {
+   "title": "Sketchfab: Low Poly Ancient Dhow Ship (CC BY 4.0)",
+   "url": "https://sketchfab.com/3d-models/low-poly-ancient-dhow-ship-f25b4552dce24d379833160dd217db84"
+  },
+  {
+   "title": "Sketchfab: Khor Fakkan Portuguese Fort, Sharjah (CC BY-NC)",
+   "url": "https://sketchfab.com/3d-models/khor-fakkan-portuguese-fort-sharjah-uae-4cc18b0663cd4626a6e88614d8a0f147"
+  },
+  {
+   "title": "Sketchfab: Excavation of the Al Midfa Mosque, Sharjah (CC BY-NC)",
+   "url": "https://www.sketchfab.com/3d-models/excavation-of-the-al-midfa-mosque-sharjah-47ce73cf844c464585906ec4b7b7fdc9"
+  },
+  {
+   "title": "Sketchfab API search: dhow (downloadable)",
+   "url": "https://api.sketchfab.com/v3/search?type=models&q=dhow&downloadable=true&count=24"
+  },
+  {
+   "title": "Sketchfab API search: sharjah (downloadable)",
+   "url": "https://api.sketchfab.com/v3/search?type=models&q=sharjah&downloadable=true&count=24"
+  },
+  {
+   "title": "Sketchfab API search: mosque low poly (downloadable)",
+   "url": "https://api.sketchfab.com/v3/search?type=models&q=mosque%20low%20poly&downloadable=true&count=24"
+  },
+  {
+   "title": "Sketchfab API search: falaj (zero results)",
+   "url": "https://api.sketchfab.com/v3/search?type=models&q=falaj&downloadable=true&count=24"
+  },
+  {
+   "title": "Poly Pizza search: dhow (no results)",
+   "url": "https://poly.pizza/search/dhow"
+  },
+  {
+   "title": "glTF Transform CLI",
+   "url": "https://gltf-transform.dev/cli"
+  },
+  {
+   "title": "Wikipedia: Heart of Sharjah",
+   "url": "https://en.wikipedia.org/wiki/Heart_of_Sharjah"
+  }
+ ]
+}

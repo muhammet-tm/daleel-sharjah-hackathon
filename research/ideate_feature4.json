@@ -1,0 +1,157 @@
+{
+ "candidates": [
+  {
+   "name": "Quiet Hours Dispersal Routing",
+   "one_liner": "A routing layer that scores every stop by hour-of-day busyness and nudges visitors away from peak slots at Sharjah City landmarks toward under-visited East Coast and Central Region sites, showing the time cost of each swap in one plain sentence.",
+   "sustainability_link": "Addresses overtourism directly. SCTDA structures its destination site and its Sustainability Map around three regions (Sharjah City, Central Region, East Coast), and this feature spreads load across them, lifting demand at under-visited sites that Visit Sharjah itself describes as a 'rare gem' (Shees Village) or 'one of the most pristine natural reserves in the Middle East' (Wadi Al Helo), alongside Nahwa Enclave and Al Rafisah Dam. Peak load is a real SCTDA problem: the 2024 Sharjah Light Festival drew over 1.2 million visitors in 12 days.",
+   "demo_in_two_days": "Build a JSON of 20 to 25 sites with curated hourly busyness curves (0 to 100) and region tags copied from Visit Sharjah and the 15 places on the Sustain Sharjah Sustainability Map. Implement one scoring function: busyness at the planned hour plus a travel-time penalty. A Leaflet or MapLibre map recolors pins as a time slider moves; the itinerary panel offers one-click swaps with a generated sentence such as 'Swapping Al Noor Island at 14:00 for Kalba Corniche Park at 16:30 adds 40 minutes and avoids the daily peak.' Busyness curves are curated and labeled illustrative; the data structure accepts a real feed later. About three hours for two people.",
+   "differentiation": "Last year's winner rewarded visitors with points and badges for reaching places; this changes where and when they go with no reward mechanic and shows the destination-side benefit. SCTDA's Sustainability Map lists eco-friendly spots but has no routing, crowding, or time dimension, so this fills a gap in an existing SCTDA product rather than duplicating it.",
+   "risk": "Judges will ask for real crowd data; the honest answer is curated curves with an architecture ready for turnstile, telecom, or popular-times style feeds. It can look like a duplicate of the team's core route planner unless the pitch frames it as the destination-side policy layer sitting on top of the visitor-side planner, with the trade-off made visible.",
+   "score": 9
+  },
+  {
+   "name": "Cool Windows Heat-Aware Scheduler",
+   "one_liner": "Reorders the day's stops around live temperature, apparent temperature, and UV so exposed sites fall in cool windows and indoor museums fill the midday peak, with a shoulder-season suggestion when the whole day is too hot.",
+   "sustainability_link": "Keeps tourism viable year-round in a hot climate, which is the economic leg of sustainability, and protects visitor health. It supports SCTDA's current summer campaign ('Exceptional Offers for an Unforgettable Summer' on visitsharjah.com) by making summer itineraries safe, and it reduces the idling of air-conditioned vehicles used as cooling shelters during badly timed outdoor stops.",
+   "demo_in_two_days": "Open-Meteo returns Sharjah hourly data with no API key. A live call today (10 October 2026) gave 33.6 C at 09:00, 38.3 C at 12:00, 37.3 C at 15:00, an apparent temperature peak of 40.8 C at 13:00, and a UV index of 7.15. Tag each site indoor, shaded, or exposed; compute a comfort score per hour; sort the itinerary and draw a timeline with red, amber, and green windows. One fetch, one sort, one timeline component. Under two hours.",
+   "differentiation": "No treasure hunt mechanics, and no regional tourism app exposes heat windows as a planning primitive. It is live data in the demo, which judges rarely see at hackathons, and it is specific to the Gulf rather than a port of a European overtourism tool.",
+   "risk": "The sustainability link is indirect and must be stated in one sentence or judges will file it under convenience. On an October demo day the contrast is modest, so include a July scenario toggle using a stored Open-Meteo sample so the reordering is visible.",
+   "score": 8
+  },
+  {
+   "name": "Conservation Mode in Protected Areas",
+   "one_liner": "When a route enters an EPAA protected area or conservation center, the guide switches to a conservation mode: trail-only navigation, habitat and species context, rules on litter, fires, drones, and wildlife distance, and a leave-no-trace check-out.",
+   "sustainability_link": "Direct environmental protection at the sites most at risk from visitor growth. Grounded in the Environment and Protected Areas Authority's protected areas (Alqurm, Wasit Nature Reserve, Lehhfaiiah, Wadil helo, Meleiha), its learning centers (Wasit Wetland Centre, Al Hefaiyah Mountain Conservation Centre, Kalba Bird of Prey Centre), and its named 'Mountain Areas Preservation Campaign' and 'Wilderness Areas Goer Campaign'. Al Qurm protects over 500 hectares of mangroves according to Sustain Sharjah.",
+   "demo_in_two_days": "Draw approximate polygons for four or five protected areas as GeoJSON, detect entry from a simulated GPS position on the map, swap the UI theme and content, and show a rules card plus a species card per area drawn from EPAA public pages. A check-out screen records a self-declared leave-no-trace confirmation. No AR required; it can also drive the AR overlay if that module lands. About three hours.",
+   "differentiation": "Behavior change through context rather than points. It gives the AR guide a reason to exist in nature sites, where last year's treasure hunt would be actively harmful, and it is the only candidate that makes the app protective of the environment rather than merely lower-impact.",
+   "risk": "Polygons are approximate and must be labeled so. EPAA, not SCTDA, owns the areas, so the pitch should name both authorities. A self-declared leave-no-trace confirmation is weak evidence; present it as the hook for future ranger validation.",
+   "score": 8
+  },
+  {
+   "name": "Local Spend Router",
+   "one_liner": "Routes food, craft, guide, and transfer spend to Sharjah-owned small businesses (souq artisans, Al Dhaid farm produce, Kalba and Khorfakkan family operators) and shows the share of the itinerary budget that stays in the local economy.",
+   "sustainability_link": "Community economic sustainability: tourism income retained by residents rather than chains. Heart of Sharjah states that 'artisans still practice age-old trades' in the restored district around Souq Al Shanasiyah; Visit Sharjah presents Al Dhaid as a farming town; the East Coast has small dive and boat operators (Khorfakkan lists seven dive sites on Sustain Sharjah).",
+   "demo_in_two_days": "A curated list of 30 to 40 businesses with a local-ownership flag and category, a retention percentage computed from the itinerary's planned spend categories, and swap suggestions such as 'replace mall lunch with Souq Al Shanasiyah'. Data from public listings with unverified entries marked. No booking integration. About two hours.",
+   "differentiation": "Shifts the value question from the visitor's rewards to the resident's income, which is what a tourism authority answers to. Last year's hunt sent people to places; this sends money to people.",
+   "risk": "Ownership data is hard to verify in hours and a wrong 'local' label on a chain would be embarrassing in front of SCTDA. The Irthi Contemporary Crafts Council site was under construction when checked, so do not cite its Bidwa artisans without another source. Spend categories are self-reported, so the percentage is an estimate.",
+   "score": 7
+  },
+  {
+   "name": "Visitor Load Forecast Panel for SCTDA",
+   "one_liner": "An authority-facing view that aggregates anonymized itinerary intent into an hourly load forecast per site and counts how many visits the dispersal and heat nudges moved, functioning as a lightweight digital twin of visitor flow.",
+   "sustainability_link": "Gives SCTDA the measurement layer that sustainable destination management requires. When SCTDA launched its Sustainable Tourism AI Assistant in October 2024 it cited the UN World Tourism Organisation initiative 'Towards a Statistical Framework for Measuring Sustainability'; a per-site load forecast is a concrete input to that framework. Sharjah received about 1.6 million hotel guests in 2024, up 11%, so growth management is a live concern.",
+   "demo_in_two_days": "Generate a few hundred synthetic itineraries at page load, aggregate into a site-by-hour heat map, a forecast-versus-capacity line chart, and a 'visits redirected' counter. Chart.js or Recharts, no backend. Label synthetic clearly on screen. About two hours once candidate 1 exists.",
+   "differentiation": "Most hackathon tourism apps stop at the visitor. This gives the ecosystem partner in the room its own screen and turns the consumer app into a data asset for policy. It also upgrades the team's existing 'anonymized visitor analytics' bullet into something visible.",
+   "risk": "Entirely synthetic data can read as a slide rather than a product. Privacy questions about intent aggregation need an answer (on-device aggregation, minimum group sizes). It depends on candidate 1 or 2 existing to have anything to forecast.",
+   "score": 7
+  },
+  {
+   "name": "Sustain Sharjah Journey Connector",
+   "one_liner": "The guide prefers and labels hotels and destinations that have completed levels of SCTDA's Sustain Sharjah Sustainability Journey, and gives destinations a visitor-side evidence export (dispersal, off-peak share, local spend) for their Sustain Sharjah Awards application.",
+   "sustainability_link": "Plugs into SCTDA's own certification ladder. The Sustain Sharjah Awards 2026 require Level 1 (Foundation) with at least 80 points, or Level 2 (Explorer) for returning participants, and recipients are recognized at the Sharjah International Travel and Tourism Forum on 28 October 2026. The hackathon winner presents at SITTF 2026, so the feature and the stage are the same event.",
+   "demo_in_two_days": "A curated list of the 15 Sustainability Map places plus the accommodation listings (The Chedi Al Bait, Kingfisher Retreat, Moon Retreat, Al Badayer Retreat), each with an illustrative journey-level badge; a ranking boost in recommendations; a one-page HTML 'evidence pack' generated from the demo analytics. About two hours.",
+   "differentiation": "Turns the app into a distribution channel for an existing SCTDA program rather than a parallel scheme. Rewards for visitors (last year) become evidence for businesses (this year).",
+   "risk": "Journey completion data is private, so every badge in the demo is illustrative and must be labeled. The feature is a connector rather than a capability, so it is weak alone; it is strongest as the pitch frame wrapped around candidates 1, 2, or 3.",
+   "score": 7
+  },
+  {
+   "name": "Itinerary Carbon and Water Ledger",
+   "one_liner": "A running footprint for the itinerary (transport carbon per leg, water intensity per overnight) with one-tap greener swaps such as a shared transfer, a single East Coast base instead of daily round trips, or a Sustain Sharjah listed stay.",
+   "sustainability_link": "Makes the environmental cost of each choice visible at decision time. It extends SCTDA's own Tourist Carbon calculator on sustainsharjah.com, which is account-gated and trip-level, into an open, leg-by-leg view inside the guide, and adds water, which matters more than carbon in the Gulf.",
+   "demo_in_two_days": "Static emission factors per mode (car, taxi, bus, walk) and a per-night water band per accommodation type in a JSON file with the source named on screen; totals update as the itinerary changes; a swap panel shows the delta in kg CO2 and liters. Credit the factor table in the AI Usage Disclosure and on the slide. About two hours.",
+   "differentiation": "The pitch must stress what is new relative to SCTDA's calculator: itinerary-level, live while planning, and paired with water. Nothing gamified; the number itself is the feedback.",
+   "risk": "Highest risk of 'SCTDA already has this'. Factor accuracy will be challenged by the data mentors (Alaa Elkouni, Rohan Mitra), so every factor needs a cited source. Per-hotel water figures do not exist publicly, so bands must be clearly labeled as estimates.",
+   "score": 6
+  },
+  {
+   "name": "Round-Up for Restoration",
+   "one_liner": "At heritage stops the guide shows the site's conservation status and offers a micro-contribution (a round-up on a ticket or a 5 AED tap) toward a named restoration item, with a public ledger of what visitors funded.",
+   "sustainability_link": "Channels tourism revenue directly into cultural heritage conservation, the heritage pillar of sustainable tourism. Anchors to Heart of Sharjah, where Souq Al Shanasiyah, The Chedi Al Bait, and restored homes show what restoration produces, and to forts on the East Coast and in the Central Region (Dibba Al-Hisn Fort, Khor Kalba Fort, Al Dhaid Fort).",
+   "demo_in_two_days": "A mock payment sheet (no real transaction), a ledger view with three or four restoration items and progress bars, and a before-and-after slider reusing the planned time-travel 3D or AR assets. Curated content per site; contribution records stored locally. About two hours.",
+   "differentiation": "Replaces reward-seeking with giving; the visitor leaves something at the site rather than collecting points from it. Few guide apps tie micro-donations to itemized, visible conservation outcomes.",
+   "risk": "Who receives funds and under what authority is a governance question the team cannot answer; present it as a model that Sharjah Museums Authority or Shurooq would operate. Payments cannot be real in the demo. Judges may view donation features as low technical contribution.",
+   "score": 6
+  },
+  {
+   "name": "Slow Trail: Three Days on the East Coast",
+   "one_liner": "Multi-day slow-tourism trails that keep visitors at one base (Khorfakkan, Kalba, or Dibba Al Hisn) for two or three nights, replacing daily round trips from Sharjah City with walking, kayaking, and short hops.",
+   "sustainability_link": "Longer stays with fewer vehicle kilometers, more spend in East Coast towns, and lower pressure on city sites. Uses stays and trails already promoted on Sustain Sharjah (Kingfisher Retreat, Moon Retreat, Wadi Shees Nature Trail, Mleiha Fossil Rock Hiking Trail) and East Coast sites from Visit Sharjah (Kalba Corniche Park, Al Hefaiyah Mountain Conservation Centre, Shees Village, Wadi Al Helo).",
+   "demo_in_two_days": "Three curated trail templates as JSON, a day-by-day view with distance and transport mode per leg, and a comparison card against the equivalent city-based day trips (kilometers, hours in a car, nights in the region). Static content on the planner's existing map. About two hours.",
+   "differentiation": "Changes the shape of the trip rather than adding a game. The comparison card against day trips is the novel element; most itinerary tools optimize within a day, not across the structure of the trip.",
+   "risk": "Reads as curated content more than technology, so technical contribution scores may suffer. Distances must be checked against a routing API or map, not guessed.",
+   "score": 6
+  },
+  {
+   "name": "Calm Route Profile (low-sensory and step-free)",
+   "one_liner": "A route profile for autistic, elderly, and mobility-limited visitors that prefers shaded, quiet, step-free paths, schedules rest and prayer stops, and warns about crowd and noise peaks.",
+   "sustainability_link": "Social sustainability and inclusion: tourism that all visitors and residents can take part in, and that spreads visitors into quieter hours by design. Reuses the busyness data from candidate 1 and the shade and heat data from candidate 2.",
+   "demo_in_two_days": "A toggle that changes route weights, a filtered site list with icons for shade, seating, step-free access, and quiet hours, and one sample route shown before and after. Accessibility attributes curated for about 15 sites. Under two hours.",
+   "differentiation": "A profile, not a game. Few regional tourism apps offer a sensory profile rather than a generic accessibility page.",
+   "risk": "Overlaps the team's existing accessibility bullet (audio descriptions, subtitles, simplified navigation), so it may not read as a replacement feature. Accessibility attributes are unverified and errors harm real users; label them community-reported.",
+   "score": 5
+  }
+ ],
+ "recommendation": "Pick candidate 1, Quiet Hours Dispersal Routing. It is the only candidate that is at once SCTDA's stated priority (the authority organizes its destination site and Sustainability Map around Sharjah City, the Central Region, and the East Coast), unambiguous as sustainability (moving load off peaks and toward under-visited sites), buildable this afternoon with curated hourly busyness curves, and productive of the impact number judges will ask for (share of visits moved off-peak or out of the city). It reuses the planned route planner and feeds the authority analytics feature for free. If time remains on Day 2, add candidate 2's heat windows as a second signal in the same scoring function. No points or badges; the incentive is a quieter, cooler visit.",
+ "sources": [
+  {
+   "title": "SCTDA unveils Sustainable Tourism AI Assistant in 40 languages (press release, 15 October 2024)",
+   "url": "https://www.sharjahtourism.ae/news/sctda-unveils-sustainable-tourism-ai-assistant-in-40-languages-to-drive-sustainability-in-the-sector/"
+  },
+  {
+   "title": "Sharjah welcomed 1.6 million hotel guests in 2024, reflecting an 11% increase (SCTDA, 30 April 2025)",
+   "url": "https://www.sharjahtourism.ae/news/sharjah-welcomed-1-6-million-hotel-guests-in-2024-reflecting-an-11-increase/"
+  },
+  {
+   "title": "12-day Sharjah Light Festival concludes with over 1.2 million visitors (SCTDA)",
+   "url": "https://www.sharjahtourism.ae/news/12-day-sharjah-light-festival-concludes-with-an-impressive-turnout-of-over-1-2-million-visitors-2/"
+  },
+  {
+   "title": "Sustain Sharjah (SCTDA sustainable tourism platform)",
+   "url": "https://www.sustainsharjah.com/"
+  },
+  {
+   "title": "Sustain Sharjah: Interactive Map of Sharjah's Sustainable and Eco-Friendly Spots",
+   "url": "https://www.sustainsharjah.com/sustainability-map/"
+  },
+  {
+   "title": "Sustain Sharjah for Visitors (Tourist Carbon calculator)",
+   "url": "https://www.sustainsharjah.com/sharjah-visitors/"
+  },
+  {
+   "title": "Sustain Sharjah Awards 2026 at SITTF, 28 October 2026 (Sustainability Journey levels and criteria)",
+   "url": "https://sustainsharjah.com/awards/"
+  },
+  {
+   "title": "Sustain Sharjah for Businesses (Sustainability Journey modules)",
+   "url": "https://www.sustainsharjah.com/sharjah-business/"
+  },
+  {
+   "title": "Environment and Protected Areas Authority, Sharjah (protected areas, learning centres, campaigns)",
+   "url": "https://epaashj.ae/"
+  },
+  {
+   "title": "Visit Sharjah (SCTDA destination site: regions, summer 2026 campaign, Personalised Planning Assistance)",
+   "url": "https://www.visitsharjah.com/"
+  },
+  {
+   "title": "Visit Sharjah: East Coast region and attractions",
+   "url": "https://www.visitsharjah.com/en/regions/east-coast/"
+  },
+  {
+   "title": "Visit Sharjah: Central Region and attractions",
+   "url": "https://www.visitsharjah.com/en/regions/central-region/"
+  },
+  {
+   "title": "Heart of Sharjah heritage district",
+   "url": "https://www.heartofsharjah.ae/"
+  },
+  {
+   "title": "Open-Meteo hourly forecast for Sharjah, 10 October 2026 (no API key required)",
+   "url": "https://api.open-meteo.com/v1/forecast?latitude=25.3463&longitude=55.4209&hourly=temperature_2m,apparent_temperature,uv_index&forecast_days=1&timezone=Asia%2FDubai"
+  },
+  {
+   "title": "Irthi Contemporary Crafts Council (site under construction on 10 October 2026; verify before citing)",
+   "url": "https://www.irthi.com/"
+  }
+ ]
+}
