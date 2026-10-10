@@ -81,6 +81,18 @@ for d in ranked:
 
 nav = "".join(f"<a href='#dir-{idx}'><span>0{idx}</span>{esc(name)}</a>" for idx, name, _ in mockups)
 
+# Caveats from the team lead's read of the specs against the hackathon context (not from the judges).
+CAVEATS = {
+    "Route Band Signage": "Highest scoring and the easiest to build in hours (flat plates, no textures). The risk is sternness: the photography and the Arabic plates have to carry the warmth, or it reads as a transport utility.",
+    "Lagoon After Dark": "The strongest story for the sustainability lever (after-dark, off-peak, walking). Dark saturated screens are hard to read on a phone outdoors and in a bright judging room; test under sunlight before committing.",
+    "Hashiya Folio": "Ties directly to World Book Capital and the calligraphy heritage, and no other team will show this. Margin notes need one sentence of explanation in the pitch, and the AR plate must be the first screen shown or it reads as a brochure.",
+    "Girih Screen": "The most distinctive AR treatment (line-drawn overlays through a lattice mask). The mask animation can stutter on low-end Android in a browser; precompute masks. Hold the serif to two sizes or it drifts toward a hotel brochure.",
+    "Mleiha Field Sheet": "Caution: its passport stamps and ticket stubs echo Sharjah Quest, the 2025 winner built by two of this year's mentors (digital stamps, badges). If chosen, replace stamps with trench-style find codes and keep the ledger; the map-first survey sheet itself is sound.",
+}
+caveat_items = "".join(
+    f"<li><strong>0{idx} {esc(name)}.</strong> {esc(CAVEATS.get(name, ''))}</li>" for idx, name, _ in mockups if CAVEATS.get(name)
+)
+
 page = f"""<title>Daleel Design Directions</title>
 {''.join(links)}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
@@ -118,6 +130,8 @@ td.note .sim {{ margin-top:6px; color:var(--fg); font-size:12px; }}
 .nopick {{ color:var(--out); font-size:12px; }}
 tr.is-out td {{ color:var(--out); }}
 tr.is-out td.name .fam, tr.is-out td.note {{ color:var(--out); }}
+.caveats {{ padding-inline-start:20px; max-width:80ch; line-height:1.55; color:var(--fg); display:grid; gap:8px; margin:0; }}
+.caveats strong {{ font-weight:600; }}
 .panels {{ display:grid; gap:40px; padding-block:16px; }}
 .panels > * {{ min-width:0; }}
 section.after {{ padding-block:32px; border-top:1px solid var(--line); }}
@@ -140,6 +154,8 @@ section.after li {{ margin-bottom:6px; }}
     <thead><tr><th>Shown</th><th>Direction</th>{''.join(f'<th>{t}</th>' for _, t in FIELDS)}<th>Total /30</th><th>Judge notes</th></tr></thead>
     <tbody>{''.join(rows)}</tbody>
   </table></div>
+  <h2 style="margin-top:28px">Caveats before choosing</h2>
+  <ul class="caveats">{caveat_items}</ul>
 </section>
 <div class="panels">
 {chr(10).join(src for _, _, src in styles_and_sections)}
