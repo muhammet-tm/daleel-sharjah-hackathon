@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+.d4{--r:0;padding:clamp(20px,4vw,40px);border-radius:12px;overflow:hidden;scroll-margin-top:64px}
+.d4 *{box-sizing:border-box}
+.d4 .hd{display:grid;gap:6px;margin-bottom:20px}
+.d4 .hd .no{font:600 13px/1 var(--mono,monospace);font-variant-numeric:tabular-nums;opacity:.75}
+.d4 .hd h2{margin:0;font-size:clamp(30px,5vw,52px);line-height:1}
+.d4 .hd .tag{margin:0;font-size:18px;max-width:52ch}
+.d4 .hd .fam{margin:0;font-size:13px;opacity:.75;max-width:80ch}
+.d4 .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:28px;align-items:start}
+.d4 .sw{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.d4 .sw li{display:grid;gap:2px;font-size:11px;line-height:1.25;min-width:0}
+.d4 .sw li span{height:40px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(127,127,127,.35)}
+.d4 .sw b{font-variant-numeric:tabular-nums}
+.d4 .sw i{font-style:normal;opacity:.75;overflow-wrap:anywhere}
+.d4 .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;justify-items:center}
+.d4 figure{margin:0;width:100%;max-width:300px;display:grid;gap:10px}
+.d4 figcaption{font-size:12px;opacity:.8;line-height:1.4}
+.d4 figcaption b{display:block;font-size:13px;opacity:1}
+.d4 .ph{aspect-ratio:9/18.5;width:100%;border-radius:28px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 0 0 6px #0a0a0a,0 0 0 7px rgba(127,127,127,.4)}
+.d4 .fort{width:100%;height:auto;display:block}
+.d4 .fort .f-ground{fill:none;stroke-width:1.5}
+.d4 .fort .f-slit{fill:none;stroke-width:2}
+.d4 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:28px;font-size:13.5px;line-height:1.5}
+.d4 .notes h3{margin:0 0 4px;font-size:13px}
+.d4 .notes p{margin:0}
+.d4 [lang=ar]{direction:rtl}
+
+.d4{--bg:#0F3D3E;--sf:#175152;--ink:#F1E9D6;--br:#D1AA4F;--co:#D27A5A;--vg:#86C3B2;--mono:'IBM Plex Mono';background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif}
+.d4 .hd h2{font-family:'Cormorant Garamond';font-weight:600;color:var(--br)}
+.d4 .spec .big{font:600 40px/1.05 'Cormorant Garamond';color:var(--br)} .d4 .spec .ar{font:700 30px/1.4 'Reem Kufi'}
+.d4 .ph{background:var(--bg)}
+.d4 .cam{position:relative;background:#2b5a5b;display:flex;align-items:flex-end;overflow:hidden}
+.d4 .cam .fort .f-wall,.d4 .cam .fort .f-tower{fill:#c99a7f} .d4 .cam .fort .f-door{fill:#5d3d2c} .d4 .cam .fort .f-slit{stroke:#5d3d2c} .d4 .cam .fort .f-ground{stroke:#ffffff55}
+.d4 .cam .wire{position:absolute;inset:auto 0 0;} .d4 .cam .wire .fort *{fill:none!important;stroke:var(--br)!important;stroke-width:1.5}
+.d4 .lat{position:absolute;inset:0;width:100%;height:100%}
+.d4 .sheet{background:var(--sf);border-top:2px solid var(--br);flex:1;display:flex;flex-direction:column;padding:12px 14px;gap:8px;clip-path:polygon(0 10px,10px 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+.d4 .sheet h4{margin:0;font:600 24px/1.05 'Cormorant Garamond';color:var(--br)} .d4 .sheet h4 .ar{font:500 15px 'Reem Kufi';color:var(--ink);margin-left:8px}
+.d4 .map{height:74px;position:relative;border:1px solid #D1AA4F66}
+.d4 .map svg{width:100%;height:100%}
+.d4 .stop{display:grid;grid-template-columns:56px 1fr;gap:1px 8px;padding:6px 0;border-bottom:1px solid #D1AA4F40;font-size:13px}
+.d4 .stop .t{font:500 12px var(--mono);color:var(--vg)} .d4 .stop .n{font-weight:500}
+.d4 .stop .s{grid-column:2;font-size:11.5px;color:var(--vg)} .d4 .stop.busy .s{color:var(--co);font-weight:500}
+.d4 .strip{font:500 11px var(--mono);color:var(--vg);display:flex;justify-content:space-between;border-top:1px solid #86C3B255;padding-top:6px}
+.d4 .thr{height:56px;background:var(--bg);border-top:1px solid var(--br);display:grid;grid-template-columns:repeat(3,1fr);align-items:center;text-align:center;font-size:12px}
+.d4 .thr .on{color:var(--br);font-weight:500} .d4 .thr .pill{justify-self:center;background:var(--br);color:var(--bg);padding:6px 14px;border-radius:999px;font-weight:500}
+.d4 .yr{position:absolute;left:12px;right:12px;bottom:12px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font:500 11px var(--mono);color:var(--ink)}
+.d4 .yr .tr{height:1.5px;background:var(--br);position:relative} .d4 .yr .tr i{position:absolute;left:62%;top:-6px;width:12px;height:12px;transform:rotate(45deg);background:var(--br)}
+.d4 .lbl{position:absolute;top:12px;left:12px;right:12px;font:600 20px/1.1 'Cormorant Garamond';color:var(--br)} .d4 .lbl small{display:block;font:500 11px var(--mono);color:var(--vg);margin-top:4px}
+.d4 .turn{font-size:13px;padding:6px 0;border-bottom:1px solid #D1AA4F55}
+.d4 .rep{font:500 16px/1.35 'Cormorant Garamond'}
+</style>
+<section id="dir-4" class="d4" aria-labelledby="dir-4-h">
+  <div class="hd"><span class="no">04 · Girih Screen</span><h2 id="dir-4-h">Girih Screen</h2><p class="tag">Sharjah through the lattice: light in, heat out.</p><p class="fam">Islamic geometric lattice as structure: dark heritage editorial with drafting-line AR, not ornament</p></div>
+  <div class="meta"><ul class='sw'><li><span style='background:#0F3D3E'></span><b>#0F3D3E</b><i>background</i></li><li><span style='background:#175152'></span><b>#175152</b><i>surface</i></li><li><span style='background:#F1E9D6'></span><b>#F1E9D6</b><i>ink</i></li><li><span style='background:#D1AA4F'></span><b>#D1AA4F</b><i>accent</i></li><li><span style='background:#D27A5A'></span><b>#D27A5A</b><i>secondary accent</i></li><li><span style='background:#86C3B2'></span><b>#86C3B2</b><i>data</i></li></ul><div class='spec'><div class='big'>Light in, heat out</div><div class='ar' lang='ar'>من خلف المشربية</div><p style='margin:6px 0 0;font-size:15px'>Cormorant and Reem Kufi for display, IBM Plex body, Plex Mono for data. Brass is stroke only; verdigris marks every sustainability figure.</p></div></div>
+  <div class="phones">
+    <figure><div class="ph"><div class='cam' style='height:14%'><svg class='lat' aria-hidden='true'><defs><pattern id='khatam' width='28' height='28' patternUnits='userSpaceOnUse'><path d='M14 2l4 8 8 4-8 4-4 8-4-8-8-4 8-4z' fill='none' stroke='#D1AA4F' stroke-width='.8'/></pattern></defs><rect width='100%' height='100%' fill='url(#khatam)'/></svg></div><div class='sheet'><h4>Today's plan<span class='ar' lang='ar'>خطة اليوم</span></h4><div class='map'><svg viewBox='0 0 240 74' aria-hidden='true'><path d='M10 60 C60 20 100 58 150 30 S220 20 232 12' fill='none' stroke='#D1AA4F' stroke-width='1.5'/><path d='M150 30 S220 20 232 12' fill='none' stroke='#86C3B2' stroke-width='4' stroke-dasharray='2 3'/><circle cx='10' cy='60' r='4' fill='#86C3B2'/><circle cx='150' cy='30' r='6' fill='#D27A5A'/><circle cx='232' cy='12' r='4' fill='#86C3B2'/></svg></div><div class='stop quiet'><span class='t'>09:30</span><span class='n'>Al Hisn Fort</span><span class='s'>Quiet now</span></div><div class='stop busy'><span class='t'>19:00</span><span class='n'>Al Noor Island</span><span class='s'>Busy 16:00–18:00, go at 19:00</span></div><div class='stop shade'><span class='t'>Sat 08:00</span><span class='n'>Kalba Mangroves</span><span class='s'>Shade route, 40 min by car</span></div><p style='margin:0;font-size:12px;line-height:1.4'>Moving Al Noor Island from 16:30 to 19:00 avoids the daily peak and drops the walk from 39°C to 31°C.</p><div class='strip'><span>SHADE 68%</span><span>CROWD LOW</span><span>SCORE 82</span></div></div><div class='thr'><span class='on'>Plan</span><span class=''>Look</span><span class=''>Ask</span></div></div><figcaption><b>Plan</b>Today's itinerary scored for crowd, heat and transport, with one swap explained.</figcaption></figure>
+    <figure><div class="ph"><div class='cam' style='flex:1'><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><div class='wire'><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg></div><div class='lbl'>Al Hisn Fort, 1823<small>BRASS LINE: ARTIST'S IMPRESSION</small></div><div class='yr'><span>TODAY</span><span class='tr'><i></i></span><span>1823</span></div></div><div style='padding:8px 12px;font:500 11px var(--mono);color:var(--vg);background:var(--bg)'>SHADE · CROWD LOW · 0.4 KG CO₂ ON FOOT</div><div class='thr'><span class=''>Plan</span><span class='on'>Look</span><span class=''>Ask</span></div></div><figcaption><b>Look</b>AR at Al Hisn Fort, slider from today back to 1823 (reconstruction labelled artist's impression).</figcaption></figure>
+    <figure><div class="ph"><div class='cam' style='height:34%'><svg class="fort" viewBox="0 0 200 120" aria-hidden="true"><path d="M0 112h200" class="f-ground"/>
+<path class="f-wall" d="M44 112V62h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v-6h8v6h8v50z"/>
+<path class="f-tower" d="M18 112V40a14 6 0 0 1 28 0v72z"/><path class="f-tower" d="M150 112V36h6v-6h7v6h7v-6h7v6h6v76z"/>
+<path class="f-door" d="M92 112V90a8 8 0 0 1 16 0v22z"/><path class="f-slit" d="M30 56v10M166 50v10M70 76v8M130 76v8"/></svg><svg class='lat' aria-hidden='true'><defs><pattern id='khatam' width='28' height='28' patternUnits='userSpaceOnUse'><path d='M14 2l4 8 8 4-8 4-4 8-4-8-8-4 8-4z' fill='none' stroke='#D1AA4F' stroke-width='.8'/></pattern></defs><rect width='100%' height='100%' fill='url(#khatam)'/></svg></div><div class='sheet'><div class='turn'>Why was the fort demolished in 1969?</div><div class='rep'>In 1969 most of Al Hisn was pulled down to make room for the modern city centre. One tower was saved, and the fort was later rebuilt from old photographs and plans. After a full restoration it reopened as a museum in 2015.</div><div class='strip'><span>READ ALOUD</span><span>SOURCE: DALEEL CORPUS</span></div></div><div class='thr'><span>Plan</span><span>Look</span><span class='pill'>Ask</span></div></div><figcaption><b>Ask</b>The guide answers from the curated Sharjah corpus and reads aloud.</figcaption></figure>
+  </div>
+  <div class="notes"><div><h3>Why Sharjah</h3><p>Heart of Sharjah houses use coral stone, gypsum, teak doors, barjeel wind towers, and lattice screens; the Sharjah Museum of Islamic Civilization holds the geometry; Souk Al Arsah sells the brass and copperware; Central Souk is tiled in blue; Khalid Lagoon supplies the teal. The palette and the lattice come from these specific places.</p></div><div><h3>Why sustainable</h3><p>The mashrabiya is passive cooling: shade and airflow with no electricity. The interface uses it the same way, letting through only the information a walker needs, and extends it to shade routes, off-peak slots, and crowd dispersal. Dark teal saves OLED power; line-drawn AR replaces heavy 3D downloads.</p></div><div><h3>Risks</h3><p>Reads as a mosque brochure or luxury hotel if Cormorant gets too large or italic; hold display to two sizes and never italic. SVG mask animation can stutter on low-end Android in a browser demo; precompute one mask per sheet position and animate only the mask scale. The lattice steals camera area in the half-open state, so test that the top 55 percent stays usable for orientation. Brass on surface teal is 4.10:1, so brass text on surfaces must be 14px bold or larger; coral is for shapes and large labels only. RTL mirroring needs a symmetric 8-fold module, so do not switch to a 10-fold girih late. The pattern is shared heritage, but avoid cropping mosque imagery with the lattice in ways that read as disrespect.</p></div></div>
+</section>

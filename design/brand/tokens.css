@@ -1,0 +1,10 @@
+/* Daleel brand tokens (team identity, 10 October 2026). Contrast measured with WCAG 2 relative luminance. */
+:root {
+  --daleel-cream: #F7F3EA;   /* page background */
+  --daleel-sand:  #E6DCC8;   /* surfaces, secondary chips, dividers */
+  --daleel-brass: #C9A24D;   /* the needle: primary action, active state, recommended choice. Fill or stroke only on light grounds */
+  --daleel-navy:  #14213D;   /* all text on light grounds; dark plates */
+  --daleel-brass-text: #8A6A1F; /* derived: brass-toned text on cream (4.56:1). Not in the logo sheet */
+}
+/* Pairs that pass for body text (4.5:1+): navy on cream 14.42, navy on sand 11.74, brass on navy 6.66, navy on brass 6.66, brass-text on cream 4.56.
+   Pairs that fail and must never carry text: brass on cream 2.17, brass on sand 1.76, cream on sand 1.23. */
