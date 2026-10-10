@@ -21,35 +21,36 @@ All four: the AI Usage Disclosure Document is appended by whoever uses a tool, a
 
 ## 3. Timeline
 
-Day 1, Saturday 10 October
+Revised at 22:15 on Day 1. The Day 1 build window was lost to a tool usage limit, so the critical path now runs through tonight and the Day 2 morning sprint. The identity is settled (Rama's palette: cream, sand, brass, navy, with tokens in `design/brand/tokens.css`); the remaining design choice is which layout idea from the five directions carries into that palette, and it must be made before the build starts tonight.
+
+Tonight, Saturday 10 October (remote, at the team's discretion; the organizers do not prohibit work between the two days, but every member still signs in at 09:00)
 
 | Time | Work | Owner |
 |---|---|---|
-| 14:30 to 15:00 | Choose the design direction and the replacement feature; freeze the feature list; agree the demo flow | All |
-| 14:30 to 15:15 | Deploy an empty HTTPS skeleton to Cloudflare Pages; open it on one iPhone and one Android; confirm the camera prompt and the AR button appear | Muhammet |
-| 15:00 to 16:30 | Site dataset v1 (names, coordinates, hours, busy windows, shade and indoor flags, east-coast alternatives) | Sulaymon |
-| 15:00 to 16:30 | Logo, wordmark, color and type tokens from the chosen direction | Rama |
-| 15:00 to 17:00 | Business model canvas; buyer interviews with mentors Zayneb Houichi and Kareem Tarabichi | Khadeja |
-| 15:15 to 17:00 | Itinerary screen with scoring from the dataset; AR view with model-viewer and one heritage model | Muhammet |
-| 16:30 to 18:00 | Dispersal dashboard chart; sustainability score formula written as one paragraph for the pitch | Sulaymon |
-| 17:00 to 18:30 | Guide chat on the Claude API behind a Pages Function, with the curated corpus in a cached system prompt; Web Speech read-aloud | Muhammet |
-| 17:30 to 18:30 | Apply the direction to the three screens; Higgsfield hero image for the chosen direction | Rama |
-| 18:00 to 18:30 | Walk one mentor through the demo (Alaa Elkouni for the AI architecture or Afif Zughayer for the product) and record what they push back on | All |
-| 18:30 to 19:00 | Wrap-up; list the overnight homework (slides outline, corpus text, dataset gaps) | All |
+| 22:30 to 23:00 | Pick the layout direction; freeze the feature list (the four demonstrated features in `01_Project_Concept.md`); confirm the demo site | All, by message |
+| 23:00 to 23:30 | Deploy an empty HTTPS skeleton to Cloudflare Pages; open it on one iPhone and one Android; confirm the camera prompt and the AR button appear | Muhammet with Claude Code |
+| 23:00 to 00:30 | Site dataset v1 as JSON: 12 to 15 sites, coordinates, hours, typical busy windows, shade and indoor flags, East Coast and Central Region alternatives | Sulaymon |
+| 23:30 to 01:00 | Itinerary screen with scoring from the dataset; guide chat on the Claude API behind a Pages Function with the curated corpus; read-aloud | Muhammet with Claude Code |
+| 23:00 to 00:30 | Logo files into `design/brand/`; wordmark fonts named; pitch deck skeleton in the brand | Rama |
+| 23:00 to 00:30 | Business model canvas; one revenue slide; the five Q&A answers drafted | Khadeja |
+| 01:00 | Stop. Push everything. Sleep | All |
 
 Day 2, Sunday 11 October
 
 | Time | Work | Owner |
 |---|---|---|
-| 09:30 to 10:30 | Time-travel slider at one site; map with the route between Heart of Sharjah stops; fix what broke overnight | Muhammet |
-| 09:30 to 10:30 | Final dataset; dashboard numbers consistent with the itinerary screen | Sulaymon |
-| 09:30 to 11:00 | Pitch deck in the chosen direction; Higgsfield video clip for the opening | Rama |
-| 09:30 to 11:00 | Business slide and pilot ask finalized; Q&A answer sheet | Khadeja |
-| 10:30 to 11:30 | Rehearse the two-minute mentor walkthrough on a phone, three times | All |
-| 11:30 to 12:00 | Buffer; nothing new is added after 11:30 | All |
+| 09:00 to 09:30 | Check-in; open the deployed app on both phones; list what broke | All |
+| 09:30 to 10:30 | AR view with model-viewer and the fort model; time-travel slider; map with the Heart of Sharjah route | Muhammet with Claude Code |
+| 09:30 to 10:30 | Final dataset; dispersal dashboard chart from the same JSON; sustainability score formula as one paragraph for the pitch | Sulaymon |
+| 09:30 to 10:30 | Higgsfield hero image and a five-second clip in the brand; deck pages for the demo | Rama |
+| 09:30 to 10:30 | Mentor round: Kareem Tarabichi on the buyer and pricing, Zayneb Houichi on what visitors ask; Alaa Elkouni on the guide architecture | Khadeja, then Muhammet |
+| 10:30 to 11:15 | Apply the brand tokens to the three screens; transition recipes for the itinerary swap and the guide reply | Muhammet with Claude Code |
+| 11:15 to 11:45 | Rehearse the two-minute mentor walkthrough on a phone, three times; nothing new is added after 11:30 | All |
 | 12:00 to 12:30 | Shortlisting | |
-| 13:30 to 15:30 | Pitch rehearsal with a timer, five minutes exactly; Q&A drill; upload materials and the disclosure document as soon as the organizers announce the cutoff | All |
+| 13:30 to 15:30 | Pitch rehearsal with a timer, five minutes exactly; Q&A drill; upload the slides, the demo link, and the disclosure document as soon as the organizers announce the cutoff | All |
 | 16:00 to 18:00 | Pitches | |
+
+If tonight's build does not happen, the Day 2 morning order is: skeleton and deploy (09:30), itinerary screen (09:50), guide (10:30), AR view (11:00), rehearsal (11:30). The slider, the map, and the dashboard then move to the presentation preparation slot and are shown as screenshots in the deck rather than live.
 
 ## 4. Stack, with the reason for each choice and the fallback
 
