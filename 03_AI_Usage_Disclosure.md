@@ -14,7 +14,7 @@ This document is required by Section 4 of the Hackathon Guidelines and is upload
 |---|---|---|
 | Claude Code (Claude Opus 5.5 and Claude Fable 5.1) | Anthropic | Research of the hackathon rules and the Sharjah tourism context, drafting of planning documents, comparison of design directions, code generation for the web prototype, and editing of pitch text |
 | Higgsfield (CLI and companion skills) | Higgsfield AI | [to be filled when used: hero images, video clips for the pitch] |
-| [Claude API inside the prototype] | Anthropic | [to be filled: the conversational guide in the demo, if built] |
+| Claude API (claude-opus-5-5) inside the prototype | Anthropic | The guide in the app: answers visitor questions from the team's curated site corpus (app/public/data/sites.json); falls back to rule-based answers from the same corpus when offline |
 | [other] | | |
 
 ## 2. Generated components and how they were integrated
@@ -25,7 +25,10 @@ This document is required by Section 4 of the Hackathon Guidelines and is upload
 | Research notes on Sharjah tourism and competitors | Claude Code with web search | Claims were checked against the cited sources; unverified claims were removed |
 | Five design direction mockups (design/dir-1 to dir-5, comparison page) | Claude Code | Used for comparison only. The team designed its own identity instead (next row), and the mockups now serve as a source of layout ideas |
 | Logo, wordmark, and colour palette (cream, sand, brass, navy) | Rama Saud Abdallah, by the team | Claude Code applied the palette to the three demo screens in design/dir-0.html, measured contrast, and wrote design/brand/tokens.css; the mark in that panel is a placeholder until the logo file is added |
-| [Prototype code] | | |
+| Prototype code (app/: itinerary engine, interface, guide function, dashboard, tests) | Claude Code | Built to the team's concept and the chosen Hashiya Folio direction in the team palette; engine checked with automated tests, accessibility checked with axe-core; team reviews and demos on phones |
+| Site dataset seed (app/public/data/sites.json), English and Arabic text | Claude Code, from public knowledge | Marked as a seed; Sulaymon verifies coordinates, hours and facts against official sources before the pitch |
+| Al Hisn Fort 3D scale models (1823, 1969, today) | Claude Code, procedurally (tools/make_fort_models.py) | Labelled in the app as simplified artist's impressions, not surveyed reconstructions |
+| Typical-hours crowd curves and the dashboard's simulated visitors | Claude Code | Labelled on screen as curated estimates and simulated pilot data |
 | [Hero images and video] | | |
 | [Pitch slides text] | | |
 

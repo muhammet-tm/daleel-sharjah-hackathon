@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Daleel · Sharjah, at the right time</title>
+  <meta name="description" content="Daleel tells visitors to Sharjah when and how to visit each place: crowds, heat and travel, with AR time travel at Al Hisn Fort and a guide that answers in English and Arabic.">
+  <meta name="theme-color" content="#F7F3EA">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M12 2h16l10 10v16L28 38H12L2 28V12z' fill='%23F7F3EA' stroke='%23C9A24D' stroke-width='3'/%3E%3Cpath d='M20 20 L29 9' stroke='%23C9A24D' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='20' r='4' fill='%2314213D'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="css/app.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+  <header class="head">
+    <div class="head-top">
+      <a class="mark" href="#index" aria-label="Daleel, home">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 2h16l10 10v16L28 38H12L2 28V12z" fill="none" stroke="#C9A24D" stroke-width="2"/><circle cx="20" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="1"/><path d="M20 20 L29 9" stroke="#C9A24D" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="20" r="3.5" fill="#C9A24D"/></svg>
+        <b>Daleel<span lang="ar" dir="rtl">دليل</span></b>
+      </a>
+      <span class="tag" data-i18n="tagline">Look Up</span>
+      <div class="tools">
+        <button class="icon-btn" id="lang-btn" type="button" lang="ar">العربية</button>
+        <button class="icon-btn" id="settings-btn" type="button" aria-haspopup="dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" fill="none"/><text x="16" y="20" font-size="9" font-weight="700" fill="currentColor">A</text></svg>
+          <span class="sr-only" data-i18n="reading">Reading settings</span>
+        </button>
+      </div>
+    </div>
+    <nav class="leaves" aria-label="Leaves" data-i18n-aria="navLabel">
+      <a href="#index" data-leaf="index" data-i18n="navIndex">Index</a>
+      <a href="#plate" data-leaf="plate" data-i18n="navPlate">Plate</a>
+      <a href="#colophon" data-leaf="colophon" data-i18n="navColophon">Colophon</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- INDEX: the day as a table of contents -->
+    <section class="leaf" id="leaf-index" aria-labelledby="index-h">
+      <h1 id="index-h" tabindex="-1" data-i18n="indexTitle">The day, as an index</h1>
+      <p class="lede" data-i18n="indexLede"></p>
+      <div class="controls">
+        <div class="field"><label for="day" data-i18n="day">Day</label><input id="day" type="date"></div>
+        <div class="field"><label for="start" data-i18n="start">Starting at</label><select id="start"></select></div>
+        <div class="heat-src"><span id="heat-src"></span><button class="linkish" id="july-btn" type="button" aria-pressed="false" data-i18n="heatJuly">Show a July day</button></div>
+      </div>
+      <div class="spread">
+        <div>
+          <h2 data-i18n="yourPlan">Your plan</h2>
+          <ol class="plan" id="plan"></ol>
+          <div class="score" id="score"></div>
+          <div class="map" id="map"></div>
+          <div class="places" id="places"></div>
+        </div>
+        <section class="margin-col" aria-labelledby="notes-h">
+          <h2 id="notes-h" data-i18n="notes">Notes in the margin</h2>
+          <ol class="notes" id="plan-notes" style="margin-top:14px"></ol>
+        </section>
+      </div>
+    </section>
+
+    <!-- PLATE: one place, the AR view, and the guide in the margin -->
+    <section class="leaf" id="leaf-plate" aria-labelledby="plate-h">
+      <h1 id="plate-h" tabindex="-1"></h1>
+      <div class="spread">
+        <div>
+          <figure class="plate-frame" style="margin:0" id="plate-figure"></figure>
+          <div id="era"></div>
+          <div class="plate-acts" id="plate-acts"></div>
+        </div>
+        <section class="margin-col" aria-labelledby="margin-h">
+          <h2 id="margin-h" data-i18n="margin">Margin</h2>
+          <ol class="notes" id="plate-notes" style="margin-top:14px" aria-live="polite"></ol>
+          <form class="ask" id="ask-form">
+            <label for="q" class="cap" data-i18n="askLabel">Write a question in the margin</label>
+            <textarea id="q" name="q" maxlength="500" rows="2"></textarea>
+            <div class="row">
+              <div class="field"><label for="aud" data-i18n="audience">Explain for</label>
+                <select id="aud"><option value="adult" data-i18n="audAdult">Adults</option><option value="family" data-i18n="audFamily">Families</option><option value="child" data-i18n="audChild">Children</option></select></div>
+              <button class="btn primary" type="submit" id="ask-btn" data-i18n="ask">Ask</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <!-- COLOPHON: the ledger of the day -->
+    <section class="leaf" id="leaf-colophon" aria-labelledby="col-h">
+      <h1 id="col-h" tabindex="-1" data-i18n="colTitle">Colophon</h1>
+      <p class="lede" data-i18n="colLede"></p>
+      <dl class="ledger" id="ledger"></dl>
+      <div class="prose">
+        <h2 data-i18n="method">How the score is made</h2>
+        <p data-i18n="methodText"></p>
+        <h2 data-i18n="privacy">Privacy</h2>
+        <p data-i18n="privacyText"></p>
+        <p style="margin-top:18px"><a class="btn" href="dashboard.html" data-i18n="dashLink">Open the authority dashboard (pilot data)</a></p>
+      </div>
+    </section>
+  </main>
+
+  <div class="sr-only" role="status" aria-live="polite" id="announce"></div>
+
+  <dialog id="settings" aria-labelledby="settings-h">
+    <form method="dialog" class="dlg">
+      <header><h2 id="settings-h" data-i18n="settings">Reading settings</h2><button class="btn small" value="close" data-i18n="close">Close</button></header>
+      <div class="field"><span class="lbl" id="lang-l" data-i18n="language">Language</span>
+        <div class="seg" role="group" aria-labelledby="lang-l"><button type="button" data-lang="en" lang="en">English</button><button type="button" data-lang="ar" lang="ar">العربية</button></div></div>
+      <div class="field"><label for="scale" data-i18n="textSize">Text size</label><input id="scale" type="range" min="100" max="160" step="10"><output id="scale-out" for="scale"></output></div>
+      <div class="field"><span class="lbl" id="theme-l" data-i18n="theme">Theme</span>
+        <div class="seg" role="group" aria-labelledby="theme-l"><button type="button" data-theme-opt="auto" data-i18n="themeAuto">Match device</button><button type="button" data-theme-opt="light" data-i18n="themeLight">Light</button><button type="button" data-theme-opt="dark" data-i18n="themeDark">Dark</button><button type="button" data-theme-opt="contrast" data-i18n="themeContrast">High contrast</button></div></div>
+      <div><label class="check"><input type="checkbox" id="calm"><span data-i18n="calm">Calm view</span></label><p class="hint" data-i18n="calmHelp"></p></div>
+      <label class="check"><input type="checkbox" id="still"><span data-i18n="motion">Reduce motion</span></label>
+      <label class="check"><input type="checkbox" id="heat-sensitive"><span data-i18n="heatSensitive">Avoid outdoor heat</span></label>
+      <div><label class="check"><input type="checkbox" id="auto-read"><span data-i18n="autoRead">Read guide answers aloud automatically</span></label><p class="hint" data-i18n="captions"></p></div>
+      <div class="field"><label for="rate" data-i18n="rate">Speech rate</label><input id="rate" type="range" min="0.7" max="1.3" step="0.1"></div>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "version": "v1 seed, 10 October 2026",
+    "owner": "Sulaymon Sadullo (data). Seed written by Claude Code from public knowledge; every field marked verify must be checked before the pitch.",
+    "coordinates": "Approximate to about 300 m; good enough for travel-time estimates, not for turn-by-turn navigation.",
+    "hours": "Typical public opening hours; verify each site on its official page before the demo.",
+    "busy": "Typical hours, curated estimates, not live data. The profile names map to hourly curves in js/engine.js.",
+    "regions": "city = Sharjah city; central = Central Region (Mleiha, desert); east = East Coast (Khor Fakkan, Kalba)."
+  },
+  "sites": [
+    {
+      "id": "al-hisn",
+      "name": { "en": "Al Hisn Fort", "ar": "حصن الشارقة" },
+      "region": "city", "lat": 25.3584, "lng": 55.3866,
+      "kind": "heritage", "indoor": true, "shade": true, "underVisited": false,
+      "busy": "museum", "visitMinutes": 60,
+      "hours": { "weekday": [8, 20], "friday": [16, 20] },
+      "hasModel": true,
+      "story": {
+        "en": "The fort was built in 1823 as the seat of the Al Qasimi rulers and the town's main defence, in coral stone and gypsum. In 1969 most of it was pulled down to make room for the modern city centre; one tower was saved. It was rebuilt in the 1990s from old photographs and plans, and after a full restoration it reopened as a museum in 2015.",
+        "ar": "بُني الحصن عام 1823 مقرًا لحكام القواسم وحصنًا رئيسيًا للبلدة، من الحجر المرجاني والجص. في عام 1969 هُدم معظمه لإفساح المجال لوسط المدينة الحديث، ونجا برج واحد. أُعيد بناؤه في التسعينيات اعتمادًا على صور ومخططات قديمة، وبعد ترميم شامل أُعيد افتتاحه متحفًا عام 2015."
+      },
+      "fragile": {
+        "en": "Coral stone and gypsum plaster wear quickly under heavy footfall and touch.",
+        "ar": "الحجر المرجاني وملاط الجص يتآكلان بسرعة مع كثرة الزوار واللمس."
+      },
+      "describe": {
+        "en": "A square two-storey fort of pale coral stone with crenellated walls, a round tower on one corner and a square tower on the other, and a heavy wooden gate in the centre of the main wall.",
+        "ar": "حصن مربع من طابقين من الحجر المرجاني الفاتح، بأسوار مشرفة، وبرج دائري في زاوية وبرج مربع في الأخرى، وبوابة خشبية ثقيلة في وسط السور الرئيسي."
+      },
+      "verify": ["hours"]
+    },
+    {
+      "id": "heart-of-sharjah",
+      "name": { "en": "Heart of Sharjah", "ar": "قلب الشارقة" },
+      "region": "city", "lat": 25.3600, "lng": 55.3890,
+      "kind": "heritage", "indoor": false, "shade": true, "underVisited": false,
+      "busy": "heritage-walk", "visitMinutes": 75,
+      "hours": { "weekday": [8, 22], "friday": [8, 22] },
+      "story": {
+        "en": "The restored old town around Al Hisn: coral-stone houses, wind towers, the covered Souq Al Arsa and a cluster of small heritage museums. Lanes are narrow and partly shaded, which makes early morning and after sunset the comfortable times to walk.",
+        "ar": "البلدة القديمة المرممة حول الحصن: بيوت من الحجر المرجاني، وأبراج هواء، وسوق العرصة المسقوف، ومجموعة من المتاحف التراثية الصغيرة. الأزقة ضيقة ومظللة جزئيًا، لذا فإن الصباح الباكر وما بعد الغروب هما الوقت المريح للمشي."
+      },
+      "fragile": { "en": "Historic plaster facades and narrow lanes are easily crowded.", "ar": "واجهات الجص التاريخية والأزقة الضيقة تزدحم بسهولة." },
+      "describe": { "en": "Narrow sandy lanes between low coral-stone houses with carved wooden doors and square wind towers.", "ar": "أزقة رملية ضيقة بين بيوت منخفضة من الحجر المرجاني بأبواب خشبية منحوتة وأبراج هواء مربعة." },
+      "verify": ["hours"]
+    },
+    {
+      "id": "islamic-museum",
+      "name": { "en": "Sharjah Museum of Islamic Civilization", "ar": "متحف الشارقة للحضارة الإسلامية" },
+      "region": "city", "lat": 25.3617, "lng": 55.3834,
+      "kind": "museum", "indoor": true, "shade": true, "underVisited": false,
+      "busy": "museum", "visitMinutes": 90,
+      "hours": { "weekday": [8, 20], "friday": [16, 20] },
+      "story": {
+        "en": "Housed since 2008 in the former Souq Al Majarrah building on the Corniche. Its galleries cover Islamic faith, science and art, and the inside of its golden dome carries a mosaic of the zodiac.",
+        "ar": "يقع منذ عام 2008 في مبنى سوق المجرة السابق على الكورنيش. تتناول قاعاته العقيدة والعلوم والفنون الإسلامية، ويحمل باطن قبته الذهبية فسيفساء للأبراج الفلكية."
+      },
+      "fragile": { "en": "Manuscripts and textiles are light-sensitive; galleries cap visitor numbers.", "ar": "المخطوطات والمنسوجات حساسة للضوء، وللقاعات سعة محدودة." },
+      "describe": { "en": "A long arcaded building on the waterfront with a large golden dome at its centre.", "ar": "مبنى طويل ذو أروقة على الواجهة البحرية تتوسطه قبة ذهبية كبيرة." },
+      "verify": ["hours"]
+    },
+    {
+      "id": "blue-souk",
+      "name": { "en": "Central Souq (Blue Souk)", "ar": "السوق المركزي (السوق الأزرق)" },
+      "region": "city", "lat": 25.3437, "lng": 55.3852,
+      "kind": "market", "indoor": true, "shade": true, "underVisited": false,
+      "busy": "market", "visitMinutes": 60,
+      "hours": { "weekday": [9, 22], "friday": [16, 22] },
+      "story": {
+        "en": "Opened in 1978, the Central Souq is known for its blue tiles and wind-tower style roofline. Its two long halls hold gold, carpets, antiques and textiles, and it is air-conditioned, which makes it a good stop in the hottest hours.",
+        "ar": "افتُتح السوق المركزي عام 1978، ويشتهر ببلاطه الأزرق وسقفه المستوحى من أبراج الهواء. يضم جناحاه الطويلان الذهب والسجاد والتحف والمنسوجات، وهو مكيّف، ما يجعله محطة مناسبة في أشد الساعات حرًا."
+      },
+      "fragile": { "en": "Small independent traders depend on steady, spread-out footfall.", "ar": "يعتمد التجار المستقلون الصغار على حركة زوار منتظمة وموزعة." },
+      "describe": { "en": "Two long buildings faced in blue tiles, joined by footbridges, with tall wind-tower shapes along the roof.", "ar": "مبنيان طويلان مكسوّان بالبلاط الأزرق، تربطهما جسور مشاة، وعلى سطحهما أشكال أبراج هواء عالية." },
+      "verify": ["hours"]
+    },
+    {
+      "id": "al-noor-mosque",
+      "name": { "en": "Al Noor Mosque", "ar": "مسجد النور" },
+      "region": "city", "lat": 25.3290, "lng": 55.3880,
+      "kind": "heritage", "indoor": true, "shade": true, "underVisited": false,
+      "busy": "mosque-tour", "visitMinutes": 45,
+      "hours": { "weekday": [10, 11], "friday": [0, 0] },
+      "story": {
+        "en": "A landmark mosque on the edge of Khalid Lagoon, built in an Ottoman style that recalls Istanbul's Sultan Ahmed Mosque. Non-Muslim visitors can join guided tours run by the Sharjah Center for Cultural Communication; modest dress is required.",
+        "ar": "مسجد بارز على طرف بحيرة خالد، بُني على الطراز العثماني الذي يذكّر بجامع السلطان أحمد في إسطنبول. يمكن لغير المسلمين الانضمام إلى جولات إرشادية ينظمها مركز الشارقة للتواصل الثقافي، مع الالتزام باللباس المحتشم."
+      },
+      "fragile": { "en": "A place of worship first; tours avoid prayer times.", "ar": "دار عبادة أولًا، والجولات تتجنب أوقات الصلاة." },
+      "describe": { "en": "A white mosque with a large central dome, smaller cascading domes and two slender minarets beside the lagoon.", "ar": "مسجد أبيض بقبة مركزية كبيرة وقباب أصغر متدرجة ومئذنتين رشيقتين بجانب البحيرة." },
+      "verify": ["hours", "tour days"]
+    },
+    {
+      "id": "al-noor-island",
+      "name": { "en": "Al Noor Island", "ar": "جزيرة النور" },
+      "region": "city", "lat": 25.3226, "lng": 55.3832,
+      "kind": "waterfront", "indoor": false, "shade": false, "underVisited": false,
+      "busy": "garden-island", "visitMinutes": 90,
+      "hours": { "weekday": [9, 23], "friday": [9, 24] },
+      "story": {
+        "en": "A garden island in Khalid Lagoon, opened in 2015, with a butterfly house, a trail of outdoor art installations and lighting that comes alive after dark. Most paths are open to the sun, so evenings are far more comfortable than afternoons.",
+        "ar": "جزيرة حدائق في بحيرة خالد افتُتحت عام 2015، فيها بيت للفراشات ومسار من الأعمال الفنية في الهواء الطلق وإضاءة تنبض بعد حلول الظلام. معظم الممرات مكشوفة للشمس، لذا فالمساء أكثر راحة بكثير من العصر."
+      },
+      "fragile": { "en": "The butterfly house has a fixed capacity and planted beds suffer when paths overflow.", "ar": "لبيت الفراشات سعة محددة، والأحواض المزروعة تتضرر عند ازدحام الممرات." },
+      "describe": { "en": "Winding paths through palms and lawns on a small island, a glass butterfly house and lit sculptures along the water.", "ar": "ممرات متعرجة بين النخيل والمسطحات الخضراء على جزيرة صغيرة، وبيت فراشات زجاجي، ومنحوتات مضيئة على الماء." },
+      "verify": ["hours"]
+    },
+    {
+      "id": "al-majaz",
+      "name": { "en": "Al Majaz Waterfront", "ar": "واجهة المجاز المائية" },
+      "region": "city", "lat": 25.3253, "lng": 55.3805,
+      "kind": "waterfront", "indoor": false, "shade": false, "underVisited": false,
+      "busy": "evening-leisure", "visitMinutes": 60,
+      "hours": { "weekday": [8, 24], "friday": [8, 24] },
+      "story": {
+        "en": "A promenade, park and restaurant strip on Khalid Lagoon, best known for its evening musical fountain show. It is the city's busiest evening gathering place on weekends.",
+        "ar": "ممشى وحديقة ومطاعم على بحيرة خالد، تشتهر بعرض النافورة الموسيقية المسائي. وهي أكثر أماكن التجمع المسائي ازدحامًا في المدينة في عطلات نهاية الأسبوع."
+      },
+      "fragile": { "en": "Weekend evenings bring traffic jams on the Corniche roads around it.", "ar": "تتسبب أمسيات العطلة في ازدحام مروري على طرق الكورنيش المحيطة." },
+      "describe": { "en": "A wide lagoon-side promenade with lawns, palm trees, cafés and a large fountain in the water.", "ar": "ممشى واسع على البحيرة بمسطحات خضراء ونخيل ومقاهٍ ونافورة كبيرة في الماء." },
+      "verify": ["fountain show times"]
+    },
+    {
+      "id": "al-qasba",
+      "name": { "en": "Al Qasba", "ar": "القصباء" },
+      "region": "city", "lat": 25.3242, "lng": 55.3768,
+      "kind": "waterfront", "indoor": false, "shade": true, "underVisited": false,
+      "busy": "evening-leisure", "visitMinutes": 60,
+      "hours": { "weekday": [10, 24], "friday": [10, 24] },
+      "story": {
+        "en": "A canal-side walkway linking Khalid Lagoon and Al Khan, lined with cafés, family activities and the Maraya Art Centre. Arcades give some shade, but it is busiest and most pleasant after sunset.",
+        "ar": "ممشى على قناة تربط بحيرة خالد بالخان، تصطف على جانبيه المقاهي والأنشطة العائلية ومركز مرايا للفنون. توفر الأروقة بعض الظل، لكنه في أزهى حالاته وأكثرها ازدحامًا بعد الغروب."
+      },
+      "fragile": { "en": "Canal-side restaurants depend on spreading evening crowds across the week.", "ar": "تعتمد مطاعم القناة على توزيع الزحام المسائي على أيام الأسبوع." },
+      "describe": { "en": "A narrow canal lined on both sides by arcaded buildings, cafés and footbridges.", "ar": "قناة ضيقة تحفها من الجانبين مبانٍ ذات أروقة ومقاهٍ وجسور مشاة." },
+      "verify": ["hours"]
+    },
+    {
+      "id": "aquarium",
+      "name": { "en": "Sharjah Aquarium", "ar": "أكواريوم الشارقة" },
+      "region": "city", "lat": 25.3326, "lng": 55.3637,
+      "kind": "museum", "indoor": true, "shade": true, "underVisited": false,
+      "busy": "family-indoor", "visitMinutes": 75,
+      "hours": { "weekday": [8, 20], "friday": [16, 21] },
+      "story": {
+        "en": "An aquarium in Al Khan, opened in 2008, showing the marine life of the Gulf and the Gulf of Oman, next to the Sharjah Maritime Museum. Indoor and cool, it is a strong choice for families in the midday heat.",
+        "ar": "أكواريوم في منطقة الخان افتُتح عام 2008، يعرض الحياة البحرية في الخليج العربي وخليج عُمان، بجوار متحف الشارقة البحري. مكان داخلي بارد، وخيار ممتاز للعائلات وقت الظهيرة الحارة."
+      },
+      "fragile": { "en": "Tanks are sensitive to noise and flash photography.", "ar": "الأحواض حساسة للضجيج والتصوير بالفلاش." },
+      "describe": { "en": "A modern building by the sea with dim galleries of large glass tanks and a walk-through tunnel.", "ar": "مبنى حديث على البحر بقاعات خافتة الإضاءة فيها أحواض زجاجية كبيرة ونفق للعبور." },
+      "verify": ["hours"]
+    },
+    {
+      "id": "desert-park",
+      "name": { "en": "Sharjah Desert Park", "ar": "منتزه الشارقة الصحراوي" },
+      "region": "central", "lat": 25.2870, "lng": 55.7060,
+      "kind": "nature", "indoor": true, "shade": true, "underVisited": true,
+      "busy": "family-indoor", "visitMinutes": 120,
+      "hours": { "weekday": [9, 18], "friday": [14, 18] },
+      "story": {
+        "en": "On the road to the Central Region, the park groups the Arabia's Wildlife Centre, home to the endangered Arabian leopard, a natural history museum and a children's farm. The wildlife centre is indoors, with glass-fronted habitats.",
+        "ar": "على الطريق إلى المنطقة الوسطى، يضم المنتزه مركز الحياة البرية العربية، موطن النمر العربي المهدد بالانقراض، ومتحفًا للتاريخ الطبيعي ومزرعة للأطفال. مركز الحياة البرية داخلي بموائل ذات واجهات زجاجية."
+      },
+      "fragile": { "en": "Breeding programmes for endangered species need quiet enclosures.", "ar": "برامج إكثار الأنواع المهددة تحتاج إلى حظائر هادئة." },
+      "describe": { "en": "Low desert-coloured buildings among sand and acacia, with indoor viewing windows onto animal habitats.", "ar": "مبانٍ منخفضة بلون الصحراء بين الرمال وأشجار السمر، بنوافذ داخلية تطل على موائل الحيوانات." },
+      "verify": ["hours", "closing day"]
+    },
+    {
+      "id": "mleiha",
+      "name": { "en": "Mleiha Archaeological Centre", "ar": "مركز مليحة للآثار" },
+      "region": "central", "lat": 25.1253, "lng": 55.8814,
+      "kind": "heritage", "indoor": true, "shade": false, "underVisited": true,
+      "busy": "remote-site", "visitMinutes": 120,
+      "hours": { "weekday": [9, 19], "friday": [9, 19] },
+      "story": {
+        "en": "A museum and desert landscape in the Central Region with Bronze Age tombs, fossil rocks and evidence of some of the earliest human presence in Arabia. The wider area belongs to the Faya Palaeolandscape, inscribed on the UNESCO World Heritage List in 2025. The museum is indoors; the tombs and fossil rock are exposed and best visited early or late.",
+        "ar": "متحف ومنظر صحراوي في المنطقة الوسطى، فيه مقابر من العصر البرونزي وصخور أحفورية وأدلة على بعض أقدم الوجود البشري في الجزيرة العربية. تنتمي المنطقة الأوسع إلى المشهد الثقافي لعصور ما قبل التاريخ في الفاية، المدرج على قائمة التراث العالمي لليونسكو عام 2025. المتحف داخلي، أما المقابر والصخرة الأحفورية فمكشوفة ويُفضَّل زيارتها مبكرًا أو متأخرًا."
+      },
+      "fragile": { "en": "Tombs and fossil surfaces are fragile and must not be climbed.", "ar": "المقابر والأسطح الأحفورية هشة ولا يجوز تسلقها." },
+      "describe": { "en": "A low modern museum in open desert, with a circular stone tomb outside and a rocky ridge behind.", "ar": "متحف حديث منخفض في صحراء مفتوحة، أمامه مقبرة حجرية دائرية وخلفه سلسلة صخرية." },
+      "verify": ["hours", "UNESCO wording"]
+    },
+    {
+      "id": "kalba-mangroves",
+      "name": { "en": "Kalba Mangroves", "ar": "قرم كلباء" },
+      "region": "east", "lat": 25.0228, "lng": 56.3634,
+      "kind": "nature", "indoor": false, "shade": true, "underVisited": true,
+      "busy": "nature-remote", "visitMinutes": 120,
+      "hours": { "weekday": [7, 18], "friday": [7, 18] },
+      "story": {
+        "en": "Khor Kalba on the East Coast holds one of the oldest mangrove forests in Arabia and is a protected area. It is home to the Arabian collared kingfisher, a rare subspecies found here, and is best explored by kayak or boardwalk in the cooler morning hours.",
+        "ar": "يضم خور كلباء على الساحل الشرقي إحدى أقدم غابات القرم في الجزيرة العربية، وهو منطقة محمية. موطن لطائر الرفراف ذي الطوق العربي، وهو سلالة نادرة موجودة هنا، وأفضل استكشاف له بالقارب أو الممشى الخشبي في ساعات الصباح الأبرد."
+      },
+      "fragile": { "en": "Nesting birds and mangrove roots are disturbed by noise, wakes and littering.", "ar": "الطيور المعششة وجذور القرم تتأذى من الضجيج وأمواج القوارب والنفايات." },
+      "describe": { "en": "Dense green mangroves along a quiet tidal creek, with mountains on the horizon.", "ar": "أشجار قرم خضراء كثيفة على خور مدّي هادئ، والجبال في الأفق." },
+      "verify": ["hours", "booking for kayak tours"]
+    },
+    {
+      "id": "khor-fakkan-beach",
+      "name": { "en": "Khor Fakkan Beach", "ar": "شاطئ خورفكان" },
+      "region": "east", "lat": 25.3410, "lng": 56.3560,
+      "kind": "waterfront", "indoor": false, "shade": false, "underVisited": true,
+      "busy": "beach", "visitMinutes": 120,
+      "hours": { "weekday": [6, 23], "friday": [6, 23] },
+      "story": {
+        "en": "A long crescent beach and corniche on the Gulf of Oman, backed by the Hajar Mountains. The Khor Fakkan Road through the mountains brought it within about an hour of Sharjah city, and its entrances jam on public holidays.",
+        "ar": "شاطئ هلالي طويل وكورنيش على خليج عُمان، تحيط به جبال الحجر. قرّب طريق خورفكان عبر الجبال المسافة إلى نحو ساعة من مدينة الشارقة، وتزدحم مداخله في العطل الرسمية."
+      },
+      "fragile": { "en": "Holiday crowds overload parking and leave litter on the sand.", "ar": "زحام العطل يرهق المواقف ويترك النفايات على الرمال." },
+      "describe": { "en": "A curved sandy beach with calm water, a palm-lined corniche and steep brown mountains behind.", "ar": "شاطئ رملي مقوس بمياه هادئة وكورنيش تصطف فيه أشجار النخيل وجبال بنية شاهقة خلفه." },
+      "verify": ["travel time"]
+    },
+    {
+      "id": "khor-fakkan-amphitheatre",
+      "name": { "en": "Khor Fakkan Amphitheatre", "ar": "مسرح خورفكان" },
+      "region": "east", "lat": 25.3375, "lng": 56.3600,
+      "kind": "heritage", "indoor": false, "shade": false, "underVisited": true,
+      "busy": "remote-site", "visitMinutes": 45,
+      "hours": { "weekday": [8, 22], "friday": [8, 22] },
+      "story": {
+        "en": "An open-air amphitheatre in a classical style, opened in 2020 near the Khor Fakkan corniche, with seating for a few thousand people and views of the bay. It hosts concerts and festivals.",
+        "ar": "مسرح مكشوف على الطراز الكلاسيكي افتُتح عام 2020 قرب كورنيش خورفكان، يتسع لبضعة آلاف من المتفرجين ويطل على الخليج. يستضيف الحفلات والمهرجانات."
+      },
+      "fragile": { "en": "Event days concentrate traffic on one coastal road.", "ar": "أيام الفعاليات تركز الحركة على طريق ساحلي واحد." },
+      "describe": { "en": "Tiers of pale stone seats in a half circle, framed by columns and arches, facing the sea.", "ar": "مدرجات من مقاعد حجرية فاتحة على شكل نصف دائرة، تؤطرها أعمدة وأقواس، مطلة على البحر." },
+      "verify": ["hours", "capacity"]
+    },
+    {
+      "id": "al-rafisah-dam",
+      "name": { "en": "Al Rafisah Dam", "ar": "سد الرفيصة" },
+      "region": "east", "lat": 25.3330, "lng": 56.2540,
+      "kind": "nature", "indoor": false, "shade": false, "underVisited": true,
+      "busy": "nature-remote", "visitMinutes": 90,
+      "hours": { "weekday": [8, 22], "friday": [8, 22] },
+      "story": {
+        "en": "A reservoir in the Hajar Mountains inland from Khor Fakkan, with a lakeside walkway, kayaks and pedal boats. The mountain setting is cooler in the early morning and lovely at sunset.",
+        "ar": "خزان مائي في جبال الحجر غرب خورفكان، بممشى على البحيرة وقوارب كاياك وقوارب بدّالات. الأجواء الجبلية أبرد في الصباح الباكر وجميلة عند الغروب."
+      },
+      "fragile": { "en": "A small lakeside area where weekend car traffic quickly overwhelms parking.", "ar": "منطقة صغيرة على البحيرة تمتلئ مواقفها سريعًا بسيارات العطلة." },
+      "describe": { "en": "A still green lake between steep rocky mountains, with a dam wall and a waterside path.", "ar": "بحيرة خضراء هادئة بين جبال صخرية شديدة الانحدار، مع جدار السد وممشى بجانب الماء." },
+      "verify": ["hours", "boat rental"]
+    }
+  ]
+}

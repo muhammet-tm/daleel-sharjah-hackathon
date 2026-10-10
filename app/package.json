@@ -1,0 +1,18 @@
+{
+  "name": "daleel",
+  "private": true,
+  "type": "module",
+  "description": "Daleel: Sharjah, at the right time. Static app in public/, guide function in functions/.",
+  "scripts": {
+    "dev": "wrangler pages dev public --port 8788",
+    "deploy": "wrangler pages deploy public --project-name daleel",
+    "test": "node --test tests/*.test.mjs",
+    "models": "python3 ../tools/make_fort_models.py"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.149.0"
+  }
+}

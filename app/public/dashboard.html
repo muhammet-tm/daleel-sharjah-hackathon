@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Daleel · Dispersal dashboard</title>
+  <meta name="theme-color" content="#F7F3EA">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .pilot { border: 1px solid var(--rubric); color: var(--rubric); padding: 8px 12px; font-size: .92rem; margin-top: 14px; max-width: 70ch; }
+    .kpis { margin-top: 20px; }
+    .kpis dd small { font: 500 .9rem var(--mono); color: var(--rule); margin-inline-start: 6px; }
+    .grid-wrap { overflow-x: auto; margin-top: 12px; border: 1px solid var(--hair); background: var(--sheet); }
+    table.heat { border-collapse: collapse; font: 500 .72rem var(--mono); min-width: 760px; width: 100%; }
+    table.heat th { text-align: start; font-weight: 500; padding: 4px 8px; white-space: nowrap; color: var(--rule); }
+    table.heat th[scope=row] { font: 500 .9rem var(--display); color: var(--ink); }
+    table.heat td { width: 3.6%; height: 26px; padding: 0; text-align: center; font-variant-numeric: tabular-nums; }
+    .legend { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font-size: .85rem; color: var(--rule); margin-top: 8px; }
+    .legend i { display: inline-block; width: 18px; height: 12px; vertical-align: middle; margin-inline-end: 4px; border: 1px solid var(--hair); }
+    .bars { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+    .bars li { display: grid; grid-template-columns: minmax(120px, 220px) minmax(0, 1fr) 4.5rem; gap: 12px; align-items: center; }
+    .bars .track { height: 18px; position: relative; background: var(--sand); }
+    .bars .b { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--rule); opacity: .45; }
+    .bars .a { position: absolute; inset-block: 4px; inset-inline-start: 0; background: var(--ink); }
+    .bars .v { font: 500 .85rem var(--mono); text-align: end; font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="head">
+    <div class="head-top">
+      <a class="mark" href="index.html" aria-label="Daleel, back to the visitor app">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 2h16l10 10v16L28 38H12L2 28V12z" fill="none" stroke="#C9A24D" stroke-width="2"/><circle cx="20" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="1"/><path d="M20 20 L29 9" stroke="#C9A24D" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="20" r="3.5" fill="#C9A24D"/></svg>
+        <b>Daleel<span lang="ar" dir="rtl">دليل</span></b>
+      </a>
+      <span class="tag">For destination managers</span>
+    </div>
+  </header>
+  <main id="main" style="padding-top:22px">
+    <h1>Where visitors go, and when</h1>
+    <p class="lede">Planned visits by site and hour for one day, before and after Daleel's timing suggestions. Built on the same engine and data as the visitor app.</p>
+    <p class="pilot" role="note"><b>Simulated pilot data.</b> Synthetic visitors generated from the typical-hours curves; not real visitor counts. A pilot would replace this with anonymous plan intent shared by consenting visitors.</p>
+    <div class="controls">
+      <div class="field"><label for="d-day">Day</label><input id="d-day" type="date"></div>
+      <div class="field"><label for="d-follow">Visitors who follow a suggestion</label><input id="d-follow" type="range" min="0.1" max="0.6" step="0.05" value="0.35"><output id="d-follow-out" for="d-follow"></output></div>
+      <div class="field"><span class="lbl" id="view-l">Show</span><div class="seg" role="group" aria-labelledby="view-l"><button type="button" data-view="after" aria-pressed="true">With Daleel</button><button type="button" data-view="before" aria-pressed="false">Without</button></div></div>
+    </div>
+    <dl class="ledger kpis" id="kpis"></dl>
+    <h2 style="margin-top:30px">Site by hour</h2>
+    <p class="lede" id="grid-cap"></p>
+    <div class="grid-wrap" id="grid"></div>
+    <div class="legend" id="legend"></div>
+    <h2 style="margin-top:30px">Peak hour load at the busiest sites</h2>
+    <p class="lede">Visitors in the single busiest hour. Pale bar: without Daleel. Dark bar: with Daleel.</p>
+    <ul class="bars" id="bars"></ul>
+  </main>
+  <div class="sr-only" role="status" aria-live="polite" id="announce"></div>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
