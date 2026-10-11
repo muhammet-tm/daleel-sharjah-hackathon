@@ -52,3 +52,113 @@ body.nolabels #p3-labels, :root.calm #p3-labels { display: none; }
 body.full3d #p3-time { position: fixed; z-index: 31; inset-inline: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 46px); background: var(--page); border: 1px solid var(--rule); padding: 10px; }
 
 :root.calm .three-stage { height: clamp(300px, 50vh, 520px); }
+
+/* ---------- AR guide (nav.js): picker, route bar, live HUD, arrival card ----------
+   The live HUD is a camera overlay, so it keeps its own dark glass in every theme. */
+.nav-ui { position: absolute; inset: 0; pointer-events: none; z-index: 2; --glass: rgba(11, 19, 36, .84); --glass-ink: #F7F3EA; --ar-blue: #4DA3FF; }
+.nav-ui > * { pointer-events: auto; }
+.nav-ui [hidden] { display: none !important; }
+.nav-ui svg { flex: none; }
+
+/* picker: a sheet over the scene */
+.nav-sheet { position: absolute; inset-block-start: 10px; inset-inline-start: 10px; width: min(340px, calc(100% - 20px)); max-height: calc(100% - 20px); overflow: auto; overscroll-behavior: contain;
+  background: var(--sheet); color: var(--ink); border: 1px solid var(--rule); border-radius: 2px; box-shadow: 0 10px 30px rgba(13, 22, 40, .22); padding: 12px 14px 14px; display: grid; gap: 10px; align-content: start; }
+.nav-head { display: flex; align-items: center; gap: 8px; }
+.nav-head h2 { margin: 0; flex: 1; font: 500 1.35rem/1.15 var(--display); }
+[dir="rtl"] .nav-head h2 { font-family: var(--display-ar); }
+.nav-head-ico { color: var(--brass); }
+.nav-x { width: 36px; height: 36px; display: grid; place-items: center; border: 0; background: transparent; color: inherit; border-radius: 2px; cursor: pointer; }
+.nav-x:hover { background: var(--sand); }
+.nav-x svg { width: 18px; height: 18px; }
+.nav-pickhint { margin: -4px 0 0; }
+.nav-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.nav-item { width: 100%; min-height: var(--tap); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 8px 10px;
+  text-align: start; border: 1px solid var(--hair); border-radius: 2px; background: var(--page); color: var(--ink); cursor: pointer; }
+.nav-item:hover, .nav-item[aria-current] { border-color: var(--route); background: var(--sheet); }
+.nav-ico { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: var(--sand); color: var(--route); }
+.nav-item-t { display: grid; min-width: 0; }
+.nav-item-t b { font-weight: 600; overflow-wrap: anywhere; }
+.nav-item-t span { font: 500 .78rem/1.4 var(--mono); color: var(--rule); }
+[dir="rtl"] .nav-item-t span { font-family: var(--body-ar); }
+.nav-chev { font-size: 1.4rem; color: var(--rule); }
+[dir="rtl"] .nav-chev { transform: scaleX(-1); }
+
+/* route bar: the chosen spot, with Start */
+.nav-bar { position: absolute; inset-inline: 10px; inset-block-end: 10px; margin-inline: auto; max-width: 560px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: var(--sheet); color: var(--ink); border: 1px solid var(--rule); border-radius: 2px; box-shadow: 0 10px 30px rgba(13, 22, 40, .22); padding: 10px 12px; }
+.nav-bar-ico { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--sand); color: var(--route); }
+.nav-bar-t { display: grid; flex: 1 1 160px; min-width: 0; }
+.nav-bar-name { font: 500 1.15rem/1.2 var(--display); }
+[dir="rtl"] .nav-bar-name { font-family: var(--display-ar); }
+.nav-bar-meta { font-size: .82rem; color: var(--rule); }
+.nav-bar-acts { display: flex; align-items: center; gap: 6px; margin-inline-start: auto; }
+
+/* live HUD: next move on top, controls along the bottom */
+.nav-hud { position: absolute; inset-block-start: 10px; inset-inline: 10px; margin-inline: auto; max-width: 460px; background: var(--glass); color: var(--glass-ink);
+  border-radius: 6px; padding: 10px 12px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 8px 24px rgba(0, 0, 0, .25); pointer-events: none; }
+.nav-card { display: flex; align-items: center; gap: 12px; }
+.nav-turn { width: 48px; height: 48px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--ar-blue); color: #fff; }
+.nav-turn svg { width: 28px; height: 28px; transform: rotate(var(--rot, 0deg)); transition: transform .5s var(--ease); }
+.nav-card-t { min-width: 0; }
+.nav-do { margin: 0; font: 600 1.12rem/1.25 var(--body); }
+.nav-sub { margin: 2px 0 0; font-size: .84rem; opacity: .8; }
+[dir="rtl"] .nav-do, [dir="rtl"] .nav-sub { font-family: var(--body-ar); }
+.nav-prog { height: 3px; margin-top: 9px; border-radius: 2px; background: rgba(255, 255, 255, .18); overflow: hidden; }
+.nav-prog span { display: block; height: 100%; background: var(--ar-blue); transform-origin: left; transform: scaleX(0); }
+[dir="rtl"] .nav-prog span { transform-origin: right; }
+.nav-ctl { position: absolute; inset-block-end: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; padding: 5px; border-radius: 999px; background: var(--glass); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.nav-b { min-width: 40px; height: 40px; padding: 0 10px; display: grid; place-items: center; border: 0; border-radius: 999px; background: rgba(255, 255, 255, .1); color: var(--glass-ink); font: 600 .9rem var(--body); cursor: pointer; }
+.nav-b:hover { background: rgba(255, 255, 255, .2); }
+.nav-b svg { width: 20px; height: 20px; }
+.nav-b[aria-pressed="true"] { background: var(--ar-blue); color: #fff; }
+.nav-end { background: #c8402f; color: #fff; padding: 0 14px; }
+.nav-end:hover { background: #d9503e; }
+
+/* arrival */
+.nav-done { position: absolute; inset-block-end: 12px; inset-inline: 10px; margin-inline: auto; max-width: 520px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px;
+  background: var(--glass); color: var(--glass-ink); border-radius: 6px; padding: 12px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.nav-done-ico { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: #2f9e5b; color: #fff; }
+.nav-done-t { display: grid; flex: 1 1 140px; }
+.nav-done-h { font: 600 1.05rem/1.2 var(--body); }
+.nav-done-name { opacity: .8; font-size: .88rem; }
+.nav-done-acts { display: flex; flex-wrap: wrap; gap: 6px; }
+.nav-done .btn { color: var(--glass-ink); border-color: rgba(255, 255, 255, .55); }
+.nav-done .btn:hover { background: rgba(255, 255, 255, .12); }
+.nav-done .btn.primary { background: var(--brass); border-color: var(--brass); color: var(--on-brass); }
+
+/* camera viewfinder while walking */
+.nav-ar { position: absolute; inset: 0; pointer-events: none !important; opacity: 0; transition: opacity .6s var(--ease);
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(5, 10, 20, .35) 100%); }
+.three-stage.nav-live .nav-ar { opacity: 1; }
+.nav-ar i { position: absolute; width: 26px; height: 26px; border: 2px solid rgba(255, 255, 255, .85); }
+.nav-ar i:nth-child(1) { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.nav-ar i:nth-child(2) { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+.nav-ar i:nth-child(3) { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+.nav-ar i:nth-child(4) { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+.nav-badge { position: absolute; inset-block-end: 18px; inset-inline-start: 18px; display: flex; align-items: center; gap: 6px; padding: 4px 9px 4px 6px; border-radius: 999px; background: var(--glass); color: var(--glass-ink); font: 500 .74rem var(--mono); letter-spacing: .04em; }
+.nav-badge svg { width: 16px; height: 16px; color: var(--ar-blue); }
+.nav-badge b { color: var(--ar-blue); }
+.nav-badge::after { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #ff5a4a; animation: nav-rec 1.6s infinite; }
+@keyframes nav-rec { 50% { opacity: .2; } }
+.three-stage.nav-live #p3-labels { opacity: .55; }
+.three-stage.nav-live canvas { cursor: grab; }
+
+/* destination name over the pin */
+.nav-pin { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 1; will-change: transform; font: 600 .8rem/1.2 var(--body); background: #f0c25a; color: #14213D; padding: 4px 9px; border-radius: 999px; white-space: nowrap; box-shadow: 0 2px 8px rgba(0, 0, 0, .25); }
+[dir="rtl"] .nav-pin { font-family: var(--body-ar); }
+
+/* full screen keeps a way into the guide on the stage itself */
+.nav-launch { position: absolute; inset-block-start: 10px; inset-inline-end: 10px; display: none; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border: 0; border-radius: 999px;
+  background: var(--brass); color: var(--on-brass); font: 600 .88rem var(--body); cursor: pointer; box-shadow: 0 4px 14px rgba(0, 0, 0, .2); }
+body.full3d .nav-ui .nav-launch { display: inline-flex; }
+.three-stage.nav-on .nav-ui .nav-launch { display: none; }
+
+:root.still .nav-badge::after, :root.calm .nav-badge::after { animation: none; }
+:root.still .nav-turn svg { transition: none; }
+@media (max-width: 520px) {
+  .nav-badge { display: none; }
+  .nav-do { font-size: 1rem; }
+  .nav-turn { width: 40px; height: 40px; }
+  .nav-bar-acts { width: 100%; }
+  .nav-bar-acts .btn.primary { flex: 1; justify-content: center; }
+}
