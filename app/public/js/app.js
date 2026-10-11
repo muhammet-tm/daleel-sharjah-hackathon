@@ -573,7 +573,7 @@ function applyPrefs() {
 // ---------- 3D ----------
 const THREE_CDN = "https://cdn.jsdelivr.net/npm/three@0.147.0/";
 const SCRIPTS_3D = ["build/three.min.js", "examples/js/controls/OrbitControls.js", "examples/js/objects/Sky.js", "examples/js/objects/Water.js", "examples/js/utils/BufferGeometryUtils.js"].map((f) => THREE_CDN + f)
-  .concat(["core", "place-central-souq", "place-souq-inside", "place-al-noor", "place-museum", "place-shanasiyah", "place-suhub"].map((f) => `js/3d/${f}.js`));
+  .concat(["core", "place-central-souq", "place-souq-inside", "place-al-noor", "place-museum", "place-shanasiyah", "place-suhub", "routes", "nav"].map((f) => `js/3d/${f}.js`));
 let load3d = null;
 function ensure3d() {
   return (load3d ||= (async () => {

@@ -580,13 +580,18 @@ const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 function arcLerp(out, a, b, k) { out.lerpVectors(a, b, k); out.y += Math.sin(Math.PI * k) * a.distanceTo(b) * .22; return out; }
 function markView(name) { document.querySelectorAll('#p3-views [data-view]').forEach(b => b.hasAttribute('aria-pressed') && b.setAttribute('aria-pressed', b.dataset.view === name)); }
 function startShot(i) { const t = active.tour; shotI = (i + t.length) % t.length; shotT = 0; fromPos.copy(camera.position); fromTgt.copy(controls.target); markView(t[shotI]); }
-function setMode(m) { mode = m; controls.enabled = m === 'explore' && !active.walk; if (m === 'explore' && active.walk) walkSync(); if (m === 'explore' && active) { const v = active.views[active.tour[shotI]]; if (v) polarFor({ a: camera.position, ta: controls.target }); } $('#p3-tour').setAttribute('aria-pressed', m === 'tour'); if (m === 'tour') startShot(shotI + 1); }
-function flyTo(k) { flyShot = active.views[k]; flyT = 0; fromPos.copy(camera.position); fromTgt.copy(controls.target); mode = 'fly'; controls.enabled = false; $('#p3-tour').setAttribute('aria-pressed', 'false'); markView(k); setHash(active.p.id + '.' + k); }
+// the AR guide (nav.js) drives the camera in mode 'guide'; any other camera mode hands control back
+let guide = null;
+function dropGuide() { const g = guide; guide = null; if (g && g.end) g.end(); }
+function startGuide(g) { if (guide !== g) dropGuide(); guide = g; mode = 'guide'; controls.enabled = false; $('#p3-tour').setAttribute('aria-pressed', 'false'); markView(''); }
+function stopGuide() { guide = null; if (mode === 'guide') setMode('explore'); }
+function setMode(m) { dropGuide(); mode = m; controls.enabled = m === 'explore' && !active.walk; if (m === 'explore' && active.walk) walkSync(); if (m === 'explore' && active) { const v = active.views[active.tour[shotI]]; if (v) polarFor({ a: camera.position, ta: controls.target }); } $('#p3-tour').setAttribute('aria-pressed', m === 'tour'); if (m === 'tour') startShot(shotI + 1); }
+function flyTo(k) { dropGuide(); flyShot = active.views[k]; flyT = 0; fromPos.copy(camera.position); fromTgt.copy(controls.target); mode = 'fly'; controls.enabled = false; $('#p3-tour').setAttribute('aria-pressed', 'false'); markView(k); setHash(active.p.id + '.' + k); }
 function polarFor(v) { const up = v.a.y < v.ta.y - 2; controls.maxPolarAngle = up ? Math.PI * .98 : Math.PI * .492; controls.minPolarAngle = 0; }
 function jumpTo(k) { const v = active.views[k]; camera.position.copy(v.a); controls.target.copy(v.ta); camera.lookAt(v.ta); polarFor(v); markView(k); if (active.walk) walkSync(); }
 function setHash() { /* the Daleel app owns the URL hash */ }
 $('#p3-tour').addEventListener('click', () => { if (window.S3.real) return; setMode(mode === 'tour' ? 'explore' : 'tour'); });
-const toExplore = () => { if (mode !== 'explore') { setMode('explore'); markView(''); } };
+const toExplore = () => { if (mode !== 'explore' && mode !== 'guide') { setMode('explore'); markView(''); } };
 canvas.addEventListener('pointerdown', toExplore);
 canvas.addEventListener('wheel', toExplore, { passive: true });
 
@@ -605,6 +610,7 @@ function activate(id, view, explore) {
   if (active && active.p === p && !view) return;
   const loader = $('#p3-loader');
   const go = () => {
+    dropGuide();
     if (!runtimes[p.id]) runtimes[p.id] = build(p);
     for (const rt of Object.values(runtimes)) rt.group.visible = rt.p === p;
     active = runtimes[p.id];
@@ -705,9 +711,11 @@ function updateLabels() {
 let paused = false;
 Object.assign(window.S3, { activeId: () => active && active.p.id, sceneFor: id => SITE_TO_SCENE[id] || (PLACES.some(p => p.id === id) ? id : null), started: false,
   pause: b => { paused = b; if (!b) clock.getDelta(); },
-  view: k => { if (active && active.views[k] && !active.views[k].link) { jumpTo(k); mode = 'explore'; controls.enabled = !active.walk; $('#p3-tour').setAttribute('aria-pressed', 'false'); } },
+  view: k => { if (active && active.views[k] && !active.views[k].link) { dropGuide(); jumpTo(k); mode = 'explore'; controls.enabled = !active.walk; $('#p3-tour').setAttribute('aria-pressed', 'false'); } },
   show: (id, h) => { if (h >= 0 && h <= 24) { hourInput.value = h; setHour(h, true); } const sc = window.S3.sceneFor(id); if (sc) activate(sc); },
-  relabel: () => { if (!active) return; fillInfo(active.p); fillViews(active); fillLabels(active); setHour(hour); $('#p3-full').textContent = tr($('#p3-frame').classList.contains('full') ? 'exitFull3d' : 'full3d'); }, real: false });
+  relabel: () => { if (!active) return; fillInfo(active.p); fillViews(active); fillLabels(active); setHour(hour); $('#p3-full').textContent = tr($('#p3-frame').classList.contains('full') ? 'exitFull3d' : 'full3d'); document.dispatchEvent(new CustomEvent('s3:relabel')); }, real: false,
+  // engine handles for the AR guide (nav.js)
+  k: { THREE, V3, scene, camera, controls, canvas, renderer, stageSize, active: () => active, mode: () => mode, startGuide, stopGuide, explore: resync => { if (mode === 'explore' && !resync) return; camera.lookAt(controls.target); setMode('explore'); markView(''); }, tr, isAr, esc, pname, still: () => still() } });
 function frame() {
   requestAnimationFrame(frame);
   if (!active || paused) return;
@@ -723,7 +731,8 @@ function frame() {
     flyT += dt / 2.6; const k = ease(Math.min(1, flyT));
     arcLerp(camera.position, fromPos, flyShot.a, k); controls.target.lerpVectors(fromTgt, flyShot.ta, k); camera.lookAt(controls.target);
     if (flyT >= 1) { mode = 'explore'; controls.enabled = !active.walk; polarFor(flyShot); if (active.walk) walkSync(); }
-  } else if (active.walk) walkUpdate(dt, t); else controls.update();
+  } else if (mode === 'guide') { if (guide) guide.update(dt, t); }
+  else if (active.walk) walkUpdate(dt, t); else controls.update();
   for (const fn of active.updaters) fn(dt, t);
   for (const w of active.waters) w.material.uniforms.time.value += dt * .5;
   updateLabels();
