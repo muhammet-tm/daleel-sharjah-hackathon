@@ -63,8 +63,8 @@ const S = {
     creditTeam: "Photo: Daleel team", creditArchive: "Archive photo", creditIllustration: "Illustration: a modern desert photo, not from 1823",
     // PLACEHOLDER: indoor AR wayfinding (see js/ar-wayfinding.js)
     wfTitle: "Find your way inside",
-    wfLede: "Coming soon: point your phone's camera at the floor and follow arrows to the facilities inside {name}.",
-    wfSoon: "AR wayfinding · coming soon", wfStart: "Start AR wayfinding",
+    wfLede: "Choose a spot inside {name}, see the route, then follow arrows at eye level.",
+    wfSoon: "AR wayfinding · coming soon", wfStart: "Open the AR guide",
     wf_toilets: "Toilets", wf_prayer: "Prayer room", wf_lift: "Lift", wf_exit: "Exit", wf_tickets: "Tickets", wf_firstAid: "First aid",
     // Recycle leaf
     navRecycle: "Recycle", recLeafTitle: "Recycle and earn",
@@ -237,8 +237,8 @@ const S = {
     creditTeam: "تصوير: فريق دليل", creditArchive: "صورة أرشيفية", creditIllustration: "توضيح: صورة حديثة للصحراء، ليست من عام 1823",
     // مؤقت: الإرشاد داخل المكان بالواقع المعزز (انظر js/ar-wayfinding.js)
     wfTitle: "اعثر على طريقك في الداخل",
-    wfLede: "قريبًا: وجّه كاميرا هاتفك إلى الأرض واتبع الأسهم إلى المرافق داخل {name}.",
-    wfSoon: "الإرشاد بالواقع المعزز · قريبًا", wfStart: "ابدأ الإرشاد بالواقع المعزز",
+    wfLede: "اختر مكانًا داخل {name}، وشاهد المسار، ثم اتبع الأسهم على مستوى النظر.",
+    wfSoon: "الإرشاد بالواقع المعزز · قريبًا", wfStart: "افتح دليل الواقع المعزز",
     wf_toilets: "دورات المياه", wf_prayer: "مصلى", wf_lift: "مصعد", wf_exit: "مخرج", wf_tickets: "التذاكر", wf_firstAid: "إسعافات أولية",
     // صفحة إعادة التدوير
     navRecycle: "أعد التدوير", recLeafTitle: "أعد التدوير واكسب",

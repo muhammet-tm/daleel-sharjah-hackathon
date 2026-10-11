@@ -327,12 +327,13 @@ function renderPlate() {
   if (state.leaf === "plate") document.title = `${name(s)} · Daleel`;
 }
 
-// PLACEHOLDER: indoor AR wayfinding. The button stays disabled until Wayfinding.READY is true (see js/ar-wayfinding.js).
+// Find your way inside: for places with a 3D scene, opens the AR guide (js/3d/nav.js) on the 3D leaf.
+// Camera AR in the real place is planned (js/ar-wayfinding.js); until then other places show nothing here.
 function renderWayfind(s) {
-  const list = Wayfinding.FACILITIES.map((k) => t("wf_" + k)).join(" · ");
+  if (!SCENES_3D.has(s.id) && !Wayfinding.READY) { $("#wayfind").innerHTML = ""; return; }
   $("#wayfind").innerHTML = `<div class="prose" style="margin-top:22px"><h2 id="wf-h">${esc(t("wfTitle"))}</h2>
-    <p>${esc(t("wfLede", { name: name(s) }))}</p><p class="hint">${esc(list)}</p></div>
-    <div class="plate-acts"><button class="btn" type="button" ${Wayfinding.READY ? `data-wayfind="${s.id}"` : 'disabled aria-disabled="true"'}>${esc(t(Wayfinding.READY ? "wfStart" : "wfSoon"))}</button></div>`;
+    <p>${esc(t("wfLede", { name: name(s) }))}</p></div>
+    <div class="plate-acts"><button class="btn primary" type="button" data-guide="${s.id}">${esc(t("wfStart"))}</button></div>`;
 }
 
 function timingSentence(s) {
@@ -599,6 +600,11 @@ async function enter3d() {
   if (window.S3.failed) { msg.textContent = t(window.S3.failed === "webgl" ? "noWebgl3d" : "engineFail3d"); return; }
   if (!window.S3.started) window.S3.start({ id, hour: s ? hourFor(s) : undefined });
   else { window.S3.pause(false); if (asked && s) window.S3.show(id, hourFor(s)); }
+  if (state.openGuide) {
+    state.openGuide = false;
+    for (let i = 0; i < 60 && !(document.querySelector("#p3-loader.done") && window.S3.activeId() === window.S3.sceneFor(id)); i++) await new Promise((r) => setTimeout(r, 250));
+    const g = $("#p3-guide"); if (g && g.getAttribute("aria-pressed") !== "true") { g.scrollIntoView({ block: "center" }); g.click(); }
+  }
 }
 
 function render() {
@@ -639,6 +645,7 @@ function bind() {
     if (b.dataset.used) return markUsed(b.dataset.used);
     if (b.dataset.shot) { (state.shot ||= {})[state.selected] = +b.dataset.shot; renderPlate(); return $(`[data-shot="${b.dataset.shot}"]`)?.focus(); }
     if (b.dataset.wayfind) return Wayfinding.start(state.byId[b.dataset.wayfind]).catch((err) => announce(String(err.message)));
+    if (b.dataset.guide) { state.openGuide = true; return openExplore(b.dataset.guide); }
     if (b.hasAttribute("data-goto-offers")) { $("#offers-h").focus(); return $("#offers").scrollIntoView({ block: "start", behavior: state.prefs.still ? "auto" : "smooth" }); }
     if (b.dataset.open) return openPlate(b.dataset.open);
     if (b.dataset.explore) return openExplore(b.dataset.explore);
