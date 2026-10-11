@@ -207,8 +207,9 @@ function renderMap() {
       title: `${i + 1}. ${name(s)}, ${H(it.hour)}`, keyboard: true, riseOnHover: true,
     }).bindTooltip(`${i + 1}. ${name(s)} · ${H(it.hour)}`, { direction: "top", offset: [0, -14] }).on("click", () => openPlate(s.id)).addTo(llayers);
   });
+  // fit the route only when the map is visible: a hidden map has no size and would zoom out to the whole world
   const all = pts.length ? pts : state.sites.map((s) => [s.lat, s.lng]);
-  lmap.fitBounds(L.latLngBounds(all).pad(pts.length === 1 ? 2 : 0.25), { maxZoom: 14, animate: false });
+  if ($("#map").clientWidth > 0) { lmap.invalidateSize(); lmap.fitBounds(L.latLngBounds(all).pad(pts.length === 1 ? 2 : 0.25), { maxZoom: 14, animate: false }); }
   const done = state.sites.filter((s) => recycled.has(s.id)).length;
   $("#map").setAttribute("role", "region");
   $("#map").setAttribute("aria-label", t("mapLabel") + (done ? " " + t("mapRecycled", { n: done }) : ""));
@@ -713,7 +714,7 @@ function showLeaf(leaf, focus = true) {
   document.body.classList.toggle("onboarding", state.leaf === "welcome");
   if (state.leaf === "welcome") fillWelcome();
   if (state.leaf === "explore") enter3d(); else window.S3?.pause?.(true);
-  if (state.leaf === "index" && lmap) setTimeout(() => lmap.invalidateSize(), 0);
+  if (state.leaf === "index" && lmap) setTimeout(() => renderMap(), 0);   // re-fit the route now that the map has a size
   $$(".leaf").forEach((el) => el.classList.toggle("on", el.id === "leaf-" + state.leaf));
   $$("nav.leaves a").forEach((a) => (a.dataset.leaf === state.leaf ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
   const h = $(`#leaf-${state.leaf} h1`);
