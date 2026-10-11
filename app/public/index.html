@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/3d.css">
   <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
@@ -35,6 +36,7 @@
       <a href="#index" data-leaf="index" data-i18n="navIndex">Index</a>
       <a href="#plate" data-leaf="plate" data-i18n="navPlate">Plate</a>
       <a href="#colophon" data-leaf="colophon" data-i18n="navColophon">Colophon</a>
+      <a href="#explore" data-leaf="explore" data-i18n="nav3d">3D</a>
     </nav>
   </header>
 
@@ -99,6 +101,57 @@
         <h2 data-i18n="privacy">Privacy</h2>
         <p data-i18n="privacyText"></p>
         <p style="margin-top:18px"><a class="btn" href="dashboard.html" data-i18n="dashLink">Open the authority dashboard (pilot data)</a></p>
+      </div>
+    </section>
+    <!-- 3D: hand-built scenes of the places, lit for the planned hour (three.js loads when this leaf first opens) -->
+    <section class="leaf" id="leaf-explore" aria-labelledby="p3-h">
+      <p class="cap" id="p3-eyebrow"></p>
+      <h1 id="p3-h" tabindex="-1">Explore in 3D</h1>
+      <p class="lede" id="p3-lede"></p>
+      <div class="spread">
+        <div>
+          <figure class="plate-frame three-frame" id="p3-frame" style="margin:0">
+            <div class="three-stage">
+              <canvas id="p3-canvas" tabindex="0" role="img"></canvas>
+              <div id="p3-labels" aria-hidden="true"></div>
+              <div id="p3-compass" aria-hidden="true"><div id="p3-needle"><b>N</b><span></span></div></div>
+              <div id="p3-loader"><p></p></div>
+            </div>
+            <figcaption class="cap plate-cap" data-i18n="artist3d"></figcaption>
+          </figure>
+          <div class="three-ctl">
+            <span class="cap" id="p3-views-l" data-i18n="views3d">Views</span>
+            <div class="three-row" role="group" aria-labelledby="p3-views-l">
+              <button class="btn small" type="button" id="p3-tour" aria-pressed="true" data-i18n="tour3d">Tour</button>
+              <span class="three-row" id="p3-views"></span>
+            </div>
+          </div>
+          <div class="three-ctl" id="p3-time">
+            <div class="three-time">
+              <div class="field"><label for="p3-hour" data-i18n="hour3d">Hour</label>
+                <input id="p3-hour" type="range" min="0" max="24" step="0.05" value="16"></div>
+              <p class="three-clock"><span id="p3-clock">16:00</span> <span id="p3-phase" class="cap"></span></p>
+            </div>
+            <div class="three-row">
+              <button class="btn small" type="button" id="p3-play" aria-pressed="false" data-i18n="runDay3d">Run the day</button>
+              <button class="btn small" type="button" id="p3-labels-btn" aria-pressed="true" data-i18n="labels3d">Labels</button>
+              <button class="btn small" type="button" id="p3-full" aria-pressed="false" data-i18n="full3d">Full screen</button>
+            </div>
+          </div>
+          <div class="plate-acts">
+            <button class="btn primary" type="button" id="p3-back" data-i18n="back3d">Back to the plate</button>
+            <a class="btn" id="p3-map" href="#" target="_blank" rel="noopener" data-i18n="openMaps">Directions in Maps</a>
+          </div>
+        </div>
+        <section class="margin-col" aria-labelledby="p3-glance-h">
+          <h2 id="p3-glance-h" data-i18n="glance3d">At a glance</h2>
+          <dl class="ledger three-ledger" id="p3-facts"></dl>
+          <p class="hint three-help" id="p3-help"></p>
+          <div class="places three-places">
+            <h2 data-i18n="places3d">Places in 3D</h2>
+            <div id="p3-places"></div>
+          </div>
+        </section>
       </div>
     </section>
   </main>

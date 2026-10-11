@@ -23,7 +23,7 @@ const state = {
   era: "today",
   heat: { live: null, sample: null, july: false },
   notes: {}, // siteId -> [{ q, a, offline, pending }]
-  prefs: Object.assign({ lang: "en", scale: 100, theme: "auto", calm: false, still: false, autoRead: false, rate: 1, heatSensitive: false, audience: "adult" }, store.get("prefs", {})),
+  prefs: Object.assign({ lang: "en", scale: 100, theme: "light", calm: false, still: false, autoRead: false, rate: 1, heatSensitive: false, audience: "adult" }, store.get("prefs", {})),
   leaf: "index",
 };
 let plan = null, sugg = [];
@@ -188,6 +188,8 @@ function renderMap() {
 
 // ---------- PLATE ----------
 const ERAS = ["1823", "1969", "today"];
+// Sites with a hand-built scene on the 3D leaf.
+const SCENES_3D = new Set(["blue-souk", "al-noor-mosque", "islamic-museum", "heart-of-sharjah"]);
 function renderPlate() {
   const s = state.byId[state.selected] || state.sites[0];
   const other = getLang() === "en" ? s.name.ar : s.name.en;
@@ -212,6 +214,7 @@ function renderPlate() {
   $("#plate-acts").innerHTML = `
     <button class="btn" type="button" id="describe-btn">${esc(t("describe"))}</button>
     ${s.hasModel ? `<button class="btn primary" type="button" id="ar-btn" hidden>${esc(t("viewAr"))}</button>` : ""}
+    ${SCENES_3D.has(s.id) ? `<button class="btn" type="button" data-explore="${s.id}">${esc(t("explore3d"))}</button>` : ""}
     <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}" target="_blank" rel="noopener">${esc(t("openMaps"))}</a>
     <button class="btn" type="button" data-toggle="${s.id}" aria-pressed="${!!inPlan}">${esc(inPlan ? t("inPlan", { h: H(inPlan.hour) }) : t("addToPlan"))}</button>
     ${s.hasModel ? `<p class="hint" style="flex-basis:100%">${esc(t("arHelp"))}</p>` : ""}`;
@@ -313,6 +316,38 @@ function applyPrefs() {
   $("#calm").checked = p.calm; $("#still").checked = p.still; $("#auto-read").checked = p.autoRead;
   $("#rate").value = p.rate; $("#heat-sensitive").checked = p.heatSensitive; $("#aud").value = p.audience;
   store.set("prefs", p);
+  window.S3?.relabel?.();
+}
+
+// ---------- 3D ----------
+const THREE_CDN = "https://cdn.jsdelivr.net/npm/three@0.147.0/";
+const SCRIPTS_3D = ["build/three.min.js", "examples/js/controls/OrbitControls.js", "examples/js/objects/Sky.js", "examples/js/objects/Water.js", "examples/js/utils/BufferGeometryUtils.js"].map((f) => THREE_CDN + f)
+  .concat(["core", "place-central-souq", "place-souq-inside", "place-al-noor", "place-museum", "place-shanasiyah", "place-suhub"].map((f) => `js/3d/${f}.js`));
+let load3d = null;
+function ensure3d() {
+  return (load3d ||= (async () => {
+    for (const src of SCRIPTS_3D) await new Promise((res, rej) => { const el = document.createElement("script"); el.src = src; el.onload = res; el.onerror = rej; document.head.appendChild(el); });
+    window.S3.i18n = { t, getLang };
+  })().catch((e) => { load3d = null; throw e; }));
+}
+function hourFor(s) {
+  const it = plan.items.find((i) => i.site.id === s.id);
+  return it ? it.hour : (E.bestHour(s, state.date, heatFor(state.date).data, 0, { heatSensitive: state.prefs.heatSensitive }) ?? 16);
+}
+function openExplore(id) {
+  state.explore = id;
+  if (location.hash !== "#explore") location.hash = "#explore"; else enter3d();
+}
+async function enter3d() {
+  const asked = state.explore; state.explore = null;
+  const id = asked || state.selected, s = state.byId[id];
+  const msg = $("#p3-loader p");
+  if (!window.S3?.started) { $("#p3-h").textContent = t("explore3d"); msg.textContent = t("loading3d", { name: s && SCENES_3D.has(id) ? name(s) : t("explore3d") }); }
+  try { await ensure3d(); } catch { msg.textContent = t("engineFail3d"); return; }
+  if (state.leaf !== "explore") return;
+  if (window.S3.failed) { msg.textContent = t(window.S3.failed === "webgl" ? "noWebgl3d" : "engineFail3d"); return; }
+  if (!window.S3.started) window.S3.start({ id, hour: s ? hourFor(s) : undefined });
+  else { window.S3.pause(false); if (asked && s) window.S3.show(id, hourFor(s)); }
 }
 
 function render() {
@@ -323,7 +358,8 @@ function render() {
 }
 
 function showLeaf(leaf, focus = true) {
-  state.leaf = ["index", "plate", "colophon"].includes(leaf) ? leaf : "index";
+  state.leaf = ["index", "plate", "colophon", "explore"].includes(leaf) ? leaf : "index";
+  if (state.leaf === "explore") enter3d(); else window.S3?.pause?.(true);
   $$(".leaf").forEach((el) => el.classList.toggle("on", el.id === "leaf-" + state.leaf));
   $$("nav.leaves a").forEach((a) => (a.dataset.leaf === state.leaf ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
   const h = $(`#leaf-${state.leaf} h1`);
@@ -345,6 +381,7 @@ function bind() {
     const b = e.target.closest("button, a");
     if (!b) return;
     if (b.dataset.open) return openPlate(b.dataset.open);
+    if (b.dataset.explore) return openExplore(b.dataset.explore);
     if (b.dataset.move) return moveStop(b.dataset.move, +b.dataset.d);
     if (b.dataset.toggle) return toggleStop(b.dataset.toggle);
     if (b.dataset.apply) return applySuggestion(sugg[+b.dataset.apply]);

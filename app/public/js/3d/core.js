@@ -4,11 +4,11 @@
 'use strict';
 const $ = s => document.querySelector(s);
 const PLACES = [];
-window.S3 = { register: p => PLACES.push(p), start: () => start() };
+window.S3 = { register: p => PLACES.push(p), start: o => start(o) };
 if (!window.THREE) { window.S3.failed = 'engine'; return; }
 
 /* ---------- renderer / scene ---------- */
-const canvas = $('#c');
+const canvas = $('#p3-canvas');
 const isMobile = matchMedia('(max-width: 720px)').matches || /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 let renderer;
 try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance', logarithmicDepthBuffer: true }); }
@@ -497,8 +497,8 @@ function setHour(h, forceEnv) {
   if (active.onTime) active.onTime(night, day);
   document.dispatchEvent(new CustomEvent('s3:hour', { detail: { hour: h, night, day } }));
   const H = Math.floor(h) % 24, m = Math.floor((h % 1) * 60);
-  $('#clock').textContent = String(H).padStart(2, '0') + ':' + String(m).padStart(2, '0');
-  $('#phase').textContent = phaseName(h);
+  $('#p3-clock').textContent = String(H).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+  $('#p3-phase').textContent = phaseName(h);
   const now = performance.now();
   if (forceEnv || (Math.abs(h - lastEnvHour) > .2 && now - lastEnvTime > 250)) { rebuildEnv(); lastEnvHour = h; lastEnvTime = now; }
 }
@@ -536,7 +536,7 @@ const SITE_TO_SCENE = { 'blue-souk': 'souq', 'al-noor-mosque': 'noor', 'islamic-
 const SCENE_TO_SITE = { souq: 'blue-souk', souqin: 'blue-souk', noor: 'al-noor-mosque', museum: 'islamic-museum', shanasiyah: 'heart-of-sharjah' };
 function buildPlaceButtons() {
   const cur = active && active.p.id;
-  $('#places').innerHTML = PLACES.map(p => `<div class="place"><span class="pn"><button type="button" data-place="${p.id}"${p.id === cur ? ' aria-current="true"' : ''}>${esc(pname(p))}</button></span>
+  $('#p3-places').innerHTML = PLACES.map(p => `<div class="place"><span class="pn"><button type="button" data-place="${p.id}"${p.id === cur ? ' aria-current="true"' : ''}>${esc(pname(p))}</button></span>
     <span class="pm">${esc(loc(p, 'eyebrow'))}${p.id === cur ? ` · <em>${esc(tr('showing3d'))}</em>` : ''}</span></div>`).join('');
 }
 function fillInfo(p) {
@@ -544,24 +544,23 @@ function fillInfo(p) {
   $('#p3-eyebrow').textContent = loc(p, 'eyebrow');
   $('#p3-h').innerHTML = `${esc(pname(p))}<span class="ar" lang="${isAr() ? 'en' : 'ar'}">${esc(other)}</span>`;
   $('#p3-lede').textContent = loc(p, 'lede');
-  $('#facts').innerHTML = loc(p, 'facts').map(([k, v, small]) => `<div><dt>${esc(k)}</dt><dd${small ? ' class="small"' : ''}>${esc(v)}</dd></div>`).join('');
-  $('#mapLink').href = p.map;
-  $('#back3d').dataset.site = SCENE_TO_SITE[p.id] || '';
-  $('#c').setAttribute('aria-label', tr('canvas3d', { name: pname(p) }));
-  document.title = `${pname(p)} · ${tr('explore3d')} · Daleel`;
+  $('#p3-facts').innerHTML = loc(p, 'facts').map(([k, v, small]) => `<div><dt>${esc(k)}</dt><dd${small ? ' class="small"' : ''}>${esc(v)}</dd></div>`).join('');
+  $('#p3-map').href = p.map;
+  const site = SCENE_TO_SITE[p.id]; $('#p3-back').hidden = !site; if (site) $('#p3-back').dataset.open = site;
+  $('#p3-canvas').setAttribute('aria-label', tr('canvas3d', { name: pname(p) }));
   buildPlaceButtons();
 }
 function fillViews(rt) {
-  const dock = $('#views'), names = (isAr() && rt.p.ar && rt.p.ar.views) || {};
+  const dock = $('#p3-views'), names = (isAr() && rt.p.ar && rt.p.ar.views) || {};
   dock.innerHTML = '';
   for (const [k, v] of Object.entries(rt.views)) {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'btn small'; b.dataset.view = k; b.textContent = names[k] || v.name;
     if (v.link) b.addEventListener('click', () => activate(v.link)); else { b.setAttribute('aria-pressed', 'false'); b.addEventListener('click', () => flyTo(k)); }
     dock.appendChild(b);
   }
-  $('#help3d').textContent = tr(rt.walk ? 'walkHelp3d' : 'orbitHelp3d');
+  $('#p3-help').textContent = tr(rt.walk ? 'walkHelp3d' : 'orbitHelp3d');
 }
-const labelsEl = $('#labels'); let LABELS = [];
+const labelsEl = $('#p3-labels'); let LABELS = [];
 function fillLabels(rt) {
   labelsEl.innerHTML = '';
   const ar = (isAr() && rt.p.ar && rt.p.ar.labels) || [];
@@ -572,39 +571,39 @@ function fillLabels(rt) {
     return { el, p: new V3(...p) };
   });
 }
-$('#places').addEventListener('click', e => { const b = e.target.closest('[data-place]'); if (b) activate(b.dataset.place); });
+$('#p3-places').addEventListener('click', e => { const b = e.target.closest('[data-place]'); if (b) activate(b.dataset.place); });
 
 /* ---------- camera views & tour ---------- */
 let mode = 'tour', shotI = 0, shotT = 0, flyT = 0, flyShot = null;
 const fromPos = new V3(), fromTgt = new V3();
 const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 function arcLerp(out, a, b, k) { out.lerpVectors(a, b, k); out.y += Math.sin(Math.PI * k) * a.distanceTo(b) * .22; return out; }
-function markView(name) { document.querySelectorAll('#views [data-view]').forEach(b => b.hasAttribute('aria-pressed') && b.setAttribute('aria-pressed', b.dataset.view === name)); }
+function markView(name) { document.querySelectorAll('#p3-views [data-view]').forEach(b => b.hasAttribute('aria-pressed') && b.setAttribute('aria-pressed', b.dataset.view === name)); }
 function startShot(i) { const t = active.tour; shotI = (i + t.length) % t.length; shotT = 0; fromPos.copy(camera.position); fromTgt.copy(controls.target); markView(t[shotI]); }
-function setMode(m) { mode = m; controls.enabled = m === 'explore' && !active.walk; if (m === 'explore' && active.walk) walkSync(); if (m === 'explore' && active) { const v = active.views[active.tour[shotI]]; if (v) polarFor({ a: camera.position, ta: controls.target }); } $('#tourBtn').setAttribute('aria-pressed', m === 'tour'); if (m === 'tour') startShot(shotI + 1); }
-function flyTo(k) { flyShot = active.views[k]; flyT = 0; fromPos.copy(camera.position); fromTgt.copy(controls.target); mode = 'fly'; controls.enabled = false; $('#tourBtn').setAttribute('aria-pressed', 'false'); markView(k); setHash(active.p.id + '.' + k); }
+function setMode(m) { mode = m; controls.enabled = m === 'explore' && !active.walk; if (m === 'explore' && active.walk) walkSync(); if (m === 'explore' && active) { const v = active.views[active.tour[shotI]]; if (v) polarFor({ a: camera.position, ta: controls.target }); } $('#p3-tour').setAttribute('aria-pressed', m === 'tour'); if (m === 'tour') startShot(shotI + 1); }
+function flyTo(k) { flyShot = active.views[k]; flyT = 0; fromPos.copy(camera.position); fromTgt.copy(controls.target); mode = 'fly'; controls.enabled = false; $('#p3-tour').setAttribute('aria-pressed', 'false'); markView(k); setHash(active.p.id + '.' + k); }
 function polarFor(v) { const up = v.a.y < v.ta.y - 2; controls.maxPolarAngle = up ? Math.PI * .98 : Math.PI * .492; controls.minPolarAngle = 0; }
 function jumpTo(k) { const v = active.views[k]; camera.position.copy(v.a); controls.target.copy(v.ta); camera.lookAt(v.ta); polarFor(v); markView(k); if (active.walk) walkSync(); }
-function setHash(h) { try { history.replaceState(null, '', '#' + h); } catch (e) { /* sandboxed */ } }
-$('#tourBtn').addEventListener('click', () => { if (window.S3.real) return; setMode(mode === 'tour' ? 'explore' : 'tour'); });
+function setHash() { /* the Daleel app owns the URL hash */ }
+$('#p3-tour').addEventListener('click', () => { if (window.S3.real) return; setMode(mode === 'tour' ? 'explore' : 'tour'); });
 const toExplore = () => { if (mode !== 'explore') { setMode('explore'); markView(''); } };
 canvas.addEventListener('pointerdown', toExplore);
 canvas.addEventListener('wheel', toExplore, { passive: true });
 
-const hourInput = $('#hour');
+const hourInput = $('#p3-hour');
 let playDay = false;
-hourInput.addEventListener('input', () => { playDay = false; $('#playDay').setAttribute('aria-pressed', 'false'); setHour(parseFloat(hourInput.value)); });
+hourInput.addEventListener('input', () => { playDay = false; $('#p3-play').setAttribute('aria-pressed', 'false'); setHour(parseFloat(hourInput.value)); });
 hourInput.addEventListener('change', () => setHour(parseFloat(hourInput.value), true));
-$('#playDay').addEventListener('click', e => { playDay = !playDay && !still(); e.currentTarget.setAttribute('aria-pressed', playDay); });
-$('#labelsBtn').addEventListener('click', e => { const off = document.body.classList.toggle('nolabels'); e.currentTarget.setAttribute('aria-pressed', !off); });
-$('#fullBtn').addEventListener('click', e => { const on = $('#frame3d').classList.toggle('full'); e.currentTarget.setAttribute('aria-pressed', on); e.currentTarget.textContent = tr(on ? 'exitFull3d' : 'full3d'); document.body.classList.toggle('full3d', on); });
-addEventListener('keydown', e => { if (e.key === 'Escape' && $('#frame3d').classList.contains('full')) $('#fullBtn').click(); });
+$('#p3-play').addEventListener('click', e => { playDay = !playDay && !still(); e.currentTarget.setAttribute('aria-pressed', playDay); });
+$('#p3-labels-btn').addEventListener('click', e => { const off = document.body.classList.toggle('nolabels'); e.currentTarget.setAttribute('aria-pressed', !off); });
+$('#p3-full').addEventListener('click', e => { const on = $('#p3-frame').classList.toggle('full'); e.currentTarget.setAttribute('aria-pressed', on); e.currentTarget.textContent = tr(on ? 'exitFull3d' : 'full3d'); document.body.classList.toggle('full3d', on); });
+addEventListener('keydown', e => { if (!paused && e.key === 'Escape' && $('#p3-frame').classList.contains('full')) $('#p3-full').click(); });
 const still = () => document.documentElement.classList.contains('still');
 
 function activate(id, view, explore) {
   const p = PLACES.find(x => x.id === id) || PLACES[0];
   if (active && active.p === p && !view) return;
-  const loader = $('#loader');
+  const loader = $('#p3-loader');
   const go = () => {
     if (!runtimes[p.id]) runtimes[p.id] = build(p);
     for (const rt of Object.values(runtimes)) rt.group.visible = rt.p === p;
@@ -613,14 +612,14 @@ function activate(id, view, explore) {
     setHour(hour, true);
     const first = view && active.views[view] ? view : active.tour[0];
     document.body.classList.toggle('walking', !!active.walk);
-    if (explore || view || still()) { jumpTo(first); mode = 'explore'; controls.enabled = !active.walk; $('#tourBtn').setAttribute('aria-pressed', 'false'); }
-    else { const v = active.views[first]; camera.position.copy(v.a).lerp(v.ta, active.walk ? 0 : -.25); controls.target.copy(v.ta); shotI = -1; mode = 'tour'; controls.enabled = false; $('#tourBtn').setAttribute('aria-pressed', 'true'); startShot(0); }
+    if (explore || view || still()) { jumpTo(first); mode = 'explore'; controls.enabled = !active.walk; $('#p3-tour').setAttribute('aria-pressed', 'false'); }
+    else { const v = active.views[first]; camera.position.copy(v.a).lerp(v.ta, active.walk ? 0 : -.25); controls.target.copy(v.ta); shotI = -1; mode = 'tour'; controls.enabled = false; $('#p3-tour').setAttribute('aria-pressed', 'true'); startShot(0); }
     setHash(p.id + (view ? '.' + view : ''));
     loader.classList.add('done');
     const ann = $('#announce'); if (ann) { ann.textContent = ''; setTimeout(() => (ann.textContent = pname(p)), 30); }
     document.dispatchEvent(new CustomEvent('s3:place', { detail: { id: p.id } }));
   };
-  if (!runtimes[p.id]) { $('#loader p').textContent = tr('loading3d', { name: pname(p) }); loader.classList.remove('done'); setTimeout(go, 40); }
+  if (!runtimes[p.id]) { $('#p3-loader p').textContent = tr('loading3d', { name: pname(p) }); loader.classList.remove('done'); setTimeout(go, 40); }
   else go();
 }
 
@@ -682,7 +681,7 @@ addEventListener('pointerup', e => {
   else walk.hop = { from: camera.position.clone(), to: new V3(q.x, W.levels[lvl] + W.eye, q.z), t: 0, level: lvl };
 });
 canvas.addEventListener('wheel', e => { if (!walking()) return; const st = -Math.sign(e.deltaY) * .9; const x = camera.position.x - Math.sin(walk.yaw) * st, z = camera.position.z - Math.cos(walk.yaw) * st; if (walkOk(x, z, walk.level)) { camera.position.x = x; camera.position.z = z; } }, { passive: true });
-addEventListener('keydown', e => { if (!active || !active.walk || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return; walk.keys[e.code] = true; if (mode !== 'explore' && /Key[WASD]|Arrow/.test(e.code)) toExplore(); if (/Arrow/.test(e.code)) e.preventDefault(); });
+addEventListener('keydown', e => { if (paused || !active || !active.walk || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return; walk.keys[e.code] = true; if (mode !== 'explore' && /Key[WASD]|Arrow/.test(e.code)) toExplore(); if (/Arrow/.test(e.code)) e.preventDefault(); });
 addEventListener('keyup', e => { walk.keys[e.code] = false; });
 addEventListener('blur', () => { walk.keys = {}; });
 
@@ -699,7 +698,10 @@ function updateLabels() {
   }
 }
 let paused = false;
-Object.assign(window.S3, { activeId: () => active && active.p.id, sceneToSite: id => SCENE_TO_SITE[id], relabel: () => { if (!active) return; fillInfo(active.p); fillViews(active); fillLabels(active); setHour(hour); $('#fullBtn').textContent = tr($('#frame3d').classList.contains('full') ? 'exitFull3d' : 'full3d'); }, real: false });
+Object.assign(window.S3, { activeId: () => active && active.p.id, sceneFor: id => SITE_TO_SCENE[id] || (PLACES.some(p => p.id === id) ? id : null), started: false,
+  pause: b => { paused = b; if (!b) clock.getDelta(); },
+  show: (id, h) => { if (h >= 0 && h <= 24) { hourInput.value = h; setHour(h, true); } const sc = window.S3.sceneFor(id); if (sc) activate(sc); },
+  relabel: () => { if (!active) return; fillInfo(active.p); fillViews(active); fillLabels(active); setHour(hour); $('#p3-full').textContent = tr($('#p3-frame').classList.contains('full') ? 'exitFull3d' : 'full3d'); }, real: false });
 function frame() {
   requestAnimationFrame(frame);
   if (!active || paused) return;
@@ -719,18 +721,17 @@ function frame() {
   for (const fn of active.updaters) fn(dt, t);
   for (const w of active.waters) w.material.uniforms.time.value += dt * .5;
   updateLabels();
-  $('#needle').style.transform = `rotate(${Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z)}rad)`;
+  $('#p3-needle').style.transform = `rotate(${Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z)}rad)`;
   renderer.render(scene, camera);
 }
 new ResizeObserver(() => { const [w, h] = stageSize(); camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h, false); }).observe(canvas);
 
-function start() {
+function start(opts = {}) {
+  window.S3.started = true;
   buildPlaceButtons();
-  let [pid, view] = location.hash.slice(1).split('.');
-  pid = SITE_TO_SCENE[pid] || pid;
-  const qs = new URLSearchParams(location.search), qh = parseFloat(qs.get('h') ?? qs.get('hour'));
-  if (qh >= 0 && qh <= 24) { hour = qh; hourInput.value = qh; }
-  activate(PLACES.some(p => p.id === pid) ? pid : PLACES[0].id, view);
+  const h = opts.hour;
+  if (h >= 0 && h <= 24) { hour = h; hourInput.value = h; }
+  activate(window.S3.sceneFor(opts.id) || PLACES[0].id);
   requestAnimationFrame(frame);
 }
 })();

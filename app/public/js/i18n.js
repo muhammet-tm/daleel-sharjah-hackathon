@@ -6,7 +6,7 @@ const S = {
     skip: "Skip to content",
     brand: "Daleel",
     tagline: "Look Up",
-    navIndex: "Index", navPlate: "Plate", navColophon: "Colophon",
+    navIndex: "Index", navPlate: "Plate", navColophon: "Colophon", nav3d: "3D",
     navLabel: "Leaves",
     reading: "Reading settings",
     // Index
@@ -112,7 +112,7 @@ const S = {
     skip: "انتقل إلى المحتوى",
     brand: "دليل",
     tagline: "ارفع نظرك",
-    navIndex: "الفهرس", navPlate: "اللوحة", navColophon: "الخاتمة",
+    navIndex: "الفهرس", navPlate: "اللوحة", navColophon: "الخاتمة", nav3d: "ثلاثي الأبعاد",
     navLabel: "الأوراق",
     reading: "إعدادات القراءة",
     indexTitle: "اليوم، كأنه فهرس",
