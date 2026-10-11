@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/3d.css">
   <link rel="stylesheet" href="css/sahm.css">
   <link rel="stylesheet" href="css/plates.css">
+  <link rel="stylesheet" href="css/onboard.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="css/map.css">
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" defer></script>
@@ -47,8 +48,27 @@
   </header>
 
   <main id="main">
+    <!-- WELCOME: first-visit onboarding (name, age, nationality, date of landing). Answers stay on the device. -->
+    <section class="leaf" id="leaf-welcome" aria-labelledby="welcome-h">
+      <h1 id="welcome-h" tabindex="-1" data-i18n="obTitle">Welcome to Sharjah</h1>
+      <p class="lede" data-i18n="obLede">Four quick questions so Daleel can plan your visit.</p>
+      <form id="ob-form" class="ob" novalidate>
+        <div class="field"><label for="ob-name" data-i18n="obName">Your name</label><input id="ob-name" name="name" autocomplete="given-name" maxlength="40" required></div>
+        <div class="field"><label for="ob-age" data-i18n="obAge">Your age</label><input id="ob-age" name="age" type="number" inputmode="numeric" min="1" max="120" required></div>
+        <div class="field"><label for="ob-nat" data-i18n="obNat">Nationality</label><select id="ob-nat" name="nationality" autocomplete="country-name" required></select></div>
+        <div class="field"><label for="ob-land" data-i18n="obLand">Date of landing in the UAE</label><input id="ob-land" name="landing" type="date" required></div>
+        <p class="hint" data-i18n="obPrivacy">Your answers stay on this device. Nothing is sent.</p>
+        <p class="ob-err" id="ob-err" role="alert"></p>
+        <div class="plate-acts">
+          <button class="btn primary" type="submit" data-i18n="obStart">Start planning</button>
+          <button class="btn" type="button" id="ob-skip" data-i18n="obSkip">Skip for now</button>
+        </div>
+      </form>
+    </section>
+
     <!-- INDEX: the day as a table of contents -->
     <section class="leaf" id="leaf-index" aria-labelledby="index-h">
+      <p class="cap" id="greet" hidden></p>
       <h1 id="index-h" tabindex="-1" data-i18n="indexTitle">The day, as an index</h1>
       <p class="lede" data-i18n="indexLede"></p>
       <div class="controls">
@@ -119,7 +139,10 @@
         <div>
           <div class="controls">
             <div class="field"><label for="rec-site" data-i18n="recWhere">Where are you recycling?</label><select id="rec-site"></select></div>
+            <button class="btn" type="button" id="rec-locate" data-i18n="recLocCheck">Check my location</button>
           </div>
+          <!-- GPS location check: confirms the visitor is at the chosen place (read once, kept on the device) -->
+          <p class="hint" id="rec-loc" role="status" aria-live="polite" style="margin-top:8px"></p>
           <section id="recycle" aria-labelledby="rec-h"></section>
           <input type="file" id="rec-file" accept="image/*" capture="environment" hidden>
           <h2 style="margin-top:30px" data-i18n="impactTitle">Your impact</h2>
@@ -211,6 +234,7 @@
       <label class="check"><input type="checkbox" id="heat-sensitive"><span data-i18n="heatSensitive">Avoid outdoor heat</span></label>
       <div><label class="check"><input type="checkbox" id="auto-read"><span data-i18n="autoRead">Read guide answers aloud automatically</span></label><p class="hint" data-i18n="captions"></p></div>
       <div class="field"><label for="rate" data-i18n="rate">Speech rate</label><input id="rate" type="range" min="0.7" max="1.3" step="0.1"></div>
+      <div><button class="btn" type="button" id="edit-profile" data-i18n="obEdit">Change your details</button></div>
       <fieldset class="hands">
         <legend data-i18n="handsFree">Hands-free (Sahm)</legend>
         <p class="hint" data-i18n="handsFreeHelp"></p>

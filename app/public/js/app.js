@@ -27,6 +27,7 @@ const state = {
   notes: {}, // siteId -> [{ q, a, offline, pending }]
   prefs: Object.assign({ lang: "en", scale: 100, theme: "light", calm: false, still: false, autoRead: false, rate: 1, heatSensitive: false, audience: "adult", voice: false, head: false, wink: false }, store.get("prefs", {})),
   leaf: "index",
+  profile: store.get("profile", null), // { name, age, nationality, landing } or { skipped: true }
   offers: [],
   // Recycling rewards: missions done, points spent, vouchers, and step progress per place for today.
   recycle: Object.assign({ log: [], spent: 0, vouchers: [], progress: { date: "", steps: {} } }, store.get("recycle", {})),
@@ -414,12 +415,46 @@ function recSite() {
   if (!state.byId[state.recSite]) state.recSite = inPlan.includes(state.selected) ? state.selected : inPlan[0] || state.selected;
   return state.byId[state.recSite];
 }
+// GPS location check for the Recycle leaf: is the visitor at (or near) the chosen place?
+// Site coordinates are approximate (about 300 m), so "at the place" means within 400 m. Read once, never stored or sent.
+const NEAR_M = 400;
+function metresBetween(a, b) {
+  const R0 = 6371000, rad = Math.PI / 180, dLat = (b.lat - a.lat) * rad, dLng = (b.lng - a.lng) * rad;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLng / 2) ** 2;
+  return 2 * R0 * Math.asin(Math.sqrt(h));
+}
+const fmtDist = (m) => (m < 1000 ? t("distM", { v: Math.round(m / 10) * 10 }) : t("distKm", { v: (Math.round(m / 100) / 10).toLocaleString(getLang() === "ar" ? "ar-AE-u-nu-latn" : "en") }));
+function renderLocation() {
+  const L = state.recLoc, s = recSite(), el = $("#rec-loc");
+  if (!L || L.status === "idle") { el.textContent = t("recLocHelp"); return; }
+  if (L.status === "checking") { el.textContent = t("recLocChecking"); return; }
+  if (L.status === "denied") { el.textContent = t("recLocDenied"); return; }
+  if (L.status === "none") { el.textContent = t("recLocNone"); return; }
+  const d = metresBetween(L.pos, s);
+  el.textContent = d <= NEAR_M ? t("recLocHere", { name: name(s), d: fmtDist(d) }) : t("recLocFar", { name: name(s), d: fmtDist(d) });
+}
+const locatedAt = (id) => state.recLoc?.pos && metresBetween(state.recLoc.pos, state.byId[id]) <= NEAR_M;
+function checkLocation() {
+  if (!navigator.geolocation) { state.recLoc = { status: "none" }; return renderLocation(); }
+  state.recLoc = { status: "checking" }; renderLocation();
+  navigator.geolocation.getCurrentPosition((p) => {
+    const pos = { lat: p.coords.latitude, lng: p.coords.longitude };
+    state.recLoc = { status: "done", pos };
+    // if the visitor is standing at a different place than the one picked, switch to it
+    const nearest = state.sites.map((x) => [x, metresBetween(pos, x)]).sort((a, b) => a[1] - b[1])[0];
+    if (nearest && nearest[1] <= NEAR_M && nearest[0].id !== state.recSite) { state.recSite = nearest[0].id; renderRecycleLeaf(); }
+    renderLocation(); announce($("#rec-loc").textContent);
+  }, (err) => { state.recLoc = { status: err.code === 1 ? "denied" : "none" }; renderLocation(); },
+  { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+}
+
 function renderRecycleLeaf() {
   const s = recSite(), inPlan = new Set(plan.items.map((i) => i.site.id));
   const opt = (x) => `<option value="${x.id}" ${x.id === s.id ? "selected" : ""}>${esc(name(x))}</option>`;
   $("#rec-site").innerHTML = `<optgroup label="${esc(t("recInPlan"))}">${plan.items.map((i) => opt(i.site)).join("")}</optgroup>
     <optgroup label="${esc(t("recAll"))}">${state.sites.filter((x) => !inPlan.has(x.id)).map(opt).join("")}</optgroup>`;
   renderRecycle(s);
+  renderLocation();
   const R = E.recycleTotals(state.recycle.log, state.recycle.spent);
   const f1 = (v) => (Math.round(v * 10) / 10).toLocaleString(getLang() === "ar" ? "ar-AE-u-nu-latn" : "en");
   $("#rec-ledger").innerHTML = [["ledBottles", R.bottles], ["ledPlastic", t("kg", { v: f1(R.plasticKg) })], ["ledCo2Saved", t("kg", { v: f1(R.co2Kg) })], ["ledPoints", t("pts", { v: R.balance })]]
@@ -479,9 +514,9 @@ function photoChosen() {
     let msg = t("recOk_" + k, vars);
     if (step + 1 >= E.RECYCLE.steps.length) {
       const points = E.missionPoints(state.recycle.log, s.id);
-      state.recycle.log.push({ siteId: s.id, date: todayIso(), bottles: E.RECYCLE.bottles, points });
+      state.recycle.log.push({ siteId: s.id, date: todayIso(), bottles: E.RECYCLE.bottles, points, located: !!locatedAt(s.id) });
       delete state.recycle.progress.steps[s.id];
-      msg += " " + t("recDone", { n: E.RECYCLE.bottles, p: points });
+      msg += " " + t("recDone", { n: E.RECYCLE.bottles, p: points }) + " " + t(locatedAt(s.id) ? "recLocOk" : "recLocNot");
     } else {
       state.recycle.progress.steps[s.id] = step + 1;
     }
@@ -568,7 +603,64 @@ function applyPrefs() {
   store.set("prefs", p);
   window.S3?.relabel?.();
   if (lmap && plan) renderMap();
+  if (state.leaf === "welcome") fillWelcome();
   Sahm.configure({ voice: p.voice, head: p.head, wink: p.wink, still: p.still || p.calm });
+}
+
+// ---------- WELCOME (first-visit onboarding) ----------
+const NATIONALITIES = [
+  ["AE", "United Arab Emirates", "الإمارات"], ["SA", "Saudi Arabia", "السعودية"], ["OM", "Oman", "عُمان"], ["KW", "Kuwait", "الكويت"], ["BH", "Bahrain", "البحرين"], ["QA", "Qatar", "قطر"],
+  ["EG", "Egypt", "مصر"], ["JO", "Jordan", "الأردن"], ["LB", "Lebanon", "لبنان"], ["SY", "Syria", "سوريا"], ["IQ", "Iraq", "العراق"], ["PS", "Palestine", "فلسطين"], ["YE", "Yemen", "اليمن"],
+  ["SD", "Sudan", "السودان"], ["MA", "Morocco", "المغرب"], ["DZ", "Algeria", "الجزائر"], ["TN", "Tunisia", "تونس"], ["IN", "India", "الهند"], ["PK", "Pakistan", "باكستان"], ["BD", "Bangladesh", "بنغلاديش"],
+  ["PH", "Philippines", "الفلبين"], ["ID", "Indonesia", "إندونيسيا"], ["MY", "Malaysia", "ماليزيا"], ["CN", "China", "الصين"], ["JP", "Japan", "اليابان"], ["KR", "South Korea", "كوريا الجنوبية"],
+  ["KZ", "Kazakhstan", "كازاخستان"], ["UZ", "Uzbekistan", "أوزبكستان"], ["TM", "Turkmenistan", "تركمانستان"], ["TJ", "Tajikistan", "طاجيكستان"], ["RU", "Russia", "روسيا"], ["TR", "Türkiye", "تركيا"], ["IR", "Iran", "إيران"],
+  ["GB", "United Kingdom", "المملكة المتحدة"], ["DE", "Germany", "ألمانيا"], ["FR", "France", "فرنسا"], ["IT", "Italy", "إيطاليا"], ["ES", "Spain", "إسبانيا"], ["NL", "Netherlands", "هولندا"],
+  ["US", "United States", "الولايات المتحدة"], ["CA", "Canada", "كندا"], ["AU", "Australia", "أستراليا"], ["NG", "Nigeria", "نيجيريا"], ["KE", "Kenya", "كينيا"], ["ZA", "South Africa", "جنوب أفريقيا"],
+];
+function fillWelcome() {
+  const p = state.profile && !state.profile.skipped ? state.profile : {}, ar = getLang() === "ar";
+  const keep = $("#ob-nat").value || p.nationality || "";
+  const sorted = [...NATIONALITIES].sort((a, b) => (ar ? a[2].localeCompare(b[2], "ar") : a[1].localeCompare(b[1])));
+  $("#ob-nat").innerHTML = `<option value="">${esc(t("obChoose"))}</option>` + sorted.map(([c, en, a]) => `<option value="${c}" ${keep === c ? "selected" : ""}>${esc(ar ? a : en)}</option>`).join("")
+    + `<option value="other" ${keep === "other" ? "selected" : ""}>${esc(t("obOther"))}</option>`;
+  if (!$("#ob-name").value) $("#ob-name").value = p.name || "";
+  if (!$("#ob-age").value) $("#ob-age").value = p.age || "";
+  if (!$("#ob-land").value) $("#ob-land").value = p.landing || isoDate(new Date());
+}
+function saveWelcome(e) {
+  e.preventDefault();
+  const f = { name: $("#ob-name").value.trim(), age: +$("#ob-age").value, nationality: $("#ob-nat").value, landing: $("#ob-land").value };
+  const bad = [];
+  if (!f.name) bad.push(["#ob-name", "obErrName"]);
+  if (!(f.age >= 1 && f.age <= 120)) bad.push(["#ob-age", "obErrAge"]);
+  if (!f.nationality) bad.push(["#ob-nat", "obErrNat"]);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(f.landing)) bad.push(["#ob-land", "obErrLand"]);
+  $$("#ob-form [aria-invalid]").forEach((el) => el.removeAttribute("aria-invalid"));
+  if (bad.length) {
+    bad.forEach(([sel]) => $(sel).setAttribute("aria-invalid", "true"));
+    $("#ob-err").textContent = bad.map(([, k]) => t(k)).join(" ");
+    return $(bad[0][0]).focus();
+  }
+  $("#ob-err").textContent = "";
+  state.profile = f; store.set("profile", f);
+  // the plan starts on the day of landing when it is today or later; children get explanations for children
+  const land = new Date(f.landing + "T00:00"), today = new Date(isoDate(new Date()) + "T00:00");
+  if (land >= today) state.date = land;
+  if (f.age < 13) state.prefs.audience = "child";
+  $("#day").value = isoDate(state.date);
+  applyPrefs(); render();
+  location.hash = "#index";
+  announce(t("obHello", { name: f.name }));
+}
+function skipWelcome() {
+  if (!state.profile) { state.profile = { skipped: true }; store.set("profile", state.profile); }
+  location.hash = "#index";
+}
+function renderGreeting() {
+  const p = state.profile, el = $("#greet");
+  if (!p || p.skipped || !p.name) { el.hidden = true; return; }
+  const when = new Date(p.landing + "T00:00").toLocaleDateString(getLang() === "ar" ? "ar-AE-u-nu-latn" : "en-GB", { day: "numeric", month: "long" });
+  el.hidden = false; el.textContent = t("obGreeting", { name: p.name, date: when });
 }
 
 // ---------- 3D ----------
@@ -610,13 +702,16 @@ async function enter3d() {
 function render() {
   recompute();
   renderIndex();
+  renderGreeting();
   renderPlate();
   renderColophon();
   renderRecycleLeaf();
 }
 
 function showLeaf(leaf, focus = true) {
-  state.leaf = ["index", "plate", "colophon", "explore", "recycle"].includes(leaf) ? leaf : "index";
+  state.leaf = ["index", "plate", "colophon", "explore", "recycle", "welcome"].includes(leaf) ? leaf : "index";
+  document.body.classList.toggle("onboarding", state.leaf === "welcome");
+  if (state.leaf === "welcome") fillWelcome();
   if (state.leaf === "explore") enter3d(); else window.S3?.pause?.(true);
   if (state.leaf === "index" && lmap) setTimeout(() => lmap.invalidateSize(), 0);
   $$(".leaf").forEach((el) => el.classList.toggle("on", el.id === "leaf-" + state.leaf));
@@ -674,7 +769,11 @@ function bind() {
   $("#lang-btn").addEventListener("click", () => { state.prefs.lang = state.prefs.lang === "en" ? "ar" : "en"; applyPrefs(); render(); showLeaf(state.leaf, false); });
   $("#settings-btn").addEventListener("click", () => $("#settings").showModal());
   $("#rec-file").addEventListener("change", photoChosen);
-  $("#rec-site").addEventListener("change", (e) => { state.recSite = e.target.value; renderRecycle(state.byId[state.recSite]); });
+  $("#rec-site").addEventListener("change", (e) => { state.recSite = e.target.value; renderRecycle(state.byId[state.recSite]); renderLocation(); });
+  $("#rec-locate").addEventListener("click", checkLocation);
+  $("#ob-form").addEventListener("submit", saveWelcome);
+  $("#ob-skip").addEventListener("click", skipWelcome);
+  $("#edit-profile").addEventListener("click", () => { $("#settings").close(); location.hash = "#welcome"; });
   // hands-free control (Sahm): voice commands, head pointer, wink to click
   for (const [id, key] of [["hf-voice", "voice"], ["hf-head", "head"], ["hf-wink", "wink"]]) {
     $("#" + id).addEventListener("change", (e) => { state.prefs[key] = e.target.checked; if (key === "wink" && e.target.checked) state.prefs.head = true; applyPrefs(); });
@@ -722,7 +821,8 @@ async function boot() {
   applyPrefs();
   bind();
   render();
-  showLeaf(location.hash.slice(1) || "index", false);
+  // first visit: the Welcome leaf asks four questions before the plan
+  showLeaf(state.profile ? location.hash.slice(1) || "index" : "welcome", !state.profile);
   loadLiveHeat();
 }
 
