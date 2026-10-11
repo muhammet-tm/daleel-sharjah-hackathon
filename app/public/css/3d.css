@@ -1,0 +1,54 @@
+/* Daleel — 3D screen (3d.html). New selectors only; colours, type and spacing come from the tokens in app.css. */
+
+/* the 3D view sits in the plate frame, like the Al Hisn model */
+.three-stage { position: relative; height: clamp(320px, 60vh, 620px); background: var(--sand); overflow: hidden; }
+.three-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+.three-stage canvas:active { cursor: grabbing; }
+body.walking .three-stage canvas { cursor: crosshair; }
+
+/* place labels drawn over the scene */
+#labels { position: absolute; inset: 0; pointer-events: none; }
+.lbl { position: absolute; left: 0; top: 0; display: grid; justify-items: center; will-change: transform; }
+.lbl b { font: 500 .8rem/1.25 var(--body); background: var(--sheet); color: var(--ink); border: 1px solid var(--rule); border-radius: 2px; padding: 4px 8px; white-space: nowrap; }
+.lbl small { display: block; font: 400 .72rem/1.3 var(--body); color: var(--rule); }
+.lbl::after { content: ""; width: 1px; height: 14px; background: var(--rule); }
+.lbl.water b { border-color: var(--route); }
+[dir="rtl"] .lbl b, [dir="rtl"] .lbl small { font-family: var(--body-ar); }
+body.nolabels #labels, :root.calm #labels { display: none; }
+
+/* compass needle, same brass as the Daleel mark */
+#compass { position: absolute; inset-inline-end: 10px; bottom: 10px; width: 40px; height: 40px; border-radius: 50%; background: var(--sheet); border: 1px solid var(--rule); }
+#needle { width: 100%; height: 100%; display: grid; justify-items: center; align-content: start; }
+#needle b { font: 600 .62rem/1 var(--mono); color: var(--rubric); margin-top: 4px; }
+#needle span { width: 0; height: 0; border-inline: 4px solid transparent; border-bottom: 10px solid var(--brass); margin-top: 1px; }
+
+/* loading state inside the frame */
+#loader { position: absolute; inset: 0; display: grid; place-items: center; background: var(--sand); text-align: center; padding: 20px; }
+#loader p { margin: 0; font: 400 1.15rem/1.4 var(--display); color: var(--ink); max-width: 36ch; }
+[dir="rtl"] #loader p { font-family: var(--display-ar); }
+#loader.done { display: none; }
+
+/* controls under the plate */
+.three-ctl { margin-top: 14px; display: grid; gap: 8px; }
+.three-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.three-time { display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: end; }
+.three-time .field { flex: 1 1 240px; }
+.three-clock { margin: 0; display: flex; align-items: baseline; gap: 10px; min-height: var(--tap); }
+#clock { font: 500 1.6rem/1 var(--mono); font-variant-numeric: tabular-nums; }
+
+/* margin: facts, help, other places */
+.three-ledger { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 14px; }
+.three-ledger dd { font-size: 1.45rem; }
+.three-ledger dd.small { font: 500 1.02rem/1.3 var(--display); }
+[dir="rtl"] .three-ledger dd.small { font-family: var(--display-ar); }
+.three-help { margin-top: 14px; }
+.three-places { margin-top: 26px; }
+.three-places .place { grid-template-columns: minmax(0, 1fr); }
+.three-places .pn button[aria-current] { color: var(--rubric); }
+
+/* full screen: the frame covers the page, controls stay below */
+.three-frame.full { position: fixed; inset: 0; z-index: 30; padding: calc(env(safe-area-inset-top, 0px) + 10px) 10px 10px; display: flex; flex-direction: column; }
+.three-frame.full .three-stage { height: auto; flex: 1; }
+body.full3d #timeCtl { position: fixed; z-index: 31; inset-inline: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 46px); background: var(--page); border: 1px solid var(--rule); padding: 10px; }
+
+:root.calm .three-stage { height: clamp(300px, 50vh, 520px); }

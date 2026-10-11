@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Explore in 3D · Daleel</title>
+  <meta name="description" content="Hand-built 3D scenes of Sharjah sites in Daleel, lit for the hour of your visit.">
+  <meta name="theme-color" content="#F7F3EA">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M12 2h16l10 10v16L28 38H12L2 28V12z' fill='%23F7F3EA' stroke='%23C9A24D' stroke-width='3'/%3E%3Cpath d='M20 20 L29 9' stroke='%23C9A24D' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='20' r='4' fill='%2314213D'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/3d.css">
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+  <header class="head">
+    <div class="head-top">
+      <a class="mark" href="index.html#index" aria-label="Daleel, home">
+        <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 2h16l10 10v16L28 38H12L2 28V12z" fill="none" stroke="#C9A24D" stroke-width="2"/><circle cx="20" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="1"/><path d="M20 20 L29 9" stroke="#C9A24D" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="20" r="3.5" fill="#C9A24D"/></svg>
+        <b>Daleel<span lang="ar" dir="rtl">دليل</span></b>
+      </a>
+      <span class="tag" data-i18n="tagline">Look Up</span>
+      <div class="tools">
+        <button class="icon-btn" id="lang-btn" type="button" lang="ar">العربية</button>
+      </div>
+    </div>
+    <nav class="leaves" aria-label="Leaves" data-i18n-aria="navLabel">
+      <a href="index.html#index" data-i18n="navIndex">Index</a>
+      <a href="index.html#plate" data-i18n="navPlate">Plate</a>
+      <a href="index.html#colophon" data-i18n="navColophon">Colophon</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="leaf on" aria-labelledby="p3-h">
+      <p class="cap" id="p3-eyebrow"></p>
+      <h1 id="p3-h" tabindex="-1"></h1>
+      <p class="lede" id="p3-lede"></p>
+      <div class="spread">
+        <div>
+          <figure class="plate-frame three-frame" id="frame3d" style="margin:0">
+            <div class="three-stage">
+              <canvas id="c" tabindex="0" role="img" aria-label="3D view"></canvas>
+              <div id="labels" aria-hidden="true"></div>
+              <div id="compass" aria-hidden="true"><div id="needle"><b>N</b><span></span></div></div>
+              <div id="loader"><p></p></div>
+            </div>
+            <figcaption class="cap plate-cap" data-i18n="artist3d"></figcaption>
+          </figure>
+
+          <div class="three-ctl">
+            <span class="cap" id="views-l" data-i18n="views3d">Views</span>
+            <div class="three-row" role="group" aria-labelledby="views-l">
+              <button class="btn small" type="button" id="tourBtn" aria-pressed="true" data-i18n="tour3d">Tour</button>
+              <span class="three-row" id="views"></span>
+            </div>
+          </div>
+
+          <div class="three-ctl" id="timeCtl">
+            <div class="three-time">
+              <div class="field"><label for="hour" data-i18n="hour3d">Hour</label>
+                <input id="hour" type="range" min="0" max="24" step="0.05" value="16"></div>
+              <p class="three-clock"><span id="clock">16:00</span> <span id="phase" class="cap"></span></p>
+            </div>
+            <div class="three-row">
+              <button class="btn small" type="button" id="playDay" aria-pressed="false" data-i18n="runDay3d">Run the day</button>
+              <button class="btn small" type="button" id="labelsBtn" aria-pressed="true" data-i18n="labels3d">Labels</button>
+              <button class="btn small" type="button" id="fullBtn" aria-pressed="false" data-i18n="full3d">Full screen</button>
+            </div>
+          </div>
+
+          <div class="plate-acts">
+            <a class="btn primary" id="back3d" href="index.html#plate" data-i18n="back3d">Back to the plate</a>
+            <a class="btn" id="mapLink" href="#" target="_blank" rel="noopener" data-i18n="openMaps">Directions in Maps</a>
+          </div>
+        </div>
+
+        <section class="margin-col" aria-labelledby="glance-h">
+          <h2 id="glance-h" data-i18n="glance3d">At a glance</h2>
+          <dl class="ledger three-ledger" id="facts"></dl>
+          <p class="hint three-help" id="help3d"></p>
+          <div class="places three-places">
+            <h2 data-i18n="places3d">Places in 3D</h2>
+            <div id="places"></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="sr-only" role="status" aria-live="polite" id="announce"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/objects/Sky.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/objects/Water.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/utils/BufferGeometryUtils.js"></script>
+  <script src="js/3d/core.js"></script>
+  <script src="js/3d/place-central-souq.js"></script>
+  <script src="js/3d/place-souq-inside.js"></script>
+  <script src="js/3d/place-al-noor.js"></script>
+  <script src="js/3d/place-museum.js"></script>
+  <script src="js/3d/place-shanasiyah.js"></script>
+  <script src="js/3d/place-suhub.js"></script>
+  <script type="module" src="js/3d/boot.js"></script>
+</body>
+</html>
