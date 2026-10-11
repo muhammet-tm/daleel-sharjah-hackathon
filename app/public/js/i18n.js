@@ -56,6 +56,9 @@ const S = {
     viewAr: "View in your space",
     arHelp: "On a phone, this places the model on a table through the camera. On other devices, drag to turn the model; use arrow keys when it has focus.",
     // plate pictures
+    "plateEra_blue-souk_1823": "Before the souq: open sand by the lagoon shore. (Illustration, a modern photo.)",
+    "plateEra_blue-souk_1978": "The souq opens in 1978: two long wings and their wind towers rise on an almost empty road.",
+    "plateEra_blue-souk_today": "Today: the Blue Souq, with more than 600 shops of gold, carpets, antiques and textiles.",
     shotsLabel: "Pictures of this place", shotFront: "The front", shotAir: "From the air", shotInside: "Inside", shot1823: "1823", shot1978: "1978", shot3d: "3D model",
     creditTeam: "Photo: Daleel team", creditArchive: "Archive photo", creditIllustration: "Illustration: a modern desert photo, not from 1823",
     // PLACEHOLDER: indoor AR wayfinding (see js/ar-wayfinding.js)
@@ -214,6 +217,9 @@ const S = {
     viewAr: "اعرضه في مكانك",
     arHelp: "على الهاتف، يضع هذا النموذج على طاولة عبر الكاميرا. على الأجهزة الأخرى، اسحب لتدوير النموذج، أو استخدم مفاتيح الأسهم عند تحديده.",
     // صور اللوحة
+    "plateEra_blue-souk_1823": "قبل السوق: رمال مفتوحة على شاطئ البحيرة. (توضيح، صورة حديثة.)",
+    "plateEra_blue-souk_1978": "افتتاح السوق عام 1978: جناحان طويلان وأبراج الهواء على طريق شبه خالٍ.",
+    "plateEra_blue-souk_today": "اليوم: السوق الأزرق، بأكثر من 600 محل للذهب والسجاد والتحف والمنسوجات.",
     shotsLabel: "صور هذا المكان", shotFront: "الواجهة", shotAir: "من الجو", shotInside: "من الداخل", shot1823: "1823", shot1978: "1978", shot3d: "نموذج ثلاثي الأبعاد",
     creditTeam: "تصوير: فريق دليل", creditArchive: "صورة أرشيفية", creditIllustration: "توضيح: صورة حديثة للصحراء، ليست من عام 1823",
     // مؤقت: الإرشاد داخل المكان بالواقع المعزز (انظر js/ar-wayfinding.js)

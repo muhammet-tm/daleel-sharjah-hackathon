@@ -21,7 +21,7 @@ const state = {
   sites: [], byId: {},
   date: new Date(), start: 9,
   stops: store.get("stops", DEFAULT_STOPS),
-  selected: store.get("selected", "al-hisn"),
+  selected: "blue-souk", // the Plate always opens on the Central Souq; choosing another place still works during the visit
   era: "today",
   heat: { live: null, sample: null, july: false },
   notes: {}, // siteId -> [{ q, a, offline, pending }]
@@ -250,12 +250,12 @@ const ERAS = ["1823", "1969", "today"];
 // Files live in public/plates/. A missing file is skipped, so a photo appears as soon as it is saved there.
 const PLATES = {
   "blue-souk": [
-    { src: "plates/blue-souk-1823.jpg", kind: "illustration", label: "shot1823", alt: { en: "Open desert with camels walking over low dunes at sunset, suggesting the land before the souq.", ar: "صحراء مفتوحة وجمال تمشي فوق كثبان منخفضة عند الغروب، توحي بالأرض قبل السوق." } },
-    { src: "plates/blue-souk-1978.jpg", kind: "archive", label: "shot1978", alt: { en: "Black-and-white photo of the newly opened souq in 1978: both wings and their wind towers across an almost empty road.", ar: "صورة بالأبيض والأسود للسوق عند افتتاحه عام 1978: الجناحان وأبراج الهواء عبر طريق شبه خالٍ." } },
-    { src: "plates/blue-souk-1.jpg", kind: "photo", label: "shotFront", start: true, alt: { en: "The front of the Central Souq: a blue-tiled arch, a glazed vault and tall wind towers above two floors of arches.", ar: "واجهة السوق المركزي: قوس مكسو بالبلاط الأزرق وقبو زجاجي وأبراج هواء عالية فوق طابقين من الأقواس." } },
-    { src: "plates/blue-souk-2.jpg", kind: "photo", label: "shotAir", alt: { en: "Both wings of the souq from the air, joined by bridges, with Khalid Lagoon and the harbour behind.", ar: "جناحا السوق من الجو تربطهما الجسور، وخلفهما بحيرة خالد والميناء." } },
-    { src: "plates/blue-souk-3.jpg", kind: "photo", label: "shotInside", alt: { en: "Inside the main hall: shop fronts on two levels, a central escalator and a hanging chandelier under the vault.", ar: "داخل القاعة الرئيسية: واجهات محلات على طابقين، وسلم كهربائي في الوسط، وثريا معلقة تحت القبو." } },
-    { src: "plates/blue-souk-3d.jpg", kind: "render", label: "shot3d" },
+    { src: "plates/blue-souk-1823.jpg", kind: "illustration", era: "1823", label: "shot1823", alt: { en: "Open desert with camels walking over low dunes at sunset, suggesting the land before the souq.", ar: "صحراء مفتوحة وجمال تمشي فوق كثبان منخفضة عند الغروب، توحي بالأرض قبل السوق." } },
+    { src: "plates/blue-souk-1978.jpg", kind: "archive", era: "1978", label: "shot1978", alt: { en: "Black-and-white photo of the newly opened souq in 1978: both wings and their wind towers across an almost empty road.", ar: "صورة بالأبيض والأسود للسوق عند افتتاحه عام 1978: الجناحان وأبراج الهواء عبر طريق شبه خالٍ." } },
+    { src: "plates/blue-souk-1.jpg", kind: "photo", era: "today", label: "shotFront", start: true, alt: { en: "The front of the Central Souq: a blue-tiled arch, a glazed vault and tall wind towers above two floors of arches.", ar: "واجهة السوق المركزي: قوس مكسو بالبلاط الأزرق وقبو زجاجي وأبراج هواء عالية فوق طابقين من الأقواس." } },
+    { src: "plates/blue-souk-2.jpg", kind: "photo", era: "today", label: "shotAir", alt: { en: "Both wings of the souq from the air, joined by bridges, with Khalid Lagoon and the harbour behind.", ar: "جناحا السوق من الجو تربطهما الجسور، وخلفهما بحيرة خالد والميناء." } },
+    { src: "plates/blue-souk-3.jpg", kind: "photo", era: "today", label: "shotInside", alt: { en: "Inside the main hall: shop fronts on two levels, a central escalator and a hanging chandelier under the vault.", ar: "داخل القاعة الرئيسية: واجهات محلات على طابقين، وسلم كهربائي في الوسط، وثريا معلقة تحت القبو." } },
+    { src: "plates/blue-souk-3d.jpg", kind: "render", era: "today", label: "shot3d" },
   ],
   "al-noor-mosque": [{ src: "plates/al-noor-mosque-3d.jpg", kind: "render", label: "shot3d" }],
   "islamic-museum": [{ src: "plates/islamic-museum-3d.jpg", kind: "render", label: "shot3d" }],
@@ -272,7 +272,17 @@ function renderPicture(s, n) {
   const img = `<img class="plate-img${sh.kind === "archive" ? " whole" : ""}" src="${sh.src}" alt="${esc(alt)}">`;
   $("#plate-figure").innerHTML = (SCENES_3D.has(s.id) ? `<button type="button" class="plate-pic" data-explore="${s.id}" aria-label="${esc(t("explore3d"))}. ${esc(alt)}">${img}</button>` : img)
     + `<figcaption class="cap plate-cap">${esc(t("plateCaption", { n, name: name(s) }))} · ${esc(t(sh.label))} · ${esc(credit)}</figcaption>`;
-  $("#era").innerHTML = shots.length > 1 ? `<div class="seg plate-shots" role="group" aria-label="${esc(t("shotsLabel"))}">${shots.map((x, k) => `<button type="button" data-shot="${k}" aria-pressed="${k === i}">${esc(t(x.label))}</button>`).join("")}</div>` : "";
+  const eras = [...new Set(shots.map((x) => x.era).filter(Boolean))];
+  if (eras.length > 1) {
+    const inEra = shots.map((x, k) => [x, k]).filter(([x]) => x.era === sh.era);
+    const first = (e) => { const k = shots.findIndex((x) => x.era === e && x.start); return k >= 0 ? k : shots.findIndex((x) => x.era === e); };
+    $("#era").innerHTML = `<div class="era"><span class="cap" id="pera-l">${esc(t("era"))}</span>
+      <div class="era-steps plate-eras" role="group" aria-labelledby="pera-l" style="grid-template-columns:repeat(${eras.length}, 1fr)">${eras.map((e) => `<button type="button" data-shot="${first(e)}" aria-pressed="${sh.era === e}">${esc(e === "today" ? t("eraToday") : e)}</button>`).join("")}</div>
+      <p class="era-desc">${esc(t("plateEra_" + s.id + "_" + sh.era))}</p>
+      ${inEra.length > 1 ? `<div class="seg plate-shots" role="group" aria-label="${esc(t("shotsLabel"))}">${inEra.map(([x, k]) => `<button type="button" data-shot="${k}" aria-pressed="${k === i}">${esc(t(x.label))}</button>`).join("")}</div>` : ""}</div>`;
+  } else {
+    $("#era").innerHTML = shots.length > 1 ? `<div class="seg plate-shots" role="group" aria-label="${esc(t("shotsLabel"))}">${shots.map((x, k) => `<button type="button" data-shot="${k}" aria-pressed="${k === i}">${esc(t(x.label))}</button>`).join("")}</div>` : "";
+  }
   $("#plate-figure .plate-img").addEventListener("error", () => { missingPics.add(sh.src); renderPlate(); }, { once: true });
   return true;
 }

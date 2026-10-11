@@ -9,3 +9,4 @@
 .rec-example { margin: 0; }
 .rec-example img { display: block; width: 96px; aspect-ratio: 3 / 4; object-fit: cover; border: 1px solid var(--hair); background: var(--sand); }
 .rec-example figcaption { margin-top: 4px; font-size: .68rem; }
+.plate-eras button[aria-pressed="true"] { background: var(--ink); color: var(--page); }  /* same as the Al Hisn period control */
