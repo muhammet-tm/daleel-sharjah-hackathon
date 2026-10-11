@@ -18,7 +18,7 @@
 /* the head pointer: a brass ring like the compass needle in the mark */
 #sahm-pointer { position: fixed; z-index: 60; left: -14px; top: -14px; width: 28px; height: 28px; border-radius: 50%; pointer-events: none;
   border: 3px solid var(--brass); box-shadow: 0 0 0 2px var(--page), 0 0 0 4px var(--ink); will-change: transform; }
-#sahm-pointer::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--ink); }
+#sahm-pointer::after { content: ""; position: absolute; inset: calc(9px - var(--eye, 0) * 9px); border-radius: 50%; background: var(--ink); opacity: calc(.6 + var(--eye, 0) * .4); }  /* fills while a wink or blink is held */
 #sahm-pointer.click { animation: sahm-click 260ms var(--ease); }
 @keyframes sahm-click { from { box-shadow: 0 0 0 2px var(--page), 0 0 0 14px var(--brass); } }
 .sahm-hover { outline: 3px solid var(--focus) !important; outline-offset: 2px; }

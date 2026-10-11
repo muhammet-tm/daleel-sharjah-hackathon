@@ -1,5 +1,5 @@
 // Hands-free control from the Sahm research project (Abdallah, Alkhazraji, Al-Rajab):
-// voice commands in English and Arabic, a head-tracked pointer (MediaPipe face landmarks, nose tip), and a one-eye wink to click.
+// voice commands in English and Arabic, a head-tracked pointer (MediaPipe face landmarks, nose tip), and wink or blink to click.
 // Everything runs in the browser: video frames and audio are never recorded or sent by Daleel.
 // (Speech recognition uses the browser's own service, which in Chrome is provided by Google.)
 
@@ -90,7 +90,8 @@ function startVoice() {
 function stopVoice(silent) { voice.want = false; const r = voice.rec; voice.rec = null; if (r) { r.onend = null; try { r.abort(); } catch { /* not started */ } } if (!silent && !opts.head) say(""); }
 
 /* ---------- head pointer and wink ---------- */
-const head = { running: false, starting: false, stream: null, lm: null, neutral: null, calib: [], x: 0, y: 0, hover: null, wink: 0, lastClick: 0, edge: 0, last: 0 };
+const head = { running: false, starting: false, stream: null, lm: null, neutral: null, calib: [], x: 0, y: 0, hover: null, lastClick: 0, edge: 0, last: 0,
+  eye: { base: null, closedSince: 0, armed: true } };   // eye gesture state: learned open-eye level, when the eyes closed, ready for the next click
 async function startHead() {
   if (head.running || head.starting) return;
   head.starting = true; say(ctx.t("sahmLoading"), true);
@@ -116,7 +117,7 @@ function stopHead() {
   head.stream = null; $("#sahm-cam").srcObject = null;
   setHover(null); panel();
 }
-function centre(silent) { head.neutral = null; head.calib = []; head.x = innerWidth / 2; head.y = innerHeight / 2; if (!silent) say(ctx.t("sahmCentre")); }
+function centre(silent) { head.eye.base = null; head.eye.armed = true; head.eye.closedSince = 0; head.neutral = null; head.calib = []; head.x = innerWidth / 2; head.y = innerHeight / 2; if (!silent) say(ctx.t("sahmCentre")); }
 
 function loop(now) {
   if (!head.running) return;
@@ -135,19 +136,39 @@ function loop(now) {
   head.x = Math.min(innerWidth - 2, Math.max(2, head.x + (tx - head.x) * k));
   head.y = Math.min(innerHeight - 2, Math.max(2, head.y + (ty - head.y) * k));
   const p = $("#sahm-pointer"); p.style.transform = `translate(${head.x}px, ${head.y}px)`;
+  const layer = document.querySelector("dialog[open]") || document.body;
+  if (p.parentElement !== layer) layer.appendChild(p);
   setHover(targetAt(head.x, head.y));
   // hold the pointer at the top or bottom edge to scroll
   const edge = head.y > innerHeight - 36 ? 1 : head.y < 36 ? -1 : 0;
   head.edge = edge ? head.edge + 1 : 0;
   if (head.edge > 15) scrollBy(0, edge * 14);
-  // a deliberate wink with one eye (the other open) for a few frames clicks; blinking both eyes does nothing
-  if (opts.wink && r.faceBlendshapes && r.faceBlendshapes[0]) {
-    const c = r.faceBlendshapes[0].categories, L = c.find((x) => x.categoryName === "eyeBlinkLeft")?.score || 0, R = c.find((x) => x.categoryName === "eyeBlinkRight")?.score || 0;
-    const wink = (L > 0.55 && R < 0.25) || (R > 0.55 && L < 0.25);
-    head.wink = wink ? head.wink + 1 : 0;
-    if (head.wink === 4 && now - head.lastClick > 900) { head.lastClick = now; clickAtPointer(); }
-  }
+  if (opts.wink && r.faceBlendshapes && r.faceBlendshapes[0]) eyeGesture(r.faceBlendshapes[0].categories, now);
 }
+// Click with the eyes: a wink (one eye shut, the other open) held for about 0.15 s, or a deliberate blink (both eyes shut)
+// held for about 0.45 s. Natural blinks are shorter and are ignored. Thresholds follow each visitor's own open-eye level,
+// learned while the eyes are open, so looking down at a laptop does not break it. After a click the gesture re-arms as
+// soon as both eyes are open again. The pointer ring fills while a gesture is being held.
+const WINK_MS = 150, BLINK_MS = 450;
+function eyeGesture(cats, now) {
+  const E = head.eye, L = cats.find((x) => x.categoryName === "eyeBlinkLeft")?.score || 0, R = cats.find((x) => x.categoryName === "eyeBlinkRight")?.score || 0;
+  const lo = Math.min(L, R);
+  if (E.base == null) E.base = lo;
+  if (Math.max(L, R) < (E.base + 0.25)) E.base += (Math.min(L, R) - E.base) * 0.05;     // keep learning the open-eye level
+  const shut = Math.min(0.85, Math.max(0.45, E.base + 0.35)), open = Math.min(shut - 0.15, E.base + 0.15);
+  const lShut = L > shut, rShut = R > shut, lOpen = L < open, rOpen = R < open;
+  const wink = (lShut && rOpen) || (rShut && lOpen), blink = lShut && rShut;
+  const p = $("#sahm-pointer");
+  if (!E.armed) { if (lOpen && rOpen) E.armed = true; p.style.setProperty("--eye", 0); return; }
+  if (wink || blink) {
+    if (!E.closedSince) { E.closedSince = now; E.kind = wink ? "wink" : "blink"; }
+    if (wink) E.kind = "wink";
+    const need = E.kind === "wink" ? WINK_MS : BLINK_MS, held = now - E.closedSince;
+    p.style.setProperty("--eye", Math.min(1, held / need));
+    if (held >= need && now - head.lastClick > 400) { head.lastClick = now; E.armed = false; E.closedSince = 0; p.style.setProperty("--eye", 0); clickAtPointer(); }
+  } else { E.closedSince = 0; p.style.setProperty("--eye", 0); }
+}
+
 function targetAt(x, y) {
   const el = document.elementFromPoint(x, y);
   return el && el.closest("button, a[href], input, select, textarea, label, summary, [role=radio], [tabindex]:not([tabindex='-1'])");
