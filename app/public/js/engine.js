@@ -185,6 +185,30 @@ export function ledger(items) {
   return L;
 }
 
+// ---- recycling rewards ----
+// A mission at a place has three photo steps (collect, landmark, bin). Photo checks are simulated and always
+// report RECYCLE.bottles. Each place can be recycled once per day. Plastic and CO2 per bottle are rough estimates
+// for a 500 ml PET bottle.
+export const RECYCLE = { steps: ["collect", "landmark", "bin"], bottles: 3, perBottle: 25, newPlaceBonus: 50, kgPlasticPerBottle: 0.02, kgCo2PerBottle: 0.08 };
+
+export function missionPoints(log, siteId, bottles = RECYCLE.bottles) {
+  const first = !log.some((m) => m.siteId === siteId);
+  return bottles * RECYCLE.perBottle + (first ? RECYCLE.newPlaceBonus : 0);
+}
+
+export const recycledOn = (log, siteId, isoDate) => log.some((m) => m.siteId === siteId && m.date === isoDate);
+
+// log: [{ siteId, date, bottles, points }]; spent: points already turned into vouchers.
+export function recycleTotals(log, spent = 0) {
+  const bottles = log.reduce((a, m) => a + m.bottles, 0);
+  const earned = log.reduce((a, m) => a + m.points, 0);
+  return {
+    missions: log.length, bottles, earned, balance: earned - spent,
+    places: new Set(log.map((m) => m.siteId)).size,
+    plasticKg: bottles * RECYCLE.kgPlasticPerBottle, co2Kg: bottles * RECYCLE.kgCo2PerBottle,
+  };
+}
+
 // ---- nudges ----
 // For each busy or hot stop, propose either a better hour for the same place or a quieter place of the same kind.
 // Each suggestion carries an `apply` description the UI can execute in one tap.

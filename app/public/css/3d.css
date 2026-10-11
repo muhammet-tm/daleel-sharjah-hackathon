@@ -9,9 +9,9 @@ body.walking .three-stage canvas { cursor: crosshair; }
 /* place labels drawn over the scene */
 #p3-labels { position: absolute; inset: 0; pointer-events: none; }
 .lbl { position: absolute; left: 0; top: 0; display: grid; justify-items: center; will-change: transform; }
-.lbl b { font: 500 .8rem/1.25 var(--body); background: var(--sheet); color: var(--ink); border: 1px solid var(--rule); border-radius: 2px; padding: 4px 8px; white-space: nowrap; }
-.lbl small { display: block; font: 400 .72rem/1.3 var(--body); color: var(--rule); }
-.lbl::after { content: ""; width: 1px; height: 14px; background: var(--rule); }
+.lbl b { font: 600 .92rem/1.25 var(--body); background: var(--page); color: var(--ink); border: 1px solid var(--ink); border-inline-start: 4px solid var(--brass); border-radius: 2px; padding: 6px 10px; white-space: nowrap; box-shadow: 0 1px 0 var(--hair); }
+.lbl small { display: block; font: 400 .8rem/1.35 var(--body); color: var(--ink); opacity: .8; }
+.lbl::after { content: ""; width: 2px; height: 16px; background: var(--ink); }
 .lbl.water b { border-color: var(--route); }
 [dir="rtl"] .lbl b, [dir="rtl"] .lbl small { font-family: var(--body-ar); }
 body.nolabels #p3-labels, :root.calm #p3-labels { display: none; }

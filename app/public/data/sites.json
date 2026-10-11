@@ -5,7 +5,8 @@
     "coordinates": "Approximate to about 300 m; good enough for travel-time estimates, not for turn-by-turn navigation.",
     "hours": "Typical public opening hours; verify each site on its official page before the demo.",
     "busy": "Typical hours, curated estimates, not live data. The profile names map to hourly curves in js/engine.js.",
-    "regions": "city = Sharjah city; central = Central Region (Mleiha, desert); east = East Coast (Khor Fakkan, Kalba)."
+    "regions": "city = Sharjah city; central = Central Region (Mleiha, desert); east = East Coast (Khor Fakkan, Kalba).",
+    "offers": "Recycling rewards: example partner offers for the demo, not real partnerships. Points come from simulated photo checks."
   },
   "sites": [
     {
@@ -240,5 +241,15 @@
       "describe": { "en": "A still green lake between steep rocky mountains, with a dam wall and a waterside path.", "ar": "بحيرة خضراء هادئة بين جبال صخرية شديدة الانحدار، مع جدار السد وممشى بجانب الماء." },
       "verify": ["hours", "boat rental"]
     }
+  ],
+  "offers": [
+    { "id": "spice-house", "siteId": "blue-souk", "cost": 80, "shop": { "en": "Blue Souk Spice House", "ar": "بيت بهارات السوق الأزرق" }, "offer": { "en": "15% off spices", "ar": "خصم 15% على البهارات" } },
+    { "id": "karak-cafe", "siteId": "heart-of-sharjah", "cost": 50, "shop": { "en": "Old Town Karak Café", "ar": "مقهى كرك المدينة القديمة" }, "offer": { "en": "Free karak tea", "ar": "كرك مجاني" } },
+    { "id": "calligraphy", "siteId": "islamic-museum", "cost": 100, "shop": { "en": "Calligraphy Corner", "ar": "ركن الخط العربي" }, "offer": { "en": "15% off calligraphy prints", "ar": "خصم 15% على لوحات الخط" } },
+    { "id": "lagoon-juice", "siteId": "al-noor-mosque", "cost": 60, "shop": { "en": "Lagoon Juice Bar", "ar": "عصائر البحيرة" }, "offer": { "en": "Free fresh juice", "ar": "عصير طازج مجاني" } },
+    { "id": "majaz-coffee", "siteId": "al-majaz", "cost": 60, "shop": { "en": "Waterfront Coffee Cart", "ar": "عربة قهوة الواجهة المائية" }, "offer": { "en": "Free Arabic coffee and dates", "ar": "قهوة عربية وتمر مجانًا" } },
+    { "id": "qasba-sweets", "siteId": "al-qasba", "cost": 80, "shop": { "en": "Qasba Sweets", "ar": "حلويات القصباء" }, "offer": { "en": "10% off sweets", "ar": "خصم 10% على الحلويات" } },
+    { "id": "mleiha-dates", "siteId": "mleiha", "cost": 120, "shop": { "en": "Mleiha Date Stall", "ar": "بسطة تمور مليحة" }, "offer": { "en": "Free box of local dates", "ar": "علبة تمور محلية مجانًا" } },
+    { "id": "kf-honey", "siteId": "khor-fakkan-beach", "cost": 150, "shop": { "en": "Khor Fakkan Mountain Honey", "ar": "عسل جبال خورفكان" }, "offer": { "en": "20% off local honey", "ar": "خصم 20% على العسل المحلي" } }
   ]
 }

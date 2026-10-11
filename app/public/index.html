@@ -12,6 +12,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/3d.css">
+  <link rel="stylesheet" href="css/sahm.css">
+  <link rel="stylesheet" href="css/plates.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="css/map.css">
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" defer></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js"></script>
 </head>
 <body>
@@ -37,6 +42,7 @@
       <a href="#plate" data-leaf="plate" data-i18n="navPlate">Plate</a>
       <a href="#colophon" data-leaf="colophon" data-i18n="navColophon">Colophon</a>
       <a href="#explore" data-leaf="explore" data-i18n="nav3d">3D</a>
+      <a href="#recycle" data-leaf="recycle" data-i18n="navRecycle">Recycle</a>
     </nav>
   </header>
 
@@ -73,6 +79,8 @@
           <figure class="plate-frame" style="margin:0" id="plate-figure"></figure>
           <div id="era"></div>
           <div class="plate-acts" id="plate-acts"></div>
+          <!-- PLACEHOLDER: indoor AR wayfinding (arrows on the floor to facilities). See js/ar-wayfinding.js -->
+          <section id="wayfind" aria-labelledby="wf-h"></section>
         </div>
         <section class="margin-col" aria-labelledby="margin-h">
           <h2 id="margin-h" data-i18n="margin">Margin</h2>
@@ -103,6 +111,25 @@
         <p style="margin-top:18px"><a class="btn" href="dashboard.html" data-i18n="dashLink">Open the authority dashboard (pilot data)</a></p>
       </div>
     </section>
+    <!-- RECYCLE: the fifth leaf. Three photo steps (checks simulated), impact, and offers to spend points on -->
+    <section class="leaf" id="leaf-recycle" aria-labelledby="rec-leaf-h">
+      <h1 id="rec-leaf-h" tabindex="-1" data-i18n="recLeafTitle">Recycle and earn</h1>
+      <p class="lede" data-i18n="recLeafLede"></p>
+      <div class="spread">
+        <div>
+          <div class="controls">
+            <div class="field"><label for="rec-site" data-i18n="recWhere">Where are you recycling?</label><select id="rec-site"></select></div>
+          </div>
+          <section id="recycle" aria-labelledby="rec-h"></section>
+          <input type="file" id="rec-file" accept="image/*" capture="environment" hidden>
+          <h2 style="margin-top:30px" data-i18n="impactTitle">Your impact</h2>
+          <dl class="ledger" id="rec-ledger"></dl>
+          <p class="hint" style="margin-top:8px" data-i18n="impactNote"></p>
+        </div>
+        <section class="margin-col places" id="offers" aria-labelledby="offers-h" style="margin-top:0"></section>
+      </div>
+    </section>
+
     <!-- 3D: hand-built scenes of the places, lit for the planned hour (three.js loads when this leaf first opens) -->
     <section class="leaf" id="leaf-explore" aria-labelledby="p3-h">
       <p class="cap" id="p3-eyebrow"></p>
@@ -157,6 +184,12 @@
   </main>
 
   <div class="sr-only" role="status" aria-live="polite" id="announce"></div>
+  <div id="sahm" hidden>
+    <video id="sahm-cam" playsinline muted aria-hidden="true"></video>
+    <p id="sahm-msg" role="status" aria-live="polite"></p>
+    <button class="btn small" type="button" id="sahm-off" data-i18n="sahmOff">Turn off hands-free</button>
+  </div>
+  <div id="sahm-pointer" aria-hidden="true" hidden></div>
 
   <dialog id="settings" aria-labelledby="settings-h">
     <form method="dialog" class="dlg">
@@ -171,7 +204,18 @@
       <label class="check"><input type="checkbox" id="heat-sensitive"><span data-i18n="heatSensitive">Avoid outdoor heat</span></label>
       <div><label class="check"><input type="checkbox" id="auto-read"><span data-i18n="autoRead">Read guide answers aloud automatically</span></label><p class="hint" data-i18n="captions"></p></div>
       <div class="field"><label for="rate" data-i18n="rate">Speech rate</label><input id="rate" type="range" min="0.7" max="1.3" step="0.1"></div>
+      <fieldset class="hands">
+        <legend data-i18n="handsFree">Hands-free (Sahm)</legend>
+        <p class="hint" data-i18n="handsFreeHelp"></p>
+        <div><label class="check"><input type="checkbox" id="hf-voice"><span data-i18n="voiceCmd">Voice commands</span></label><p class="hint" data-i18n="voiceHelp"></p></div>
+        <div><label class="check"><input type="checkbox" id="hf-head"><span data-i18n="headPointer">Head pointer</span></label><p class="hint" data-i18n="headHelp"></p></div>
+        <div><label class="check"><input type="checkbox" id="hf-wink"><span data-i18n="winkClick">Wink to click</span></label><p class="hint" data-i18n="winkHelp"></p></div>
+      </fieldset>
     </form>
+  </dialog>
+
+  <dialog id="voucher" aria-labelledby="voucher-h">
+    <form method="dialog" class="dlg" id="voucher-body"></form>
   </dialog>
 
   <script type="module" src="js/app.js"></script>

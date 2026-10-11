@@ -2,6 +2,8 @@ import * as E from "./engine.js";
 import { t, setLang, getLang, name, field } from "./i18n.js";
 import { askGuide } from "./guide.js";
 import * as Speech from "./speech.js";
+import * as Sahm from "./sahm.js";
+import * as Wayfinding from "./ar-wayfinding.js";
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -23,8 +25,11 @@ const state = {
   era: "today",
   heat: { live: null, sample: null, july: false },
   notes: {}, // siteId -> [{ q, a, offline, pending }]
-  prefs: Object.assign({ lang: "en", scale: 100, theme: "light", calm: false, still: false, autoRead: false, rate: 1, heatSensitive: false, audience: "adult" }, store.get("prefs", {})),
+  prefs: Object.assign({ lang: "en", scale: 100, theme: "light", calm: false, still: false, autoRead: false, rate: 1, heatSensitive: false, audience: "adult", voice: false, head: false, wink: false }, store.get("prefs", {})),
   leaf: "index",
+  offers: [],
+  // Recycling rewards: missions done, points spent, vouchers, and step progress per place for today.
+  recycle: Object.assign({ log: [], spent: 0, vouchers: [], progress: { date: "", steps: {} } }, store.get("recycle", {})),
 };
 let plan = null, sugg = [];
 
@@ -129,7 +134,7 @@ function renderIndex() {
     return `<li class="entry">
       <span class="time">${H(it.hour)}<small>${esc(trv)}</small></span>
       <span class="nm"><button type="button" data-open="${s.id}" aria-label="${esc(t("openFor", { name: name(s) }))}">${nm}</button></span>
-      <span class="st ${it.status.code}">${esc(statusText(it.status))}${n ? ` <sup>${n}</sup>` : ""}</span>
+      <span class="st ${it.status.code}">${esc(statusText(it.status))}${n ? ` <span class="note-ref">${esc(t("seeNote", { n }))}</span>` : ""}</span>
       <span class="meta"><span>${esc(env)}</span><span>${esc(temp)}</span><span>${esc(t("typical"))}</span></span>
       <span class="acts">
         <button class="btn small" type="button" data-move="${s.id}" data-d="-0.5" aria-label="${esc(t("earlierFor", { name: name(s) }))}"><span aria-hidden="true">${rtl ? "→" : "←"}</span> ${esc(t("earlier"))}</button>
@@ -159,13 +164,56 @@ function renderPlaces() {
       const b = E.bestHour(s, state.date, heat, 0, { heatSensitive: state.prefs.heatSensitive });
       const on = inPlan.has(s.id);
       return `<div class="place"><span class="pn"><button type="button" data-open="${s.id}">${esc(name(s))}</button></span>
-        <span class="pm">${b != null ? esc(t("bestAt", { h: H(b) })) : esc(t("closed"))}${s.underVisited ? ` · <em>${esc(t("underVisited"))}</em>` : ""}</span>
+        <span class="pm">${b != null ? esc(t("bestAt", { h: H(b) })) : esc(t("closed"))}${s.underVisited ? ` · <em>${esc(t("underVisited"))}</em>` : ""}${recycledMark(s.id)}</span>
         <button class="btn small" type="button" data-toggle="${s.id}" aria-pressed="${on}" aria-label="${esc(on ? t("removeFor", { name: name(s) }) : t("addFor", { name: name(s) }))}">${esc(on ? t("added") : t("add"))}</button></div>`;
     }).join("")}</div>`;
   }).join("");
 }
 
+// Real map (Leaflet + OpenStreetMap tiles; darkened with a filter in the dark theme). Falls back to the schematic when Leaflet cannot load.
+let lmap = null, ltiles = null, llayers = null;
+function mapDark() { const th = document.documentElement.getAttribute("data-theme"); return th === "dark" || (!th && matchMedia("(prefers-color-scheme: dark)").matches); }
 function renderMap() {
+  if (!window.L) return renderSchematic();
+  const css = getComputedStyle(document.documentElement), v = (k) => css.getPropertyValue(k).trim();
+  const still = document.documentElement.classList.contains("still");
+  if (!lmap) {
+    $("#map").innerHTML = "";
+    lmap = L.map("map", { scrollWheelZoom: false, zoomAnimation: !still, fadeAnimation: !still, markerZoomAnimation: !still, attributionControl: false });
+    L.control.attribution({ prefix: '<a href="https://leafletjs.com">Leaflet</a>' }).addTo(lmap);
+    ltiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(lmap);
+    llayers = L.layerGroup().addTo(lmap);
+  }
+  $("#map").classList.toggle("map-dark", mapDark());
+  llayers.clearLayers();
+  const inPlan = new Set(plan.items.map((i) => i.site.id)), recycled = new Set(state.recycle.log.map((m) => m.siteId));
+  // every place: a small dot that opens its plate
+  for (const s of state.sites) {
+    if (inPlan.has(s.id)) continue;
+    L.circleMarker([s.lat, s.lng], { radius: 5, color: v("--ink"), weight: 1.5, fillColor: v("--sheet"), fillOpacity: 1 })
+      .bindTooltip(name(s) + (recycled.has(s.id) ? " ✓" : "")).on("click", () => openPlate(s.id)).addTo(llayers);
+  }
+  // the route and numbered stops, in plan order
+  const pts = plan.items.map((it) => [it.site.lat, it.site.lng]);
+  if (pts.length > 1) {
+    L.polyline(pts, { color: v("--page"), weight: 8, opacity: .9, interactive: false }).addTo(llayers);   // pale casing so the route reads over streets
+    L.polyline(pts, { color: v("--route"), weight: 4, dashArray: "9 7", lineCap: "round", interactive: false }).addTo(llayers);
+  }
+  plan.items.forEach((it, i) => {
+    const s = it.site, done = recycled.has(s.id);
+    L.marker([s.lat, s.lng], {
+      icon: L.divIcon({ className: "map-stop", html: `<span>${i + 1}</span>${done ? '<b aria-hidden="true">✓</b>' : ""}`, iconSize: [30, 30], iconAnchor: [15, 15] }),
+      title: `${i + 1}. ${name(s)}, ${H(it.hour)}`, keyboard: true, riseOnHover: true,
+    }).bindTooltip(`${i + 1}. ${name(s)} · ${H(it.hour)}`, { direction: "top", offset: [0, -14] }).on("click", () => openPlate(s.id)).addTo(llayers);
+  });
+  const all = pts.length ? pts : state.sites.map((s) => [s.lat, s.lng]);
+  lmap.fitBounds(L.latLngBounds(all).pad(pts.length === 1 ? 2 : 0.25), { maxZoom: 14, animate: false });
+  const done = state.sites.filter((s) => recycled.has(s.id)).length;
+  $("#map").setAttribute("role", "region");
+  $("#map").setAttribute("aria-label", t("mapLabel") + (done ? " " + t("mapRecycled", { n: done }) : ""));
+}
+
+function renderSchematic() {
   // Schematic, not to scale for navigation: the emirate's three regions, with city stops grouped.
   const W = 640, Hh = 300, box = { lng: [55.3, 56.45], lat: [24.98, 25.42] };
   const P = (s) => [20 + ((s.lng - box.lng[0]) / (box.lng[1] - box.lng[0])) * (W - 40), 20 + ((box.lat[1] - s.lat) / (box.lat[1] - box.lat[0])) * (Hh - 40)];
@@ -178,16 +226,57 @@ function renderMap() {
   const route = pts.map((x, i) => `${i ? "L" : "M"}${x.p[0].toFixed(1)} ${x.p[1].toFixed(1)}`).join(" ");
   const towns = [["Sharjah", 55.39, 25.35], ["Mleiha", 55.88, 25.13], ["Khor Fakkan", 56.35, 25.34], ["Kalba", 56.36, 25.03]];
   const allDots = state.sites.map((s) => { const [x, y] = P(s); return `<circle class="site" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3"/>`; }).join("");
-  $("#map").innerHTML = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="${esc(t("mapLabel"))}">
+  const done = state.sites.filter((s) => state.recycle.log.some((m) => m.siteId === s.id));
+  // A tick under each recycled place, grouped like the plan markers ("✓ 3" for a cluster), drawn last so nothing covers it.
+  const tickGroups = [];
+  for (const s of done) {
+    const p = P(s), g = tickGroups.find((g) => Math.hypot(g.p[0] - p[0], g.p[1] - p[1]) < 16);
+    if (g) g.n++; else tickGroups.push({ p, n: 1 });
+  }
+  const ticks = tickGroups.map((g) => `<text class="lbl" x="${(g.p[0] + 12).toFixed(1)}" y="${(g.p[1] + 18).toFixed(1)}">✓${g.n > 1 ? " " + g.n : ""}</text>`).join("");
+  const mapLabel = t("mapLabel") + (done.length ? " " + t("mapRecycled", { n: done.length }) : "");
+  $("#map").innerHTML = `<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="${esc(mapLabel)}">
     <path d="M${P({ lng: 56.22, lat: 25.42 })[0]} 0 L${P({ lng: 56.22, lat: 24.98 })[0]} ${Hh}" stroke="var(--hair)" stroke-dasharray="2 4"/>
     ${towns.map(([n, lng, lat]) => { const [x, y] = P({ lng, lat }); return `<text class="lbl" x="${x + 8}" y="${y - 8}">${n}</text>`; }).join("")}
     ${allDots}<path class="rt" d="${route}"/>
     ${groups.map((g) => `<circle class="site on" cx="${g.p[0]}" cy="${g.p[1]}" r="10"/><text class="n" x="${g.p[0]}" y="${g.p[1] + 3}" text-anchor="middle">${g.nums.length > 2 ? `${g.nums[0]}–${g.nums.at(-1)}` : g.nums.join(",")}</text>`).join("")}
+    ${ticks}
   </svg>`;
 }
 
 // ---------- PLATE ----------
 const ERAS = ["1823", "1969", "today"];
+// Plate pictures: the team's photos where they exist, otherwise a still of the site's 3D scene.
+// Files live in public/plates/. A missing file is skipped, so a photo appears as soon as it is saved there.
+const PLATES = {
+  "blue-souk": [
+    { src: "plates/blue-souk-1823.jpg", kind: "illustration", label: "shot1823", alt: { en: "Open desert with camels walking over low dunes at sunset, suggesting the land before the souq.", ar: "صحراء مفتوحة وجمال تمشي فوق كثبان منخفضة عند الغروب، توحي بالأرض قبل السوق." } },
+    { src: "plates/blue-souk-1978.jpg", kind: "archive", label: "shot1978", alt: { en: "Black-and-white photo of the newly opened souq in 1978: both wings and their wind towers across an almost empty road.", ar: "صورة بالأبيض والأسود للسوق عند افتتاحه عام 1978: الجناحان وأبراج الهواء عبر طريق شبه خالٍ." } },
+    { src: "plates/blue-souk-1.jpg", kind: "photo", label: "shotFront", start: true, alt: { en: "The front of the Central Souq: a blue-tiled arch, a glazed vault and tall wind towers above two floors of arches.", ar: "واجهة السوق المركزي: قوس مكسو بالبلاط الأزرق وقبو زجاجي وأبراج هواء عالية فوق طابقين من الأقواس." } },
+    { src: "plates/blue-souk-2.jpg", kind: "photo", label: "shotAir", alt: { en: "Both wings of the souq from the air, joined by bridges, with Khalid Lagoon and the harbour behind.", ar: "جناحا السوق من الجو تربطهما الجسور، وخلفهما بحيرة خالد والميناء." } },
+    { src: "plates/blue-souk-3.jpg", kind: "photo", label: "shotInside", alt: { en: "Inside the main hall: shop fronts on two levels, a central escalator and a hanging chandelier under the vault.", ar: "داخل القاعة الرئيسية: واجهات محلات على طابقين، وسلم كهربائي في الوسط، وثريا معلقة تحت القبو." } },
+    { src: "plates/blue-souk-3d.jpg", kind: "render", label: "shot3d" },
+  ],
+  "al-noor-mosque": [{ src: "plates/al-noor-mosque-3d.jpg", kind: "render", label: "shot3d" }],
+  "islamic-museum": [{ src: "plates/islamic-museum-3d.jpg", kind: "render", label: "shot3d" }],
+  "heart-of-sharjah": [{ src: "plates/heart-of-sharjah-3d.jpg", kind: "render", label: "shot3d" }],
+};
+const missingPics = new Set();
+function renderPicture(s, n) {
+  const shots = PLATES[s.id].filter((x) => !missingPics.has(x.src));
+  if (!shots.length) return false;
+  const start = Math.max(0, shots.findIndex((x) => x.start));
+  const i = Math.min(state.shot?.[s.id] ?? start, shots.length - 1), sh = shots[i];
+  const alt = sh.alt ? sh.alt[getLang()] || sh.alt.en : field(s, "describe");
+  const credit = t({ photo: "creditTeam", archive: "creditArchive", illustration: "creditIllustration" }[sh.kind] || "artist3d");
+  const img = `<img class="plate-img${sh.kind === "archive" ? " whole" : ""}" src="${sh.src}" alt="${esc(alt)}">`;
+  $("#plate-figure").innerHTML = (SCENES_3D.has(s.id) ? `<button type="button" class="plate-pic" data-explore="${s.id}" aria-label="${esc(t("explore3d"))}. ${esc(alt)}">${img}</button>` : img)
+    + `<figcaption class="cap plate-cap">${esc(t("plateCaption", { n, name: name(s) }))} · ${esc(t(sh.label))} · ${esc(credit)}</figcaption>`;
+  $("#era").innerHTML = shots.length > 1 ? `<div class="seg plate-shots" role="group" aria-label="${esc(t("shotsLabel"))}">${shots.map((x, k) => `<button type="button" data-shot="${k}" aria-pressed="${k === i}">${esc(t(x.label))}</button>`).join("")}</div>` : "";
+  $("#plate-figure .plate-img").addEventListener("error", () => { missingPics.add(sh.src); renderPlate(); }, { once: true });
+  return true;
+}
+
 // Sites with a hand-built scene on the 3D leaf.
 const SCENES_3D = new Set(["blue-souk", "al-noor-mosque", "islamic-museum", "heart-of-sharjah"]);
 function renderPlate() {
@@ -205,6 +294,8 @@ function renderPlate() {
     $("#era").innerHTML = `<div class="era"><span class="cap" id="era-l">${esc(t("era"))}</span>
       <div class="era-steps" role="radiogroup" aria-labelledby="era-l">${ERAS.map((e) => `<button type="button" role="radio" aria-checked="${state.era === e}" tabindex="${state.era === e ? 0 : -1}" data-era="${e}">${esc(t(e === "today" ? "eraToday" : "era" + e))}</button>`).join("")}</div>
       <p class="era-desc" id="era-desc">${esc(t("eraDesc")[state.era])}</p></div>`;
+  } else if (PLATES[s.id] && renderPicture(s, n)) {
+    // picture plate (photos or 3D still)
   } else {
     $("#plate-figure").innerHTML = `<div class="typo-plate" role="img" aria-label="${esc(field(s, "describe"))}"><div><div class="big" lang="ar">${esc(s.name.ar)}</div><p>${esc(t("noPhoto"))}</p></div></div>${cap}`;
     $("#era").innerHTML = "";
@@ -222,7 +313,16 @@ function renderPlate() {
   if (mv) mv.addEventListener("load", () => { if (mv.canActivateAR) $("#ar-btn")?.removeAttribute("hidden"); }, { once: true });
 
   renderPlateNotes(s);
+  renderWayfind(s);
   if (state.leaf === "plate") document.title = `${name(s)} · Daleel`;
+}
+
+// PLACEHOLDER: indoor AR wayfinding. The button stays disabled until Wayfinding.READY is true (see js/ar-wayfinding.js).
+function renderWayfind(s) {
+  const list = Wayfinding.FACILITIES.map((k) => t("wf_" + k)).join(" · ");
+  $("#wayfind").innerHTML = `<div class="prose" style="margin-top:22px"><h2 id="wf-h">${esc(t("wfTitle"))}</h2>
+    <p>${esc(t("wfLede", { name: name(s) }))}</p><p class="hint">${esc(list)}</p></div>
+    <div class="plate-acts"><button class="btn" type="button" ${Wayfinding.READY ? `data-wayfind="${s.id}"` : 'disabled aria-disabled="true"'}>${esc(t(Wayfinding.READY ? "wfStart" : "wfSoon"))}</button></div>`;
 }
 
 function timingSentence(s) {
@@ -296,6 +396,144 @@ function renderColophon() {
   $("#ledger").innerHTML = rows.map(([k, v]) => `<div><dt>${esc(t(k))}</dt><dd>${esc(v)}</dd></div>`).join("");
 }
 
+// ---------- recycling rewards (Recycle leaf) ----------
+const todayIso = () => isoDate(new Date());
+function recSite() {
+  const inPlan = plan.items.map((i) => i.site.id);
+  if (!state.byId[state.recSite]) state.recSite = inPlan.includes(state.selected) ? state.selected : inPlan[0] || state.selected;
+  return state.byId[state.recSite];
+}
+function renderRecycleLeaf() {
+  const s = recSite(), inPlan = new Set(plan.items.map((i) => i.site.id));
+  const opt = (x) => `<option value="${x.id}" ${x.id === s.id ? "selected" : ""}>${esc(name(x))}</option>`;
+  $("#rec-site").innerHTML = `<optgroup label="${esc(t("recInPlan"))}">${plan.items.map((i) => opt(i.site)).join("")}</optgroup>
+    <optgroup label="${esc(t("recAll"))}">${state.sites.filter((x) => !inPlan.has(x.id)).map(opt).join("")}</optgroup>`;
+  renderRecycle(s);
+  const R = E.recycleTotals(state.recycle.log, state.recycle.spent);
+  const f1 = (v) => (Math.round(v * 10) / 10).toLocaleString(getLang() === "ar" ? "ar-AE-u-nu-latn" : "en");
+  $("#rec-ledger").innerHTML = [["ledBottles", R.bottles], ["ledPlastic", t("kg", { v: f1(R.plasticKg) })], ["ledCo2Saved", t("kg", { v: f1(R.co2Kg) })], ["ledPoints", t("pts", { v: R.balance })]]
+    .map(([k, v]) => `<div><dt>${esc(t(k))}</dt><dd>${esc(v)}</dd></div>`).join("");
+  renderOffers(R.balance);
+}
+const saveRecycle = () => store.set("recycle", state.recycle);
+
+function recycledMark(id) {
+  const log = state.recycle.log;
+  if (E.recycledOn(log, id, todayIso())) return ` · <em>✓ ${esc(t("recycledToday"))}</em>`;
+  return log.some((m) => m.siteId === id) ? ` · <em>✓ ${esc(t("recycled"))}</em>` : "";
+}
+
+// Steps finished today at a place (progress resets each day).
+function stepsDone(id) {
+  const p = state.recycle.progress;
+  if (p.date !== todayIso()) { p.date = todayIso(); p.steps = {}; }
+  return p.steps[id] || 0;
+}
+
+function renderRecycle(s, busy = false) {
+  const n = E.RECYCLE.bottles, steps = E.RECYCLE.steps;
+  const doneToday = E.recycledOn(state.recycle.log, s.id, todayIso());
+  const at = doneToday ? steps.length : stepsDone(s.id);
+  const vars = { n, name: name(s) };
+  const items = steps.map((k, i) => {
+    const finished = i < at, current = i === at && !doneToday;
+    const body = finished ? t("recOk_" + k, vars) : current && busy ? t("recChecking") : t("recDo_" + k, vars);
+    const action = current && !busy
+      ? `<div class="acts"><button class="btn small primary" type="button" data-rec-upload="${s.id}" aria-label="${esc(t("recUploadFor", { i: i + 1, step: t("recStep_" + k) }))}">${esc(t("recUpload"))}</button></div>`
+      : !finished && !current ? `<p class="src">${esc(t("recLater", { i }))}</p>` : "";
+    // example photo for each step (team demo photos in public/plates/recycle-1..3.jpg)
+    const example = `<figure class="rec-example"><img src="plates/recycle-${i + 1}.jpg" alt="${esc(t("recEx_" + k, vars))}" loading="lazy"><figcaption class="cap">${esc(t("recExample"))}</figcaption></figure>`;
+    return `<li class="note"><span class="num" aria-hidden="true">${finished ? "✓" : i + 1}</span><div class="rec-step"><div>
+      <h3>${esc(t("recStep_" + k))}${finished ? ` · ${esc(t("recDoneMark"))}` : ""}</h3>
+      <p aria-busy="${current && busy}">${esc(body)}</p>${action}</div>${example}</div></li>`;
+  }).join("");
+  const last = doneToday ? state.recycle.log.filter((m) => m.siteId === s.id && m.date === todayIso()).at(-1) : null;
+  $("#recycle").innerHTML = `<div class="prose"><h2 id="rec-h" tabindex="-1">${esc(t("recTitle"))}</h2><p>${esc(t("recLede", vars))}</p><p class="hint">${esc(t("recSimNote", vars))}</p></div>
+    <ol class="notes" style="margin-top:14px">${items}</ol>
+    ${last ? `<div class="prose"><p><b>✓ ${esc(t("recDone", { n: last.bottles, p: last.points }))}</b> ${esc(t("recTomorrow"))}</p>
+      <p style="margin-top:12px"><button class="btn" type="button" data-goto-offers>${esc(t("recSpend"))}</button></p></div>` : ""}`;
+}
+
+let uploadSite = null;
+function startUpload(id) { uploadSite = id; const f = $("#rec-file"); f.value = ""; f.click(); }
+
+// Simulated photo check: any image passes and reports RECYCLE.bottles.
+function photoChosen() {
+  const s = state.byId[uploadSite];
+  if (!s || !$("#rec-file").files.length) return;
+  renderRecycle(s, true);
+  setTimeout(() => {
+    const step = stepsDone(s.id), k = E.RECYCLE.steps[step];
+    const vars = { n: E.RECYCLE.bottles, name: name(s) };
+    let msg = t("recOk_" + k, vars);
+    if (step + 1 >= E.RECYCLE.steps.length) {
+      const points = E.missionPoints(state.recycle.log, s.id);
+      state.recycle.log.push({ siteId: s.id, date: todayIso(), bottles: E.RECYCLE.bottles, points });
+      delete state.recycle.progress.steps[s.id];
+      msg += " " + t("recDone", { n: E.RECYCLE.bottles, p: points });
+    } else {
+      state.recycle.progress.steps[s.id] = step + 1;
+    }
+    saveRecycle();
+    renderRecycleLeaf(); renderPlaces(); renderMap();
+    ($("#recycle [data-rec-upload]") || $("#recycle [data-goto-offers]") || $("#rec-h")).focus?.();
+    announce(msg);
+  }, state.prefs.still || state.prefs.calm ? 0 : 700);
+}
+
+function renderOffers(balance) {
+  const offerRow = (o) => {
+    const site = state.byId[o.siteId], short = o.cost - balance;
+    const btn = short > 0
+      ? `<button class="btn small" type="button" disabled>${esc(t("needMore", { n: short }))}</button>`
+      : `<button class="btn small" type="button" data-redeem="${o.id}" aria-label="${esc(t("redeemAria", { offer: field(o, "offer"), shop: field(o, "shop"), c: o.cost }))}">${esc(t("redeemFor", { c: o.cost }))}</button>`;
+    return `<div class="place"><span class="pn">${esc(field(o, "offer"))}</span><span class="pm">${esc(field(o, "shop"))} · ${esc(name(site))}</span>${btn}</div>`;
+  };
+  const vRow = (v) => {
+    const o = state.offers.find((x) => x.id === v.offerId);
+    return `<div class="place"><span class="pn" dir="ltr">${esc(v.code)}</span><span class="pm">${esc(field(o, "offer"))} · ${esc(field(o, "shop"))} · ${esc(v.used ? t("vUsed") : t("vActive"))}</span>
+      ${v.used ? "" : `<button class="btn small" type="button" data-used="${v.id}" aria-label="${esc(t("markUsedFor", { code: v.code }))}">${esc(t("markUsed"))}</button>`}</div>`;
+  };
+  $("#offers").innerHTML = `<h2 id="offers-h" tabindex="-1">${esc(t("offersTitle"))}</h2><p class="hint">${esc(t("offersLede"))}</p>
+    <div class="region"><h3>${esc(t("ledPoints"))}: ${esc(t("pts", { v: balance }))}</h3>${state.offers.map(offerRow).join("")}</div>
+    <div class="region"><h3>${esc(t("vouchersTitle"))}</h3>${state.recycle.vouchers.length ? state.recycle.vouchers.map(vRow).join("") : `<p class="empty">${esc(t("noVouchers"))}</p>`}</div>`;
+}
+
+function askRedeem(id) {
+  const o = state.offers.find((x) => x.id === id);
+  $("#voucher-body").innerHTML = `<header><h2 id="voucher-h">${esc(t("offersTitle"))}</h2></header>
+    <p>${esc(t("confirmRedeem", { c: o.cost, offer: field(o, "offer"), shop: field(o, "shop") }))}</p>
+    <div class="plate-acts"><button class="btn" value="cancel">${esc(t("cancel"))}</button>
+      <button class="btn primary" type="button" data-confirm-redeem="${o.id}">${esc(t("redeem"))}</button></div>`;
+  $("#voucher").showModal();
+  $("[data-confirm-redeem]").focus();
+}
+
+function redeem(id) {
+  const o = state.offers.find((x) => x.id === id);
+  if (E.recycleTotals(state.recycle.log, state.recycle.spent).balance < o.cost) return;
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const part = () => Array.from({ length: 4 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+  const v = { id: String(Date.now()), offerId: o.id, code: `DAL-${part()}-${part()}`, ts: Date.now(), used: false };
+  state.recycle.spent += o.cost;
+  state.recycle.vouchers.unshift(v);
+  saveRecycle();
+  renderRecycleLeaf();
+  $("#voucher-body").innerHTML = `<header><h2 id="voucher-h">${esc(t("voucherTitle"))}: ${esc(field(o, "offer"))}</h2><button class="btn small" value="close">${esc(t("close"))}</button></header>
+    <dl class="ledger" style="margin:0"><div><dt>${esc(t("voucherCode"))}</dt><dd dir="ltr">${esc(v.code)}</dd></div></dl>
+    <p>${esc(t("voucherShow", { shop: field(o, "shop") }))}</p>`;
+  $("#voucher-body [value=close]").focus();
+  announce(`${t("voucherTitle")} ${v.code}`);
+}
+
+function markUsed(id) {
+  const v = state.recycle.vouchers.find((x) => x.id === id);
+  if (!v) return;
+  v.used = true; saveRecycle(); renderRecycleLeaf();
+  $("#offers-h").focus?.();
+  announce(`${v.code}: ${t("vUsed")}`);
+}
+
 // ---------- chrome: language, settings, routing ----------
 function applyPrefs() {
   const p = state.prefs, root = document.documentElement;
@@ -315,8 +553,11 @@ function applyPrefs() {
   $("#scale").value = p.scale; $("#scale-out").textContent = p.scale + "%";
   $("#calm").checked = p.calm; $("#still").checked = p.still; $("#auto-read").checked = p.autoRead;
   $("#rate").value = p.rate; $("#heat-sensitive").checked = p.heatSensitive; $("#aud").value = p.audience;
+  $("#hf-voice").checked = p.voice; $("#hf-head").checked = p.head; $("#hf-wink").checked = p.wink;
   store.set("prefs", p);
   window.S3?.relabel?.();
+  if (lmap && plan) renderMap();
+  Sahm.configure({ voice: p.voice, head: p.head, wink: p.wink, still: p.still || p.calm });
 }
 
 // ---------- 3D ----------
@@ -355,11 +596,13 @@ function render() {
   renderIndex();
   renderPlate();
   renderColophon();
+  renderRecycleLeaf();
 }
 
 function showLeaf(leaf, focus = true) {
-  state.leaf = ["index", "plate", "colophon", "explore"].includes(leaf) ? leaf : "index";
+  state.leaf = ["index", "plate", "colophon", "explore", "recycle"].includes(leaf) ? leaf : "index";
   if (state.leaf === "explore") enter3d(); else window.S3?.pause?.(true);
+  if (state.leaf === "index" && lmap) setTimeout(() => lmap.invalidateSize(), 0);
   $$(".leaf").forEach((el) => el.classList.toggle("on", el.id === "leaf-" + state.leaf));
   $$("nav.leaves a").forEach((a) => (a.dataset.leaf === state.leaf ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current")));
   const h = $(`#leaf-${state.leaf} h1`);
@@ -380,6 +623,13 @@ function bind() {
   document.addEventListener("click", (e) => {
     const b = e.target.closest("button, a");
     if (!b) return;
+    if (b.dataset.recUpload) return startUpload(b.dataset.recUpload);
+    if (b.dataset.redeem) return askRedeem(b.dataset.redeem);
+    if (b.dataset.confirmRedeem) return redeem(b.dataset.confirmRedeem);
+    if (b.dataset.used) return markUsed(b.dataset.used);
+    if (b.dataset.shot) { (state.shot ||= {})[state.selected] = +b.dataset.shot; renderPlate(); return $(`[data-shot="${b.dataset.shot}"]`)?.focus(); }
+    if (b.dataset.wayfind) return Wayfinding.start(state.byId[b.dataset.wayfind]).catch((err) => announce(String(err.message)));
+    if (b.hasAttribute("data-goto-offers")) { $("#offers-h").focus(); return $("#offers").scrollIntoView({ block: "start", behavior: state.prefs.still ? "auto" : "smooth" }); }
     if (b.dataset.open) return openPlate(b.dataset.open);
     if (b.dataset.explore) return openExplore(b.dataset.explore);
     if (b.dataset.move) return moveStop(b.dataset.move, +b.dataset.d);
@@ -406,6 +656,24 @@ function bind() {
   });
   $("#lang-btn").addEventListener("click", () => { state.prefs.lang = state.prefs.lang === "en" ? "ar" : "en"; applyPrefs(); render(); showLeaf(state.leaf, false); });
   $("#settings-btn").addEventListener("click", () => $("#settings").showModal());
+  $("#rec-file").addEventListener("change", photoChosen);
+  $("#rec-site").addEventListener("change", (e) => { state.recSite = e.target.value; renderRecycle(state.byId[state.recSite]); });
+  // hands-free control (Sahm): voice commands, head pointer, wink to click
+  for (const [id, key] of [["hf-voice", "voice"], ["hf-head", "head"], ["hf-wink", "wink"]]) {
+    $("#" + id).addEventListener("change", (e) => { state.prefs[key] = e.target.checked; if (key === "wink" && e.target.checked) state.prefs.head = true; applyPrefs(); });
+  }
+  $("#sahm-off").addEventListener("click", () => { Object.assign(state.prefs, { voice: false, head: false, wink: false }); applyPrefs(); });
+  Sahm.init({
+    t, getLang,
+    places: () => state.sites.map((s) => ({ id: s.id, names: [s.name.en, s.name.ar] })),
+    go: (leaf) => { location.hash = "#" + leaf; },
+    openPlace: (id) => openPlate(id),
+    readAloud: () => describePlate(),
+    stopSpeech: () => Speech.stop(),
+    setLang: (l) => { state.prefs.lang = l; applyPrefs(); render(); showLeaf(state.leaf, false); },
+    openSettings: () => $("#settings").showModal(),
+    announce,
+  });
   $("#day").addEventListener("change", (e) => { const [y, m, d] = e.target.value.split("-").map(Number); if (y) { state.date = new Date(y, m - 1, d); render(); } });
   $("#start").addEventListener("change", (e) => { state.start = +e.target.value; render(); });
   $("#july-btn").addEventListener("click", () => { state.heat.july = !state.heat.july; render(); announce(heatFor(state.date).src); });
@@ -428,6 +696,7 @@ function bind() {
 async function boot() {
   const [sites, sample] = await Promise.all([fetch("data/sites.json").then((r) => r.json()), fetch("data/heat-sample.json").then((r) => r.json())]);
   state.sites = sites.sites;
+  state.offers = sites.offers || [];
   state.byId = Object.fromEntries(state.sites.map((s) => [s.id, s]));
   state.stops = state.stops.filter((s) => state.byId[s.id]);
   state.heat.sample = sample;

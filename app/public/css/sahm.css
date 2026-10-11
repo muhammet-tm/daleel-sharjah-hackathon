@@ -1,0 +1,24 @@
+/* Daleel — hands-free control (Sahm). New selectors only; colours and type come from the tokens in app.css. */
+
+/* Hands-free group in Reading settings */
+.hands { border: 1px solid var(--hair); border-radius: 2px; padding: 12px 14px 14px; margin: 0; display: grid; gap: 10px; }
+.hands legend { font: 500 .74rem var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--rule); padding: 0 6px; }
+[dir="rtl"] .hands legend { font-family: var(--body-ar); letter-spacing: 0; text-transform: none; font-size: .85rem; }
+
+#sahm[hidden], #sahm-cam[hidden], #sahm-pointer[hidden] { display: none; }
+
+/* status panel: what was heard, and the camera preview while the head pointer is on */
+#sahm { position: fixed; z-index: 40; inset-inline-end: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); width: min(320px, calc(100vw - 32px));
+  background: var(--page); color: var(--ink); border: 1px solid var(--ink); border-radius: 2px; padding: 10px 12px; display: grid; gap: 8px; }
+#sahm-cam { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transform: scaleX(-1); background: var(--sand); border: 1px solid var(--hair); }
+#sahm-msg { margin: 0; font: 400 1rem/1.4 var(--display); min-height: 1.4em; }
+[dir="rtl"] #sahm-msg { font-family: var(--display-ar); line-height: 1.8; }
+#sahm .btn { justify-self: start; }
+
+/* the head pointer: a brass ring like the compass needle in the mark */
+#sahm-pointer { position: fixed; z-index: 60; left: -14px; top: -14px; width: 28px; height: 28px; border-radius: 50%; pointer-events: none;
+  border: 3px solid var(--brass); box-shadow: 0 0 0 2px var(--page), 0 0 0 4px var(--ink); will-change: transform; }
+#sahm-pointer::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--ink); }
+#sahm-pointer.click { animation: sahm-click 260ms var(--ease); }
+@keyframes sahm-click { from { box-shadow: 0 0 0 2px var(--page), 0 0 0 14px var(--brass); } }
+.sahm-hover { outline: 3px solid var(--focus) !important; outline-offset: 2px; }

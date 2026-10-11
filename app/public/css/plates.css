@@ -1,0 +1,11 @@
+/* Daleel — picture plates (team photos, archive photos, 3D stills). New selectors only; tokens from app.css. */
+.plate-img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--sand); }
+.plate-pic { all: unset; display: block; cursor: pointer; }
+.plate-pic:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.plate-shots { margin-top: 14px; }
+.plate-img.whole { object-fit: contain; }  /* archive photos are shown whole, not cropped */
+/* recycling steps: an example photo beside each step */
+.rec-step { display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: 12px; align-items: start; }
+.rec-example { margin: 0; }
+.rec-example img { display: block; width: 96px; aspect-ratio: 3 / 4; object-fit: cover; border: 1px solid var(--hair); background: var(--sand); }
+.rec-example figcaption { margin-top: 4px; font-size: .68rem; }

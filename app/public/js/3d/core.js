@@ -688,18 +688,24 @@ addEventListener('blur', () => { walk.keys = {}; });
 /* ---------- loop ---------- */
 const clock = new THREE.Clock(), tmpV = new V3();
 function updateLabels() {
-  for (const l of LABELS) {
+  // nearest labels first; a label that would overlap one already placed is hidden, so they never pile up
+  const [w, h] = stageSize(), placed = [];
+  const order = LABELS.map(l => ({ l, d: camera.position.distanceTo(l.p) })).sort((a, b) => a.d - b.d);
+  for (const { l, d } of order) {
     tmpV.copy(l.p).project(camera);
-    const d = camera.position.distanceTo(l.p);
-    if (tmpV.z > 1 || tmpV.z < -1 || Math.abs(tmpV.x) > 1.1 || Math.abs(tmpV.y) > 1.1 || d > active.env.maxDist * .95 || d < 10) { l.el.style.display = 'none'; continue; }
+    if (tmpV.z > 1 || tmpV.z < -1 || Math.abs(tmpV.x) > 1.05 || Math.abs(tmpV.y) > 1.05 || d > active.env.maxDist * .95 || d < 10) { l.el.style.display = 'none'; continue; }
+    const x = (tmpV.x * .5 + .5) * w, y = (-tmpV.y * .5 + .5) * h;
     l.el.style.display = '';
-    const [w, h] = stageSize();
-    l.el.style.transform = `translate(${(tmpV.x * .5 + .5) * w}px, ${(-tmpV.y * .5 + .5) * h}px) translate(-50%, -100%)`;
+    const bw = l.el.offsetWidth || 120, bh = l.el.offsetHeight || 40, r = [x - bw / 2 - 4, y - bh - 4, x + bw / 2 + 4, y + 4];
+    if (placed.some(q => r[0] < q[2] && r[2] > q[0] && r[1] < q[3] && r[3] > q[1])) { l.el.style.display = 'none'; continue; }
+    placed.push(r);
+    l.el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -100%)`;
   }
 }
 let paused = false;
 Object.assign(window.S3, { activeId: () => active && active.p.id, sceneFor: id => SITE_TO_SCENE[id] || (PLACES.some(p => p.id === id) ? id : null), started: false,
   pause: b => { paused = b; if (!b) clock.getDelta(); },
+  view: k => { if (active && active.views[k] && !active.views[k].link) { jumpTo(k); mode = 'explore'; controls.enabled = !active.walk; $('#p3-tour').setAttribute('aria-pressed', 'false'); } },
   show: (id, h) => { if (h >= 0 && h <= 24) { hourInput.value = h; setHour(h, true); } const sc = window.S3.sceneFor(id); if (sc) activate(sc); },
   relabel: () => { if (!active) return; fillInfo(active.p); fillViews(active); fillLabels(active); setHour(hour); $('#p3-full').textContent = tr($('#p3-frame').classList.contains('full') ? 'exitFull3d' : 'full3d'); }, real: false });
 function frame() {

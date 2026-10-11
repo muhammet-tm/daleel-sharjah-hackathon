@@ -1,0 +1,22 @@
+/* Daleel — the real map on the Index (Leaflet + OpenStreetMap). New selectors only; tokens from app.css. */
+.map.leaflet-container { height: clamp(300px, 46vh, 460px); background: var(--sand); font: 400 .85rem/1.4 var(--body); }
+.map .leaflet-control-attribution { background: color-mix(in srgb, var(--page) 85%, transparent); color: var(--rule); font-size: .7rem; }
+.map .leaflet-control-attribution a { color: var(--route); }
+.map .leaflet-bar a { background: var(--page); color: var(--ink); border-color: var(--hair); }
+.map .leaflet-tooltip { background: var(--page); color: var(--ink); border: 1px solid var(--ink); border-radius: 2px; box-shadow: none; font: 500 .82rem/1.3 var(--body); }
+[dir="rtl"] .map .leaflet-tooltip { font-family: var(--body-ar); }
+/* numbered plan stops: brass discs like the margin-note numerals */
+.map-stop span { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--brass); color: var(--on-brass); border: 2px solid var(--ink);
+  font: 600 .8rem/1 var(--mono); box-shadow: 0 0 0 2px var(--page); }
+.map-stop b { position: absolute; inset-inline-end: -8px; top: -8px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--page); color: var(--ink); border: 1px solid var(--ink); font: 700 .7rem/1 var(--body); }
+.map-stop:focus-visible span { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* dark theme: darken the OpenStreetMap tiles so the page stays dark */
+.map-dark .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.85) contrast(.9); }
+/* app.css limits img and svg to max-width:100%; Leaflet's tiles and route layer must keep their real size */
+.map img, .map svg { max-width: none !important; }
+/* app.css sizes ".map svg" for the old schematic map; Leaflet's route layer sets its own size */
+.map.leaflet-container .leaflet-pane svg { width: auto; height: auto; display: inline; }
+/* hide hairline seams between tiles at fractional zoom */
+.map .leaflet-tile-container img.leaflet-tile { width: 256.5px !important; height: 256.5px !important; }

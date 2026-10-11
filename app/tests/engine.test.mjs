@@ -77,3 +77,22 @@ test("fmtHour", () => {
   assert.equal(E.fmtHour(9.5), "09:30");
   assert.equal(E.fmtHour(19), "19:00");
 });
+
+test("recycling: a first mission at a place earns enough for the cheapest offer", () => {
+  const pts = E.missionPoints([], "blue-souk");
+  assert.equal(pts, E.RECYCLE.bottles * E.RECYCLE.perBottle + E.RECYCLE.newPlaceBonus);
+  const cheapest = Math.min(...data.offers.map((o) => o.cost));
+  assert.ok(pts >= cheapest, `${pts} points should buy an offer costing ${cheapest}`);
+  assert.ok(data.offers.every((o) => byId[o.siteId]), "every offer belongs to a known place");
+});
+
+test("recycling: repeat visits drop the new-place bonus, totals and once-a-day hold", () => {
+  const log = [{ siteId: "blue-souk", date: "2026-10-11", bottles: 3, points: E.missionPoints([], "blue-souk") }];
+  assert.equal(E.missionPoints(log, "blue-souk"), 3 * E.RECYCLE.perBottle);
+  assert.ok(E.recycledOn(log, "blue-souk", "2026-10-11"));
+  assert.ok(!E.recycledOn(log, "blue-souk", "2026-10-12"));
+  const T = E.recycleTotals(log, 50);
+  assert.equal(T.bottles, 3);
+  assert.equal(T.balance, log[0].points - 50);
+  assert.equal(T.places, 1);
+});
