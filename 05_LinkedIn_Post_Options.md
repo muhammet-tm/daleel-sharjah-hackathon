@@ -2,6 +2,18 @@
 
 Drafted 14 October 2026 for Muhammet Yalkapov. Four options, each built on a different structure, so the choice is about what the post is for rather than wording. All facts were checked against the project files (survey export, pitch deck, AI Usage Disclosure Document, app code, and the public repository); the three items in "Check before posting" could not be verified and need a decision.
 
+## Chosen version: Options A and D combined, without the AI disclosure paragraph (about 250 words)
+
+Last weekend, our team Amadeus from Abu Dhabi University reached the final ten of the Sharjah Tourism Innovation Hackathon 2026 at the American University of Sharjah, from 800 registered participants. We pitched on stage to ten judges on Sunday evening. We did not place, and I am still proud of what the four of us built in two days.
+
+The hardest part came before we wrote any code. On the first afternoon we learned that last year's winning team had built an AR tourism app with stamps, badges, and curated routes, and the organizers had used an AI tourism assistant as their worked example on stage. Our first plan was close to both, so we had to find the part that was ours.
+
+We kept the AR and the AI guide as tools and built Daleel (Arabic for "guide") around a different question: when should a visitor go, and how should they get there? The web app plans a day in Sharjah around heat, crowds, and travel time. It walks you through 3D scenes of five Sharjah places, shows Al Hisn Fort as it stood in 1823, in 1969, and today, and works in English and Arabic without an install. By Sunday the pitch had also become a navigator table for malls, parks, and heritage sites that carries the route to the visitor's phone.
+
+Thank you to Rama Saud Abdallah, Khadeja Alkhazraji, and Sulaymon Sadullo for two very long days, and to AUS, the Sharjah Commerce and Tourism Development Authority, Sheraa, and the mentors who gave us their time.
+
+The link to try Daleel is in the first comment.
+
 ## Check before posting
 
 1. Survey percentages. The survey export on disk (50 responses, 10 October 2026) gives 56% never heard of Al Noor Island, 50% never heard of Mleiha, and 40% visited none of seven attractions. The slide in the stage photo (sheet 02 of 11) shows 46%, 36%, and 25%, which suggests the final deck used a larger sample that is not on disk. Option C uses the 50-response figures; if the 11-sheet deck is the final one, replace them with its numbers and its response count, or the post and the photo will disagree.
