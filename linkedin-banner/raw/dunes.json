@@ -1,0 +1,23 @@
+[
+  {
+    "created_at": "2026-10-14T07:48:02.78321Z",
+    "display_name": "Nano Banana Pro",
+    "id": "c0549729-236e-4b01-89bc-367c52fa8f8b",
+    "job_type": "nano_banana_pro",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KUxFD6EF8pcpGwTurFWMJkqhME/hf_20261014_074802_c0549729-236e-4b01-89bc-367c52fa8f8b_min.webp",
+    "params": {
+      "application": null,
+      "aspect_ratio": "21:9",
+      "batch_size": 1,
+      "height": 1344,
+      "input_image": null,
+      "input_images": [],
+      "prompt": "Wide aerial photograph of desert sand dunes at first light, long parallel dune crests running diagonally from the lower left to the upper right, soft warm low sun from the right, deep blue-violet shadows in the troughs, very fine sand texture visible, calm and spacious, the left third of the frame is soft shadow and nearly empty, the right half has gentle even light, documentary landscape photography, medium format, no people, no vehicles, no text, no logos, no watermark",
+      "resolution": "2k",
+      "surface": null,
+      "width": 3168
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KUxFD6EF8pcpGwTurFWMJkqhME/hf_20261014_074802_c0549729-236e-4b01-89bc-367c52fa8f8b.png",
+    "status": "completed"
+  }
+]

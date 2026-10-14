@@ -1,0 +1,23 @@
+[
+  {
+    "created_at": "2026-10-14T07:48:03.694287Z",
+    "display_name": "Nano Banana Pro",
+    "id": "5ba0fdd0-d2f6-4231-ad92-f29bdc11e459",
+    "job_type": "nano_banana_pro",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KUxFD6EF8pcpGwTurFWMJkqhME/hf_20261014_074803_5ba0fdd0-d2f6-4231-ad92-f29bdc11e459_min.webp",
+    "params": {
+      "application": null,
+      "aspect_ratio": "21:9",
+      "batch_size": 1,
+      "height": 1344,
+      "input_image": null,
+      "input_images": [],
+      "prompt": "Architectural photograph of sunlight passing through a geometric mashrabiya screen and casting a crisp pattern of eight-pointed star shadows across a smooth limestone wall, late afternoon light, warm stone against cool blue-gray shade, the left third of the frame is plain wall in soft shade, the pattern concentrates in the center and right, minimal, quiet, high detail, no people, no text, no logos, no watermark",
+      "resolution": "2k",
+      "surface": null,
+      "width": 3168
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KUxFD6EF8pcpGwTurFWMJkqhME/hf_20261014_074803_5ba0fdd0-d2f6-4231-ad92-f29bdc11e459.png",
+    "status": "completed"
+  }
+]

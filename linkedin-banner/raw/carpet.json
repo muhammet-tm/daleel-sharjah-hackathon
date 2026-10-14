@@ -1,0 +1,23 @@
+[
+  {
+    "created_at": "2026-10-14T07:48:02.986852Z",
+    "display_name": "Nano Banana Pro",
+    "id": "89d7c302-de3a-4ef5-b958-17d005709a01",
+    "job_type": "nano_banana_pro",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KUxFD6EF8pcpGwTurFWMJkqhME/hf_20261014_074802_89d7c302-de3a-4ef5-b958-17d005709a01_min.webp",
+    "params": {
+      "application": null,
+      "aspect_ratio": "21:9",
+      "batch_size": 1,
+      "height": 1344,
+      "input_image": null,
+      "input_images": [],
+      "prompt": "Extreme close-up macro photograph of a hand-knotted Turkmen carpet, deep madder red wool with dark indigo and ivory knots forming a precise octagonal gul motif, raking side light from the right showing each knot and fiber, shallow depth of field with the left side falling into soft dark focus, rich but restrained color, studio product photography, no text, no logos, no watermark",
+      "resolution": "2k",
+      "surface": null,
+      "width": 3168
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3KUxFD6EF8pcpGwTurFWMJkqhME/hf_20261014_074802_89d7c302-de3a-4ef5-b958-17d005709a01.png",
+    "status": "completed"
+  }
+]
